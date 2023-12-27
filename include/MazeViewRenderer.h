@@ -13,7 +13,7 @@ class MazeViewRenderer
         BITMAP *BACKGROUND;
         PALETTE palette_background;
         MazeViewRenderer(){}
-        virtual ~MazeViewRenderer();
+        virtual ~MazeViewRenderer(){}
         void Init();
         void DrawForwardWall(Dungeon &currentDungeon, WallPartId wallPart, int wallSetIndex, int xPos);
         void DrawSideWall(Dungeon &currentDungeon, WallPartId wallPart, bool flip, int wallSetIndex, int xPos);

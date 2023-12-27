@@ -4,11 +4,6 @@ const unsigned FLIPPED_HORIZONTALLY_FLAG  = 0x80000000;
 const unsigned FLIPPED_VERTICALLY_FLAG    = 0x40000000;
 const unsigned FLIPPED_DIAGONALLY_FLAG    = 0x20000000;
 
-WallSet::~WallSet()
-{
-
-}
-
 void WallSet::LoadWallSet(std::string wallSetName)
 {
     std::ifstream ifs((".\\WALLSETS\\" + wallSetName + ".tmj").c_str());

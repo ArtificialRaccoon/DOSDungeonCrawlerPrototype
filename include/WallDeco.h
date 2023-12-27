@@ -14,7 +14,7 @@ class WallDeco
 {
     public:
         WallDeco() {}
-        virtual ~WallDeco();
+        virtual ~WallDeco() {}
         void LoadWallDeco(std::string wallDecoName);
         void DrawWallDeco(BITMAP *BUFFER, WallPartId wallPart, int startX, bool flip);
     protected:

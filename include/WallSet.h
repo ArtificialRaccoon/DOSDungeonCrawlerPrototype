@@ -14,7 +14,7 @@ class WallSet
 {
     public:
         WallSet() {}
-        virtual ~WallSet();
+        virtual ~WallSet() {}
         void LoadWallSet(std::string wallSetName);
         void DrawWall(BITMAP *BUFFER, WallPartId wallPart, int startX, bool flip);
     protected:

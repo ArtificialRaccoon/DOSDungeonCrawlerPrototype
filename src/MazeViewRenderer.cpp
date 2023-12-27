@@ -1,10 +1,5 @@
 #include "MazeViewRenderer.h"
 
-MazeViewRenderer::~MazeViewRenderer()
-{
-
-}
-
 void MazeViewRenderer::Init()
 {
     BACKGROUND = create_bitmap(BACK_WIDTH, BACK_HEIGHT);

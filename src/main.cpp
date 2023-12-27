@@ -1,0 +1,44 @@
+#include "Globals.h"
+#include "GameProcessor.h"
+#include "DungeonViewState.h"
+using namespace std;
+
+volatile int ticks = 0;
+void timer(void)
+{
+    ticks = ticks + 1;
+}
+END_OF_FUNCTION(timer)
+
+int main() {
+    GameProcessor objGame;
+    objGame.InitializeGame();
+
+	/* SETUP THE MAIN TIMER TO 60 FPS */
+    install_timer(); //Setup the timer
+    LOCK_VARIABLE(ticks); //Set timer variable
+    LOCK_FUNCTION(timer); //Set timer function
+    install_int_ex(timer, BPS_TO_TIMER(60));
+
+    objGame.ChangeState(DungeonViewState::Instance());
+	while ( true )
+	{
+	    while(ticks == 0)
+            rest(1);
+
+	    while(ticks > 0)
+        {
+            int old_ticks = ticks;
+
+            ticks--;
+            if(old_ticks <= ticks)
+                break;
+
+            objGame.ProcessEvents();
+            objGame.HandleEvents();
+        }
+
+        objGame.Render();
+	}
+    return 0;
+}

@@ -2,6 +2,10 @@
 
 ![Untitled](https://github.com/ArtificialRaccoon/DOSDungeonCrawlerPrototype/assets/17658654/843aa2d5-e88e-4f57-b8f6-1954055b90d3)
 
+A fairly basic dungeon crawler engine prototype.  Multiple missing features.  Poorly coded since I almost never use C/C++ anymore.  I hope to peck away at this over time to add more basic functionality.
+
+Currently runs on hardware and DOSBOX without issue (for now).  
+
 Tooling:
 - DJGPP (targetting GCC 12.1.0)
 - Allegro 4.2.3.1 (Unoffical, see below)
@@ -13,7 +17,7 @@ Install VSCode, and the [DOS-Dev](https://marketplace.visualstudio.com/items?ite
 
 ## 3rd Party Libraries
 
-- [Allegro 4.2.3.1](https://github.com/ArtificialRaccoon/allegro-4.2-xc) - Additionally, some minor changes were made to the bundled Allegro headers so they would compile with C++17.
+- [Allegro 4.2.3.1](https://github.com/ArtificialRaccoon/allegro-4.2-xc) - Additionally, some minor changes were made to the bundled Allegro headers so they would compile under C++17.
 - [Simpleson](https://github.com/gregjesl/simpleson)
 
 ## Art Attribution

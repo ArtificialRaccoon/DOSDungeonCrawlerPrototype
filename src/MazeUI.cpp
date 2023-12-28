@@ -55,7 +55,7 @@ void MazeUI::DrawMazeUI(int startX, int startY, Dungeon &currentDungeon, Rotatio
     DrawCharacterWindow(&game->playerData.Party[3], 250, 101);
 
     //Draw Minimap
-    //DrawMiniMap(MINIMAP_X, MINIMAP_Y, currentDungeon, facing, playerX, playerY, game);
+    DrawMiniMap(MINIMAP_X, MINIMAP_Y, currentDungeon, facing, playerX, playerY, game);
 
     //Draw UI
     DrawNavigation();

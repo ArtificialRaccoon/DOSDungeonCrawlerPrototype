@@ -11,6 +11,19 @@ Tooling:
 - Allegro 4.2.3.1 (Unoffical, see below)
 - TBD
 
+### To Do (Near Term)
+
+- Interactable Switches
+- Doors
+- Level Transitions
+
+### To Do (Later Term)
+
+- Improved Tileset loader:  At the moment it is fairly memory ineffificent.  This could be easily improved, as the basis for this is already in place (simply keep a tile minimized version of the tileset in memory, use the TilEd layout to dynamically build the parts, rather than pre-build them)
+- Inventory
+- Character Status Screen / Equipment Screen
+- Battle System: Aiming for a Wizardry/M&M/Turn-Based combat system
+
 ## Environment Setup
 
 Install VSCode, and the [DOS-Dev](https://marketplace.visualstudio.com/items?itemName=badlogicgames.dos-dev) extension.  Clang / intellisense will complain about missing headers, etc.  Disable that if it bothers you.

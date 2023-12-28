@@ -16,7 +16,9 @@ class MazeViewRenderer
         virtual ~MazeViewRenderer(){}
         void Init();
         void DrawForwardWall(Dungeon &currentDungeon, WallPartId wallPart, int wallSetIndex, int xPos);
+        void DrawForwardDecoration(Dungeon &currentDungeon, WallPartId wallPart, int wallSetIndex, int xPos);        
         void DrawSideWall(Dungeon &currentDungeon, WallPartId wallPart, bool flip, int wallSetIndex, int xPos);
+        void DrawSideDecoration(Dungeon &currentDungeon, WallPartId wallPart, bool flip, int wallSetIndex, int xPos);
         void DrawBackground(bool flip);
         void RenderVisionCone(Dungeon &currentDungeon, VisionCone &wallCone, VisionCone &decoCone);
 };

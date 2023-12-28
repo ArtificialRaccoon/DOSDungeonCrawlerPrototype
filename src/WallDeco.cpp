@@ -20,66 +20,77 @@ void WallDeco::LoadWallDeco(std::string wallDecoName)
     FORWARD_A.width = jsonObj["width"];
     FORWARD_A.tileData = jsonObj["data"];
     FORWARD_A.startY = jsonObj["starty"];
+    FORWARD_A.startX = jsonObj["startx"];
 
     jsonObj = parsedObject["SIDEA"];
     SIDE_A.height = jsonObj["height"];
     SIDE_A.width = jsonObj["width"];
     SIDE_A.tileData = jsonObj["data"];
     SIDE_A.startY = jsonObj["starty"];
+    SIDE_A.startX = jsonObj["startx"];
 
     jsonObj = parsedObject["FORWARDB"];
     FORWARD_B.height = jsonObj["height"];
     FORWARD_B.width = jsonObj["width"];
     FORWARD_B.tileData = jsonObj["data"];
     FORWARD_B.startY = jsonObj["starty"];
+    FORWARD_B.startX = jsonObj["startx"];
 
     jsonObj = parsedObject["SIDEB"];
     SIDE_B.height = jsonObj["height"];
     SIDE_B.width = jsonObj["width"];
     SIDE_B.tileData = jsonObj["data"];
     SIDE_B.startY = jsonObj["starty"];
+    SIDE_B.startX = jsonObj["startx"];
 
     jsonObj = parsedObject["FORWARDC"];
     FORWARD_C.height = jsonObj["height"];
     FORWARD_C.width = jsonObj["width"];
     FORWARD_C.tileData = jsonObj["data"];
     FORWARD_C.startY = jsonObj["starty"];
+    FORWARD_C.startX = jsonObj["startx"];
 
     jsonObj = parsedObject["SIDEC"];
     SIDE_C.height = jsonObj["height"];
     SIDE_C.width = jsonObj["width"];
     SIDE_C.tileData = jsonObj["data"];
     SIDE_C.startY = jsonObj["starty"];
+    SIDE_C.startX = jsonObj["startx"];
 
     jsonObj = parsedObject["FARSIDEC"];
     FARSIDE_C.height = jsonObj["height"];
     FARSIDE_C.width = jsonObj["width"];
     FARSIDE_C.tileData = jsonObj["data"];
     FARSIDE_C.startY = jsonObj["starty"];
+    FARSIDE_C.startX = jsonObj["startx"];
 
     jsonObj = parsedObject["FORWARDD"];
     FORWARD_D.height = jsonObj["height"];
     FORWARD_D.width = jsonObj["width"];
     FORWARD_D.tileData = jsonObj["data"];
     FORWARD_D.startY = jsonObj["starty"];
+    FORWARD_D.startX = jsonObj["startx"];
 
     jsonObj = parsedObject["SIDED"];
     SIDE_D.height = jsonObj["height"];
     SIDE_D.width = jsonObj["width"];
     SIDE_D.tileData = jsonObj["data"];
     SIDE_D.startY = jsonObj["starty"];
+    SIDE_D.startX = jsonObj["startx"];
 
     jsonObj = parsedObject["FARSIDED1"];
     FARSIDE_D1.height = jsonObj["height"];
     FARSIDE_D1.width = jsonObj["width"];
     FARSIDE_D1.tileData = jsonObj["data"];
     FARSIDE_D1.startY = jsonObj["starty"];
+    FARSIDE_D1.startX = jsonObj["startx"];
 
     jsonObj = parsedObject["FARSIDED2"];
     FARSIDE_D2.height = jsonObj["height"];
     FARSIDE_D2.width = jsonObj["width"];
     FARSIDE_D2.tileData = jsonObj["data"];
     FARSIDE_D2.startY = jsonObj["starty"];
+    FARSIDE_D2.startX = jsonObj["startx"];
 
     TILESHEET = load_bitmap((".\\WALLDECO\\" + wallDecoName + ".bmp").c_str(), palette_tile);
     TILE = create_bitmap(tileWidth, tileHeight);
@@ -168,8 +179,8 @@ void WallDeco::DrawWallDeco(BITMAP *BUFFER, WallPart wallObj, int startX, bool f
     }
 
     if(flip)
-        draw_sprite_h_flip(BUFFER, wall, startX, wallObj.startY);
+        draw_sprite_h_flip(BUFFER, wall, startX + wallObj.startX, wallObj.startY);
     else
-        masked_blit(wall, BUFFER, 0, 0, startX, wallObj.startY, wallObj.width * tileWidth, wallObj.height * tileHeight);
+        masked_blit(wall, BUFFER, 0, 0, startX + wallObj.startX, wallObj.startY, wallObj.width * tileWidth, wallObj.height * tileHeight);
     destroy_bitmap(wall);
 }

@@ -3,11 +3,11 @@
 	"Name":	 "Test",
 	"WallSets": 	
 	[
-		"WALLTILE"
+		"NICETILE"
 	],
 	"WallDeco": 	
 	[
-		"SWITCH1A"
+		"SWITCH1"
 	],
 	"FloorSet": "OVERLOOK",
 	"WallLength": 10,

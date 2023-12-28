@@ -187,9 +187,15 @@ void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int delt
         if ((a + (deltaSign * 4)) >= 0 && (a + (deltaSign * 4)) < mapN1 && (b + (-3 + i)) >= 0 && (b + (-3 + i)) < mapN2)
         {
             if (calculateForX)
+            {
                 wallCone.Tier0[(deltaSign < 0 ? abs(i - 6) : i)] = dungeonObj.WallMap[b + (-3 + i)][a + (deltaSign * 4)];
+                decoCone.Tier0[(deltaSign < 0 ? abs(i - 6) : i)] = dungeonObj.DecoMap[b + (-3 + i)][a + (deltaSign * 4)];
+            }
             else
+            {
                 wallCone.Tier0[(deltaSign > 0 ? abs(i - 6) : i)] = dungeonObj.WallMap[a + (deltaSign * 4)][b + (-3 + i)];
+                decoCone.Tier0[(deltaSign > 0 ? abs(i - 6) : i)] = dungeonObj.DecoMap[a + (deltaSign * 4)][b + (-3 + i)];
+            }
         }
     }
 
@@ -198,9 +204,15 @@ void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int delt
         if ((a + (deltaSign * 3)) >= 0 && (a + (deltaSign * 3)) < mapN1 && (b + (-3 + i)) >= 0 && (b + (-3 + i)) < mapN2)
         {
             if (calculateForX)
+            {
                 wallCone.Tier1[(deltaSign < 0 ? abs(i - 6) : i)] = dungeonObj.WallMap[b + (-3 + i)][a + (deltaSign * 3)];
+                decoCone.Tier1[(deltaSign < 0 ? abs(i - 6) : i)] = dungeonObj.DecoMap[b + (-3 + i)][a + (deltaSign * 3)];
+            }
             else
+            {
                 wallCone.Tier1[(deltaSign > 0 ? abs(i - 6) : i)] = dungeonObj.WallMap[a + (deltaSign * 3)][b + (-3 + i)];
+                decoCone.Tier1[(deltaSign > 0 ? abs(i - 6) : i)] = dungeonObj.DecoMap[a + (deltaSign * 3)][b + (-3 + i)];
+            }
         }
     }
 
@@ -209,9 +221,15 @@ void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int delt
         if ((a + (deltaSign * 2)) >= 0 && (a + (deltaSign * 2)) < mapN1 && (b + (-3 + i)) >= 0 && (b + (-3 + i)) < mapN2)
         {
             if (calculateForX)
+            {
                 wallCone.Tier2[(deltaSign < 0 ? abs(i - 6) : i)] = dungeonObj.WallMap[b + (-3 + i)][a + (deltaSign * 2)];
+                decoCone.Tier2[(deltaSign < 0 ? abs(i - 6) : i)] = dungeonObj.DecoMap[b + (-3 + i)][a + (deltaSign * 2)];
+            }
             else
+            {
                 wallCone.Tier2[(deltaSign > 0 ? abs(i - 6) : i)] = dungeonObj.WallMap[a + (deltaSign * 2)][b + (-3 + i)];
+                decoCone.Tier2[(deltaSign > 0 ? abs(i - 6) : i)] = dungeonObj.DecoMap[a + (deltaSign * 2)][b + (-3 + i)];
+            }
         }
     }
 
@@ -220,9 +238,15 @@ void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int delt
         if ((a + (deltaSign * 1)) >= 0 && (a + (deltaSign * 1)) < mapN1 && (b + (-2 + i)) >= 0 && (b + (-2 + i)) < mapN2)
         {
             if (calculateForX)
+            {
                 wallCone.Tier3[(deltaSign < 0 ? abs(i - 4) : i)] = dungeonObj.WallMap[b + (-2 + i)][a + (deltaSign * 1)];
+                decoCone.Tier3[(deltaSign < 0 ? abs(i - 4) : i)] = dungeonObj.DecoMap[b + (-2 + i)][a + (deltaSign * 1)];
+            }
             else
+            {
                 wallCone.Tier3[(deltaSign > 0 ? abs(i - 4) : i)] = dungeonObj.WallMap[a + (deltaSign * 1)][b + (-2 + i)];
+                decoCone.Tier3[(deltaSign > 0 ? abs(i - 4) : i)] = dungeonObj.DecoMap[a + (deltaSign * 1)][b + (-2 + i)];
+            }
         }
     }
 

@@ -1,11 +1,11 @@
 #include "MazeViewRenderer.h"
 
-void MazeViewRenderer::Init()
+void MazeViewRenderer::Init(Dungeon &currentDungeon)
 {
     BACKGROUND = create_bitmap(BACK_WIDTH, BACK_HEIGHT);
     MAZEVIEW = create_bitmap(BACK_WIDTH, BACK_HEIGHT);
 
-    BACKGROUND = load_bitmap(".\\BACKSETS\\OVERLOOK.bmp", palette_background);
+    BACKGROUND = load_bitmap((".\\BACKSETS\\" + currentDungeon.FloorSet + ".bmp").c_str(), palette_background);
     if (!BACKGROUND) {
       set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
       allegro_message("Error reading bitmap file");

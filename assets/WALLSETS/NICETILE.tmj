@@ -106,7 +106,7 @@
             564, 565],
          "height":6,
          "width":2,
-		 "starty":25
+		 "starty":26
         },
  "FORWARDD":{
          "data":[453, 454, 455, 456, 
@@ -134,7 +134,7 @@
             541, 542, 543],
          "height":5,
          "width":3,
-		 "starty":27
+		 "starty":28
         },	
  "FARSIDED2":{
          "data":[441,

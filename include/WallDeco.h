@@ -18,7 +18,7 @@ class WallDeco
         void LoadWallDeco(std::string wallDecoName);
         void DrawWallDeco(BITMAP *BUFFER, WallPartId wallPart, int startX, bool flip);
     protected:
-        void DrawWallDeco(BITMAP *BUFFER, WallPart wallObj, int startX, bool flip);
+        void DrawWallDeco(BITMAP *BUFFER, WallPart wallObj, int wallWidth, int startX, bool flip);
     private:
         int tilesetWidth;
         int tilesetHeight;

@@ -7,7 +7,7 @@ void DungeonViewState::InitState()
     BUFFER = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
     mazeUIObj.Init(BUFFER);
     dungeonObj.LoadDungeon();
-    mazeRenderer.Init();
+    mazeRenderer.Init(dungeonObj);
 
     facing = NORTH;
     playerX = 1;

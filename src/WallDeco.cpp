@@ -101,44 +101,38 @@ void WallDeco::DrawWallDeco(BITMAP *BUFFER, WallPartId wallPart, int startX, boo
     switch(wallPart)
     {
         case FORWARDA:
-            DrawWallDeco(BUFFER, FORWARD_A, startX, flip);
+            DrawWallDeco(BUFFER, FORWARD_A, FORWARDA_WIDTH, startX, flip);
             break;
         case FORWARDB:
-            DrawWallDeco(BUFFER, FORWARD_B, startX, flip);
+            DrawWallDeco(BUFFER, FORWARD_B, FORWARDB_WIDTH, startX, flip);
             break;
         case FORWARDC:
-            DrawWallDeco(BUFFER, FORWARD_C, startX, flip);
+            DrawWallDeco(BUFFER, FORWARD_C, FORWARDC_WIDTH, startX, flip);
             break;
         case FORWARDD:
-            DrawWallDeco(BUFFER, FORWARD_D, startX, flip);
+            DrawWallDeco(BUFFER, FORWARD_D, FORWARDD_WIDTH, startX, flip);
             break;
         case SIDEA:
-            DrawWallDeco(BUFFER, SIDE_A, startX, flip);
+            DrawWallDeco(BUFFER, SIDE_A, SIDEA_WIDTH, startX, flip);
             break;
         case SIDEB:
-            DrawWallDeco(BUFFER, SIDE_B, startX, flip);
+            DrawWallDeco(BUFFER, SIDE_B, SIDEB_WIDTH, startX, flip);
             break;
         case SIDEC:
-            DrawWallDeco(BUFFER, SIDE_C, startX, flip);
+            DrawWallDeco(BUFFER, SIDE_C, SIDEC_WIDTH, startX, flip);
             break;
         case SIDED:
-            DrawWallDeco(BUFFER, SIDE_D, startX, flip);
+            DrawWallDeco(BUFFER, SIDE_D, SIDED_WIDTH, startX, flip);
             break;
         case FARSIDEC:
-            DrawWallDeco(BUFFER, FARSIDE_C, startX, flip);
-            break;
-        case FARSIDED1:
-            DrawWallDeco(BUFFER, FARSIDE_D1, startX, flip);
-            break;
-        case FARSIDED2:
-            DrawWallDeco(BUFFER, FARSIDE_D2, startX, flip);
+            DrawWallDeco(BUFFER, FARSIDE_C, FARSIDEC_WIDTH, startX, flip);
             break;
         default:
             break;
     }
 }
 
-void WallDeco::DrawWallDeco(BITMAP *BUFFER, WallPart wallObj, int startX, bool flip)
+void WallDeco::DrawWallDeco(BITMAP *BUFFER, WallPart wallObj, int wallWidth, int startX, bool flip)
 {
     int destXPos = 0;
     int destYPos = 0;
@@ -179,7 +173,7 @@ void WallDeco::DrawWallDeco(BITMAP *BUFFER, WallPart wallObj, int startX, bool f
     }
 
     if(flip)
-        draw_sprite_h_flip(BUFFER, wall, startX + wallObj.startX, wallObj.startY);
+        draw_sprite_h_flip(BUFFER, wall, startX + wallWidth - (wallObj.width * tileWidth) - wallObj.startX, wallObj.startY);
     else
         masked_blit(wall, BUFFER, 0, 0, startX + wallObj.startX, wallObj.startY, wallObj.width * tileWidth, wallObj.height * tileHeight);
     destroy_bitmap(wall);

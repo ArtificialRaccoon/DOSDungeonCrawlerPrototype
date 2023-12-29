@@ -1,6 +1,6 @@
 # Dungeon Crawler Prototype
 
-![Untitled](https://github.com/ArtificialRaccoon/DOSDungeonCrawlerPrototype/assets/17658654/843aa2d5-e88e-4f57-b8f6-1954055b90d3)
+![Untitled](https://github.com/ArtificialRaccoon/DOSDungeonCrawlerPrototype/screenshot.png)
 
 A fairly basic dungeon crawler engine prototype.  Multiple missing features.  Poorly coded since I almost never use C/C++ anymore.  I hope to peck away at this over time to add more basic functionality.
 
@@ -43,5 +43,3 @@ Install VSCode, and the [DOS-Dev](https://marketplace.visualstudio.com/items?ite
 - Brain Icon by Bernard Walker.  (CC0)
 - Maze and Character Window Borders by [PIPOSCHPATZ](https://piposchpatz.itch.io/ui-borders-art-deco-pixel-art) (CC-BY-4.0)
 - Background Texture by [Jestan](https://opengameart.org/content/pixel-texture-pack) (CC-BY-SA)
-
-Currently, the wall textures have been lifted directly from Eye of the Beholder.  

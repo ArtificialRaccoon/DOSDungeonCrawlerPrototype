@@ -1,6 +1,6 @@
 # Dungeon Crawler Prototype
 
-![Untitled](https://github.com/ArtificialRaccoon/DOSDungeonCrawlerPrototype/screenshot.png)
+![Untitled](https://github.com/ArtificialRaccoon/DOSDungeonCrawlerPrototype/blob/main/screenshot.png)
 
 A fairly basic dungeon crawler engine prototype.  Multiple missing features.  Poorly coded since I almost never use C/C++ anymore.  I hope to peck away at this over time to add more basic functionality.
 

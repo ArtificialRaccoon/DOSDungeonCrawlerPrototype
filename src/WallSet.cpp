@@ -15,74 +15,32 @@ void WallSet::LoadWallSet(std::string wallSetName)
     tilesetWidth = parsedObject["tilesetwidth"];
     tilesetHeight = parsedObject["tilesetheight"];
 
-    json::jobject jsonObj = parsedObject["FORWARDA"];
-    FORWARD_A.height = jsonObj["height"];
-    FORWARD_A.width = jsonObj["width"];
-    FORWARD_A.tileData = jsonObj["data"];
-    FORWARD_A.startY = jsonObj["starty"];
-
-    jsonObj = parsedObject["SIDEA"];
-    SIDE_A.height = jsonObj["height"];
-    SIDE_A.width = jsonObj["width"];
-    SIDE_A.tileData = jsonObj["data"];
-    SIDE_A.startY = jsonObj["starty"];
-
-    jsonObj = parsedObject["FORWARDB"];
-    FORWARD_B.height = jsonObj["height"];
-    FORWARD_B.width = jsonObj["width"];
-    FORWARD_B.tileData = jsonObj["data"];
-    FORWARD_B.startY = jsonObj["starty"];
-
-    jsonObj = parsedObject["SIDEB"];
-    SIDE_B.height = jsonObj["height"];
-    SIDE_B.width = jsonObj["width"];
-    SIDE_B.tileData = jsonObj["data"];
-    SIDE_B.startY = jsonObj["starty"];
-
-    jsonObj = parsedObject["FORWARDC"];
-    FORWARD_C.height = jsonObj["height"];
-    FORWARD_C.width = jsonObj["width"];
-    FORWARD_C.tileData = jsonObj["data"];
-    FORWARD_C.startY = jsonObj["starty"];
-
-    jsonObj = parsedObject["SIDEC"];
-    SIDE_C.height = jsonObj["height"];
-    SIDE_C.width = jsonObj["width"];
-    SIDE_C.tileData = jsonObj["data"];
-    SIDE_C.startY = jsonObj["starty"];
-
-    jsonObj = parsedObject["FARSIDEC"];
-    FARSIDE_C.height = jsonObj["height"];
-    FARSIDE_C.width = jsonObj["width"];
-    FARSIDE_C.tileData = jsonObj["data"];
-    FARSIDE_C.startY = jsonObj["starty"];
-
-    jsonObj = parsedObject["FORWARDD"];
-    FORWARD_D.height = jsonObj["height"];
-    FORWARD_D.width = jsonObj["width"];
-    FORWARD_D.tileData = jsonObj["data"];
-    FORWARD_D.startY = jsonObj["starty"];
-
-    jsonObj = parsedObject["SIDED"];
-    SIDE_D.height = jsonObj["height"];
-    SIDE_D.width = jsonObj["width"];
-    SIDE_D.tileData = jsonObj["data"];
-    SIDE_D.startY = jsonObj["starty"];
-
-    jsonObj = parsedObject["FARSIDED1"];
-    FARSIDE_D1.height = jsonObj["height"];
-    FARSIDE_D1.width = jsonObj["width"];
-    FARSIDE_D1.tileData = jsonObj["data"];
-    FARSIDE_D1.startY = jsonObj["starty"];
-
-    jsonObj = parsedObject["FARSIDED2"];
-    FARSIDE_D2.height = jsonObj["height"];
-    FARSIDE_D2.width = jsonObj["width"];
-    FARSIDE_D2.tileData = jsonObj["data"];
-    FARSIDE_D2.startY = jsonObj["starty"];
+    LoadPartData(parsedObject, "FORWARDA", &FORWARD_A);
+    LoadPartData(parsedObject, "SIDEA", &SIDE_A);
+    LoadPartData(parsedObject, "FORWARDB", &FORWARD_B);
+    LoadPartData(parsedObject, "SIDEB", &SIDE_B);    
+    LoadPartData(parsedObject, "FORWARDC", &FORWARD_C);
+    LoadPartData(parsedObject, "SIDEC", &SIDE_C);
+    LoadPartData(parsedObject, "FARSIDEC", &FARSIDE_C);
+    LoadPartData(parsedObject, "FORWARDD", &FORWARD_D);
+    LoadPartData(parsedObject, "SIDED", &SIDE_D);
+    LoadPartData(parsedObject, "FARSIDED1", &FARSIDE_D1);
+    LoadPartData(parsedObject, "FARSIDED2", &FARSIDE_D2);
 
     TILESHEET = load_bitmap((".\\WALLSETS\\" + wallSetName + ".bmp").c_str(), palette_tile);
     TILE = create_bitmap(tileWidth, tileHeight);
+}
+
+void WallSet::LoadPartData(json::jobject parsedObject, std::string key, WallPart *partToLoad)
+{
+    if(parsedObject.has_key(key))
+    {
+        json::jobject jsonObj = parsedObject[key];
+        partToLoad->height = jsonObj["height"];
+        partToLoad->width = jsonObj["width"];
+        partToLoad->tileData = jsonObj["data"];
+        partToLoad->startY = jsonObj["starty"];
+    }
 }
 
 void WallSet::DrawWall(BITMAP *BUFFER, WallPartId wallPart, int startX, bool flip)

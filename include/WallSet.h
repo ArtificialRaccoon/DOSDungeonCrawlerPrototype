@@ -30,6 +30,7 @@ class WallSet
         WallPart FORWARD_A, FORWARD_B, FORWARD_C, FORWARD_D;
         WallPart SIDE_A, SIDE_B, SIDE_C, SIDE_D;
         WallPart FARSIDE_C, FARSIDE_D1, FARSIDE_D2;
+        void LoadPartData(json::jobject parsedObject, std::string key, WallPart *partToLoad);
 };
 
 #endif // WALLSET_H

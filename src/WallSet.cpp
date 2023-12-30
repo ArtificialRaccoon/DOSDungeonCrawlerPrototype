@@ -27,7 +27,7 @@ void WallSet::LoadWallSet(std::string wallSetName)
     LoadPartData(parsedObject, "FARSIDED1", &FARSIDE_D1);
     LoadPartData(parsedObject, "FARSIDED2", &FARSIDE_D2);
 
-    TILESHEET = load_bitmap((".\\WALLSETS\\" + wallSetName + ".bmp").c_str(), palette_tile);
+    TILESHEET = load_bitmap((".\\WALLSETS\\" + ((std::string)parsedObject["TileSet"]) + ".bmp").c_str(), palette_tile);
     TILE = create_bitmap(tileWidth, tileHeight);
 }
 

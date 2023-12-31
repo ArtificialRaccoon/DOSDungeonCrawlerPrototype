@@ -27,6 +27,29 @@ void GameProcessor::InitializeGame() {
 	//even in the example code files, suggesting its the cross
 	//compiled code.  This just solves the crash stupidly.
 	set_mouse_range(SCREEN_WIDTH * -2, SCREEN_HEIGHT * -2, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
+
+	reserve_voices (8, -1);    
+    if (install_sound (DIGI_AUTODETECT, MIDI_NONE, NULL) < 0)
+	{
+		printf ("Error initializing sound card");
+		exit(0);
+	}
+
+    if (install_mod (8) < 0) 
+	{
+		printf ("Error setting digi voices");
+		exit(0);
+	}
+
+	JGMOD *ex;
+	ex = load_mod (".\\MUSIC\\yehat.mod");     
+    if (ex == NULL)
+	{
+		printf ("Error reading introgho.mod");
+		exit(0);
+	}
+
+    play_mod (ex, TRUE);
 }
 
 void GameProcessor::HandleEvents() {

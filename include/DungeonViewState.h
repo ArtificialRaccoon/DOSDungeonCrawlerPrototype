@@ -39,6 +39,8 @@ class DungeonViewState : public BaseState
         MazeViewRenderer mazeRenderer;
         static DungeonViewState mDungeonViewState;
         int Wrap(int input, int const lowerBound, int const upperBound);
+        void ClearVisionCones(VisionCone& cone);
+        void UpdateCone(int* coneArray, int* decoArray, bool calculateForX, int a, int b, int mapN1, int mapN2, int deltaSign, int xOffset, int arrayLen, int pivotPoint);
         MIDI *theme;
 };
 

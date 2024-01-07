@@ -15,6 +15,9 @@ void DungeonViewState::InitState()
 
     ticks = 0;
     mouseDebounce = 0;
+    	
+	theme = load_midi((".\\MUSIC\\" + dungeonObj.Theme + ".MID").c_str());
+	play_midi(theme, TRUE);    
 }
 
 void DungeonViewState::Pause()
@@ -34,7 +37,7 @@ void DungeonViewState::AquireInput(GameProcessor* game)
         switch(readkey() >> 8)
         {
             case KEY_W:
-                deltaY = 1;
+                deltaY = 1;  
                 break;
             case KEY_A:
                 facing = (Rotation)(Wrap((int)facing - 1, 0, 3));
@@ -119,7 +122,7 @@ void DungeonViewState::Render(GameProcessor* game)
     clear_to_color(BUFFER, makecol(55,55,255));
     mazeUIObj.DrawMazeBackground();
     draw_sprite(BUFFER, mazeRenderer.MAZEVIEW, 72, 8);    
-    mazeUIObj.DrawMazeUI(72, 0, dungeonObj, facing, playerX, playerY, game);
+    mazeUIObj.DrawMazeUI(72, 0, dungeonObj, facing, playerX, playerY, game);    
     show_mouse(BUFFER);
     draw_sprite(screen, BUFFER, 0, 0);
 }
@@ -127,7 +130,7 @@ void DungeonViewState::Render(GameProcessor* game)
 void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int deltaY, int deltaX)
 {
     int a, b, mapN1, mapN2;
-    //bool visionChanged = false;
+    bool visionChanged = false;
 
     //Clear Wall Vision Cone
     for(int i = 0; i < 7; i++)
@@ -159,7 +162,7 @@ void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int delt
         {
             playerX = playerX + (deltaSign * deltaY);
             playerY = playerY - (deltaSign * deltaX);
-            //visionChanged = true;
+            visionChanged = true;
         }
 
         a = playerX;
@@ -173,7 +176,7 @@ void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int delt
         {
             playerY = playerY + (deltaSign * deltaY);
             playerX = playerX + (deltaSign * deltaX);
-            //visionChanged = true;
+            visionChanged = true;
         }
 
         a = playerY;

@@ -19,7 +19,7 @@ public:
 	void PushState(BaseState *state);
 	void PopState();
 
-	PlayerInstance playerData;
+	PlayerInstance playerData;	
 private:
 	std::vector<BaseState *> states;
 };

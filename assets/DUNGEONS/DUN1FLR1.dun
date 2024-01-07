@@ -10,6 +10,7 @@
 		"SWITCH1"
 	],
 	"FloorSet": "TEMPLATE",
+	"Theme": "HALLS",
 	"WallLength": 10,
 	"Walls":
 	[

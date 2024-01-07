@@ -39,6 +39,7 @@ class DungeonViewState : public BaseState
         MazeViewRenderer mazeRenderer;
         static DungeonViewState mDungeonViewState;
         int Wrap(int input, int const lowerBound, int const upperBound);
+        MIDI *theme;
 };
 
 #endif // DUNGEONVIEWSTATE_H

@@ -16,6 +16,7 @@ class Dungeon
         int Id;
         std::string Name;
         std::string FloorSet;
+        std::string Theme;
         std::vector<WallSet> WallSets;
         std::vector<WallDeco> WallDecos;
         std::vector< std::vector<int> > WallMap;

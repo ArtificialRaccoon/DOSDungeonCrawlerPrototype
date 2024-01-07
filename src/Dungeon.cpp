@@ -18,7 +18,10 @@ void Dungeon::LoadDungeon()
         newWallset.LoadWallSet(wallSetArray[i].c_str());
         WallSets.push_back(newWallset);
     }
-            
+
+    //Load the theme music
+    Theme = dungeonObj.get("Theme");
+
     //Fetch the Wall Decorations
     std::vector<std::string> wallDecoArray = dungeonObj["WallDeco"];
     for(int i = 0; i < wallDecoArray.size(); i++)

@@ -30,7 +30,7 @@ int main() {
         {
             int old_ticks = ticks;
 
-            ticks--;
+            ticks= ticks - 1;
             if(old_ticks <= ticks)
                 break;
 

@@ -10,7 +10,7 @@ void GameProcessor::InitializeGame() {
 	install_mouse();
 
 	set_color_depth(8);
-	if (set_gfx_mode(GFX_SAFE, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0) != 0) {
+	if (set_gfx_mode(GFX_AUTODETECT, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0) != 0) {
 		set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
 		allegro_message("Unable to set any graphic mode\n%s\n", allegro_error);
 		exit(0);
@@ -28,28 +28,12 @@ void GameProcessor::InitializeGame() {
 	//compiled code.  This just solves the crash stupidly.
 	set_mouse_range(SCREEN_WIDTH * -2, SCREEN_HEIGHT * -2, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
 
-	reserve_voices (8, -1);    
-    if (install_sound (DIGI_AUTODETECT, MIDI_NONE, NULL) < 0)
+	reserve_voices (32, -1);    
+    if (install_sound (DIGI_AUTODETECT, MIDI_AUTODETECT, NULL) < 0)
 	{
 		printf ("Error initializing sound card");
 		exit(0);
-	}
-
-    if (install_mod (8) < 0) 
-	{
-		printf ("Error setting digi voices");
-		exit(0);
-	}
-
-	JGMOD *ex;
-	ex = load_mod (".\\MUSIC\\yehat.mod");     
-    if (ex == NULL)
-	{
-		printf ("Error reading introgho.mod");
-		exit(0);
-	}
-
-    play_mod (ex, TRUE);
+	}	
 }
 
 void GameProcessor::HandleEvents() {
@@ -87,7 +71,7 @@ void GameProcessor::ProcessEvents() {
 		newY = mouse_y;
 
 	if (!mouse_on_screen)
-		position_mouse(newX, newY);
+		position_mouse(newX, newY);	
 
 	states.back()->AquireInput(this);
 }

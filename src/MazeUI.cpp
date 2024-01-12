@@ -233,7 +233,7 @@ void MazeUI::DrawMiniMap(int xOffset, int yOffset, Dungeon &currentDungeon, Rota
 
 void MazeUI::DrawButton(BITMAP *SHEET, int xPos, int yPos, int sheetX, int sheetY, int buttonWidth, int buttonHeight)
 {
-    blit(SHEET, BUFFER, xPos, yPos, sheetX, sheetY, buttonWidth, buttonHeight);
+    masked_blit(SHEET, BUFFER, xPos, yPos, sheetX, sheetY, buttonWidth, buttonHeight);
     if((mouse_b & 1) && !(mouse_x < sheetX || mouse_x > sheetX + buttonWidth || mouse_y < sheetY || mouse_y > sheetY + buttonHeight))
         rect(BUFFER, sheetX, sheetY, sheetX + buttonWidth - 1, sheetY + buttonHeight - 1, makecol(55,55,55));
 }

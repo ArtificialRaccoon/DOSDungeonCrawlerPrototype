@@ -27,7 +27,7 @@ void WallSet::LoadWallSet(std::string wallSetName)
     LoadPartData(parsedObject, "FARSIDED1", &FARSIDE_D1);
     LoadPartData(parsedObject, "FARSIDED2", &FARSIDE_D2);
 
-    TILESHEET = load_bitmap((".\\WALLSETS\\" + ((std::string)parsedObject["TileSet"]) + ".bmp").c_str(), palette_tile);
+    TILESHEET = load_bitmap((".\\WALLSETS\\" + ((std::string)parsedObject["TileSet"]) + ".bmp").c_str(), palette_tile);    
     TILE = create_bitmap(tileWidth, tileHeight);
 }
 
@@ -87,47 +87,43 @@ void WallSet::DrawWall(BITMAP *BUFFER, WallPartId wallPart, int startX, bool fli
 
 void WallSet::DrawWall(BITMAP *BUFFER, WallPart wallObj, int startX, bool flip)
 {
-    int destXPos = 0;
-    int destYPos = 0;
+    int destXPos = startX;
+    int destYPos = wallObj.startY;
     int srcXPos = 0;
     int srcYPos = 0;
 
     unsigned tile_index = 0;
-    BITMAP* wall = create_bitmap(wallObj.width * tileWidth, wallObj.height * tileHeight);
-    clear_bitmap(wall);
 
     for (int y = 0; y < wallObj.height; y++)
     {
-        destXPos = 0;
+        destXPos = startX;
+        tile_index = flip ? (y + 1) * wallObj.width - 1 : y * wallObj.width;
+
         for (int x = 0; x < wallObj.width; x++)
         {
             bool H = wallObj.tileData[tile_index] & FLIPPED_HORIZONTALLY_FLAG;
-            //bool V = wallObj.tileData[tile_index] & FLIPPED_VERTICALLY_FLAG;
-            //bool D = wallObj.tileData[tile_index] & FLIPPED_DIAGONALLY_FLAG;
             unsigned tileID = wallObj.tileData[tile_index];
 
             tileID &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
-            tile_index++;
 
-            srcXPos = tileWidth * ((tileID-1) % tilesetWidth);
-            srcYPos = tileHeight * floor((tileID-1) / tilesetWidth);
+            srcXPos = tileWidth * ((tileID - 1) % tilesetWidth);
+            srcYPos = tileHeight * floor((tileID - 1) / tilesetWidth);
 
-            if(H)
+            if (flip)
             {
                 clear_bitmap(TILE);
                 masked_blit(TILESHEET, TILE, srcXPos, srcYPos, 0, 0, tileWidth, tileHeight);
-                draw_sprite_h_flip(wall, TILE, destXPos, destYPos);
+                draw_sprite_h_flip(BUFFER, TILE, destXPos, destYPos);
             }
             else
-                blit(TILESHEET, wall, srcXPos, srcYPos, destXPos, destYPos, tileWidth, tileHeight);
+            {
+                masked_blit(TILESHEET, BUFFER, srcXPos, srcYPos, destXPos, destYPos, tileWidth, tileHeight);
+            }
+
+            tile_index += flip ? -1 : 1;
             destXPos += tileWidth;
         }
+
         destYPos += tileHeight;
     }
-
-    if(flip)
-        draw_sprite_h_flip(BUFFER, wall, startX, wallObj.startY);
-    else
-        masked_blit(wall, BUFFER, 0, 0, startX, wallObj.startY, wallObj.width * tileWidth, wallObj.height * tileHeight);
-    destroy_bitmap(wall);
 }

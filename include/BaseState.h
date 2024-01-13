@@ -15,7 +15,7 @@ public:
 
 protected:
 	BaseState() {}
-
+	bool firstRender = true;
 private:
 };
 

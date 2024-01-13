@@ -11,9 +11,9 @@ void MazeUI::Init(BITMAP *INPUT_BUFFER)
     SHEET = load_bitmap(".\\OTHER\\MAZEUI.bmp", palette);
     PORTSHEET = load_bitmap(".\\OTHER\\CHARPORT.bmp", palette);
 
-    if (!SHEET) {
+    if (!SHEET || !PORTSHEET) {
       set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
-      allegro_message("Error reading bitmap file");
+      allegro_message("Error reading UI bitmap files");
       return;
     }
 
@@ -43,16 +43,16 @@ void MazeUI::LoadUISprite(BITMAP *bmpData, BITMAP *sprite, PALETTE palData, int 
     masked_blit(bmpData, sprite, startX, startY, 0, 0, sizeW, sizeH);
 }
 
-void MazeUI::DrawMazeUI(int startX, int startY, Dungeon &currentDungeon, Rotation facing, int playerX, int playerY, GameProcessor* game)
+void MazeUI::DrawMazeUI(int startX, int startY, Dungeon &currentDungeon, Rotation facing, int playerX, int playerY, GameProcessor* game, bool update)
 {
     //Draw Maze Border
     DrawMazeWindowBorder(startX, startY + 8, MAZEBORDER_H, MAZEBORDER_V, facing);
 
     //Draw Character Windows
-    DrawCharacterWindow(&game->playerData.Party[0], 2, 2);
-    DrawCharacterWindow(&game->playerData.Party[1], 250, 2);
-    DrawCharacterWindow(&game->playerData.Party[2], 2, 101);
-    DrawCharacterWindow(&game->playerData.Party[3], 250, 101);
+    DrawCharacterWindow(&game->playerData.Party[0], 2, 2, update);
+    DrawCharacterWindow(&game->playerData.Party[1], 250, 2, update);
+    DrawCharacterWindow(&game->playerData.Party[2], 2, 101, update);
+    DrawCharacterWindow(&game->playerData.Party[3], 250, 101, update);
 
     //Draw Minimap
     DrawMiniMap(MINIMAP_X, MINIMAP_Y, currentDungeon, facing, playerX, playerY, game);
@@ -62,33 +62,44 @@ void MazeUI::DrawMazeUI(int startX, int startY, Dungeon &currentDungeon, Rotatio
     DrawUserButtons();
 }
 
-void MazeUI::DrawCharacterWindow(Character *characterObj, int xOffset, int yOffset)
+void MazeUI::DrawCharacterWindow(Character *characterObj, int xOffset, int yOffset, bool update)
 {
-    DrawCharacterBackground(xOffset, yOffset, CHARWIN_HEIGHT, CHARWIN_WIDTH);
-    DrawCharacterWindowBorder(xOffset, yOffset, CHARWIN_HEIGHT, CHARWIN_WIDTH);
+    if(update)
+    {
+        //Blank Out Point Regions
+        rectfill(BUFFER, xOffset + 21, yOffset + 60, xOffset + 36, yOffset + 68, makecol(55,55,255));
+        rectfill(BUFFER, xOffset + 44, yOffset + 66, xOffset + 59, yOffset + 74, makecol(55,55,255));
+        rectfill(BUFFER, xOffset + 21, yOffset + 76, xOffset + 36, yOffset + 84, makecol(55,55,255));
+        rectfill(BUFFER, xOffset + 44, yOffset + 82, xOffset + 59, yOffset + 88, makecol(55,55,255));
 
-    //Character Portrait
-    masked_blit(PORTSHEET, BUFFER, characterObj->Portrait * PORT_WIDTH, 0, xOffset + 12, yOffset + 7, PORT_WIDTH, PORT_HEIGHT);
+        //Hit Points
+        masked_blit(SHEET, BUFFER, CHAR_HEART_STARTX, CHAR_HEART_STARTY, xOffset + 3, yOffset + 60, CHAR_HEART_WIDTH, CHAR_HEART_HEIGHT);
+        DrawDigits(xOffset + 21, yOffset + 60, characterObj->CurrentHP, 3);
+        DrawDigits(xOffset + 44, yOffset + 66, characterObj->MaxHP, 3);
 
-    //Hit Points
-    masked_blit(SHEET, BUFFER, CHAR_HEART_STARTX, CHAR_HEART_STARTY, xOffset + 3, yOffset + 60, CHAR_HEART_WIDTH, CHAR_HEART_HEIGHT);
-    DrawDigits(xOffset + 21, yOffset + 60, characterObj->CurrentHP, 3);
-    DrawDigits(xOffset + 44, yOffset + 66, characterObj->MaxHP, 3);
+        //Mind Points
+        masked_blit(SHEET, BUFFER, CHAR_MIND_STARTX, CHAR_MIND_STARTY, xOffset + 3, yOffset + 76, CHAR_MIND_WIDTH, CHAR_MIND_HEIGHT);
+        DrawDigits(xOffset + 21, yOffset + 76, characterObj->CurrentMP, 3);
+        DrawDigits(xOffset + 44, yOffset + 82, characterObj->MaxMP, 3);
+    }
+    else
+    {
+        DrawCharacterBackground(xOffset, yOffset, CHARWIN_HEIGHT, CHARWIN_WIDTH);
+        DrawCharacterWindowBorder(xOffset, yOffset, CHARWIN_HEIGHT, CHARWIN_WIDTH);
 
-    //Draw the forward slash
-    line(BUFFER, xOffset + 39, yOffset + 68, xOffset + 42, yOffset + 65, makecol(255, 255, 255));
-    line(BUFFER, xOffset + 39, yOffset + 69, xOffset + 43, yOffset + 65, makecol(255, 255, 255));
-    line(BUFFER, xOffset + 40, yOffset + 69, xOffset + 43, yOffset + 66, makecol(255, 255, 255));
+        //Character Portrait
+        masked_blit(PORTSHEET, BUFFER, characterObj->Portrait * PORT_WIDTH, 0, xOffset + 12, yOffset + 7, PORT_WIDTH, PORT_HEIGHT);
 
-    //Mind Points
-    masked_blit(SHEET, BUFFER, CHAR_MIND_STARTX, CHAR_MIND_STARTY, xOffset + 3, yOffset + 76, CHAR_MIND_WIDTH, CHAR_MIND_HEIGHT);
-    DrawDigits(xOffset + 21, yOffset + 76, characterObj->CurrentMP, 3);
-    DrawDigits(xOffset + 44, yOffset + 82, characterObj->MaxMP, 3);
+        //Draw the forward slash
+        line(BUFFER, xOffset + 39, yOffset + 68, xOffset + 42, yOffset + 65, makecol(255, 255, 255));
+        line(BUFFER, xOffset + 39, yOffset + 69, xOffset + 43, yOffset + 65, makecol(255, 255, 255));
+        line(BUFFER, xOffset + 40, yOffset + 69, xOffset + 43, yOffset + 66, makecol(255, 255, 255));
 
-    //Draw the forward slash
-    line(BUFFER, xOffset + 39, yOffset + 84, xOffset + 42, yOffset + 81, makecol(255, 255, 255));
-    line(BUFFER, xOffset + 39, yOffset + 85, xOffset + 43, yOffset + 81, makecol(255, 255, 255));
-    line(BUFFER, xOffset + 40, yOffset + 85, xOffset + 43, yOffset + 82, makecol(255, 255, 255));
+        //Draw the forward slash
+        line(BUFFER, xOffset + 39, yOffset + 84, xOffset + 42, yOffset + 81, makecol(255, 255, 255));
+        line(BUFFER, xOffset + 39, yOffset + 85, xOffset + 43, yOffset + 81, makecol(255, 255, 255));
+        line(BUFFER, xOffset + 40, yOffset + 85, xOffset + 43, yOffset + 82, makecol(255, 255, 255));
+    }    
 }
 
 void MazeUI::DrawDigits(int startX, int startY, int value, int width)

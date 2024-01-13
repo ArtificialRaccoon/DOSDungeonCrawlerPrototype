@@ -118,13 +118,15 @@ void DungeonViewState::ProcessInput(GameProcessor* game)
 
 void DungeonViewState::Render(GameProcessor* game)
 {
-    mazeRenderer.RenderVisionCone(dungeonObj, wallCone, decoCone);
-    clear_to_color(BUFFER, makecol(55,55,255));
-    mazeUIObj.DrawMazeBackground();
+    if(firstRender)
+        mazeUIObj.DrawMazeBackground();
+
+    mazeRenderer.RenderVisionCone(dungeonObj, wallCone, decoCone);    
     draw_sprite(BUFFER, mazeRenderer.MAZEVIEW, 72, 8);    
-    mazeUIObj.DrawMazeUI(72, 0, dungeonObj, facing, playerX, playerY, game);    
+    mazeUIObj.DrawMazeUI(72, 0, dungeonObj, facing, playerX, playerY, game, !firstRender);    
     show_mouse(BUFFER);
     draw_sprite(screen, BUFFER, 0, 0);
+    firstRender = false;
 }
 
 void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int deltaY, int deltaX)

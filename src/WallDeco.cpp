@@ -82,47 +82,39 @@ void WallDeco::DrawWallDeco(BITMAP *BUFFER, WallPartId wallPart, int startX, boo
 
 void WallDeco::DrawWallDeco(BITMAP *BUFFER, WallPart wallObj, int wallWidth, int startX, bool flip)
 {
-    int destXPos = 0;
-    int destYPos = 0;
-    int srcXPos = 0;
-    int srcYPos = 0;
+    int destXPos = startX + (flip ? wallWidth - wallObj.width * tileWidth - wallObj.startX : wallObj.startX);
+    int destYPos = wallObj.startY;
 
     unsigned tile_index = 0;
-    BITMAP* wall = create_bitmap(wallObj.width * tileWidth, wallObj.height * tileHeight);
-    clear_bitmap(wall);
 
     for (int y = 0; y < wallObj.height; y++)
     {
-        destXPos = 0;
+        int currentX = destXPos;
+        tile_index = flip ? (y + 1) * wallObj.width - 1 : y * wallObj.width;
+
         for (int x = 0; x < wallObj.width; x++)
         {
             bool H = wallObj.tileData[tile_index] & FLIPPED_HORIZONTALLY_FLAG;
-            //bool V = wallObj.tileData[tile_index] & FLIPPED_VERTICALLY_FLAG;
-            //bool D = wallObj.tileData[tile_index] & FLIPPED_DIAGONALLY_FLAG;
             unsigned tileID = wallObj.tileData[tile_index];
-
             tileID &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
-            tile_index++;
 
-            srcXPos = tileWidth * ((tileID-1) % tilesetWidth);
-            srcYPos = tileHeight * floor((tileID-1) / tilesetWidth);
+            int srcXPos = tileWidth * ((tileID - 1) % tilesetWidth);
+            int srcYPos = tileHeight * floor((tileID - 1) / tilesetWidth);
 
-            if(H)
+            if (flip)
             {
                 clear_bitmap(TILE);
                 masked_blit(TILESHEET, TILE, srcXPos, srcYPos, 0, 0, tileWidth, tileHeight);
-                draw_sprite_h_flip(wall, TILE, destXPos, destYPos);
+                draw_sprite_h_flip(BUFFER, TILE, currentX, destYPos);
             }
             else
-                blit(TILESHEET, wall, srcXPos, srcYPos, destXPos, destYPos, tileWidth, tileHeight);
-            destXPos += tileWidth;
+            {
+                masked_blit(TILESHEET, BUFFER, srcXPos, srcYPos, currentX, destYPos, tileWidth, tileHeight);
+            }
+            
+            tile_index += flip ? -1 : 1;
+            currentX += tileWidth;
         }
         destYPos += tileHeight;
     }
-
-    if(flip)
-        draw_sprite_h_flip(BUFFER, wall, startX + wallWidth - (wallObj.width * tileWidth) - wallObj.startX, wallObj.startY);
-    else
-        masked_blit(wall, BUFFER, 0, 0, startX + wallObj.startX, wallObj.startY, wallObj.width * tileWidth, wallObj.height * tileHeight);
-    destroy_bitmap(wall);
 }

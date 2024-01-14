@@ -33,9 +33,9 @@ void MazeViewRenderer::DrawForwardDecoration(Dungeon &currentDungeon, WallPartId
     selectedDecoration.DrawWallDeco(MAZEVIEW, wallPart, xPos, false);
 }
 
-void MazeViewRenderer::DrawSideWall(Dungeon &currentDungeon, WallPartId wallPart, bool flip, int wallSetIndex, int xPos)
+void MazeViewRenderer::DrawSideWall(std::vector<WallSet> wallSets, WallPartId wallPart, bool flip, int wallSetIndex, int xPos)
 {
-    WallSet &selectedWall = currentDungeon.WallSets[wallSetIndex - 1];
+    WallSet &selectedWall = wallSets[wallSetIndex - 1];
     selectedWall.DrawWall(MAZEVIEW, wallPart, xPos, flip);
 }
 
@@ -55,22 +55,34 @@ void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wal
         if(wallCone.Tier0[i].TypeFlag & WALL)
             DrawForwardWall(currentDungeon.WallSets, FORWARDD, wallCone.Tier0[i].WallSetId, FORWARDD_STARTX + ((i - 3) * FORWARDD_WIDTH));
         if(wallCone.Tier0[i].TypeFlag & DOOR)
-            DrawForwardWall(currentDungeon.DoorSets, FORWARDC, currentDungeon.DoorList[wallCone.Tier0[i].DoorId].DoorSetId, FORWARDD_STARTX + ((i - 3) * FORWARDD_WIDTH));                    
+            DrawForwardWall(currentDungeon.DoorSets, FORWARDD, currentDungeon.DoorList[wallCone.Tier0[i].DoorId].DoorSetId, FORWARDD_STARTX + ((i - 3) * FORWARDD_WIDTH));                    
     }
 
     //Render Far/SideD
     if(wallCone.Tier1[0].TypeFlag & WALL)
-        DrawSideWall(currentDungeon, FARSIDED2, false, wallCone.Tier1[0].WallSetId, 0);
+        DrawSideWall(currentDungeon.WallSets, FARSIDED2, false, wallCone.Tier1[0].WallSetId, 0);
     if(wallCone.Tier1[1].TypeFlag & WALL)
-        DrawSideWall(currentDungeon, FARSIDED1, false, wallCone.Tier1[1].WallSetId, FARSIDED1_STARTX);
+        DrawSideWall(currentDungeon.WallSets, FARSIDED1, false, wallCone.Tier1[1].WallSetId, FARSIDED1_STARTX);
     if(wallCone.Tier1[2].TypeFlag & WALL)
-        DrawSideWall(currentDungeon, SIDED, false, wallCone.Tier1[2].WallSetId, SIDED_STARTX);
+        DrawSideWall(currentDungeon.WallSets, SIDED, false, wallCone.Tier1[2].WallSetId, SIDED_STARTX);
     if(wallCone.Tier1[4].TypeFlag & WALL)
-        DrawSideWall(currentDungeon, SIDED, true, wallCone.Tier1[4].WallSetId, SIDED_STARTX + FORWARDC_WIDTH - SIDED_WIDTH);
+        DrawSideWall(currentDungeon.WallSets, SIDED, true, wallCone.Tier1[4].WallSetId, SIDED_STARTX + FORWARDC_WIDTH - SIDED_WIDTH);
     if(wallCone.Tier1[5].TypeFlag & WALL)
-        DrawSideWall(currentDungeon, FARSIDED1, true, wallCone.Tier1[5].WallSetId, FORWARDD_STARTX + FORWARDD_WIDTH * 2);
+        DrawSideWall(currentDungeon.WallSets, FARSIDED1, true, wallCone.Tier1[5].WallSetId, FORWARDD_STARTX + FORWARDD_WIDTH * 2);
     if(wallCone.Tier1[6].TypeFlag & WALL)
-        DrawSideWall(currentDungeon, FARSIDED2, true, wallCone.Tier1[6].WallSetId, FORWARDD_STARTX + FORWARDD_WIDTH * 3);
+        DrawSideWall(currentDungeon.WallSets, FARSIDED2, true, wallCone.Tier1[6].WallSetId, FORWARDD_STARTX + FORWARDD_WIDTH * 3);
+    if(wallCone.Tier1[0].TypeFlag & DOOR)
+        DrawSideWall(currentDungeon.DoorSets, FARSIDED2, false, currentDungeon.DoorList[wallCone.Tier1[0].DoorId].DoorSetId, 0);
+    if(wallCone.Tier1[1].TypeFlag & DOOR)
+        DrawSideWall(currentDungeon.DoorSets, FARSIDED1, false, currentDungeon.DoorList[wallCone.Tier1[1].DoorId].DoorSetId, FARSIDED1_STARTX);   
+    if(wallCone.Tier1[2].TypeFlag & DOOR)
+        DrawSideWall(currentDungeon.DoorSets, SIDED, false, currentDungeon.DoorList[wallCone.Tier1[2].DoorId].DoorSetId, SIDED_STARTX);
+    if(wallCone.Tier1[4].TypeFlag & DOOR)
+        DrawSideWall(currentDungeon.DoorSets, SIDED, true, currentDungeon.DoorList[wallCone.Tier1[4].DoorId].DoorSetId, SIDED_STARTX + FORWARDC_WIDTH - SIDED_WIDTH);  
+    if(wallCone.Tier1[5].TypeFlag & DOOR)
+        DrawSideWall(currentDungeon.DoorSets, FARSIDED1, true, currentDungeon.DoorList[wallCone.Tier1[5].DoorId].DoorSetId, FORWARDD_STARTX + FORWARDD_WIDTH * 2);
+    if(wallCone.Tier1[6].TypeFlag & DOOR)
+        DrawSideWall(currentDungeon.DoorSets, FARSIDED2, true, currentDungeon.DoorList[wallCone.Tier1[6].DoorId].DoorSetId, FORWARDD_STARTX + FORWARDD_WIDTH * 3);      
 
 
     //Render ForwardC
@@ -84,14 +96,21 @@ void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wal
 
     //Render Far/SideC
     if(wallCone.Tier2[1].TypeFlag & WALL)
-        DrawSideWall(currentDungeon, FARSIDEC, false, wallCone.Tier2[1].WallSetId, 0);
+        DrawSideWall(currentDungeon.WallSets, FARSIDEC, false, wallCone.Tier2[1].WallSetId, 0);
     if(wallCone.Tier2[2].TypeFlag & WALL)
-        DrawSideWall(currentDungeon, SIDEC, false, wallCone.Tier2[2].WallSetId, SIDEC_STARTX);
+        DrawSideWall(currentDungeon.WallSets, SIDEC, false, wallCone.Tier2[2].WallSetId, SIDEC_STARTX);
     if(wallCone.Tier2[4].TypeFlag & WALL)
-        DrawSideWall(currentDungeon, SIDEC, true, wallCone.Tier2[4].WallSetId, SIDEC_STARTX + FORWARDB_WIDTH - SIDEC_WIDTH);
+        DrawSideWall(currentDungeon.WallSets, SIDEC, true, wallCone.Tier2[4].WallSetId, SIDEC_STARTX + FORWARDB_WIDTH - SIDEC_WIDTH);
     if(wallCone.Tier2[5].TypeFlag & WALL)
-        DrawSideWall(currentDungeon, FARSIDEC, true, wallCone.Tier2[5].WallSetId, (3 * FORWARDC_WIDTH) + FARSIDEC_WIDTH);
-
+        DrawSideWall(currentDungeon.WallSets, FARSIDEC, true, wallCone.Tier2[5].WallSetId, (3 * FORWARDC_WIDTH) + FARSIDEC_WIDTH);
+    if(wallCone.Tier2[1].TypeFlag & DOOR)
+        DrawSideWall(currentDungeon.DoorSets, FARSIDEC, false, currentDungeon.DoorList[wallCone.Tier2[1].DoorId].DoorSetId, 0);
+    if(wallCone.Tier2[2].TypeFlag & DOOR)
+        DrawSideWall(currentDungeon.DoorSets, SIDEC, false, currentDungeon.DoorList[wallCone.Tier2[2].DoorId].DoorSetId, SIDEC_STARTX);   
+    if(wallCone.Tier2[4].TypeFlag & DOOR)
+        DrawSideWall(currentDungeon.DoorSets, SIDEC, true, currentDungeon.DoorList[wallCone.Tier2[4].DoorId].DoorSetId, SIDEC_STARTX + FORWARDB_WIDTH - SIDEC_WIDTH);
+    if(wallCone.Tier2[5].TypeFlag & DOOR)
+        DrawSideWall(currentDungeon.DoorSets, FARSIDEC, true, currentDungeon.DoorList[wallCone.Tier2[5].DoorId].DoorSetId, (3 * FORWARDC_WIDTH) + FARSIDEC_WIDTH);       
 
     //Render ForwardB
     for(int i = 2; i < 5; i++)
@@ -104,9 +123,14 @@ void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wal
 
     //Render SideB
     if(wallCone.Tier3[1].TypeFlag & WALL)
-        DrawSideWall(currentDungeon, SIDEB, false, wallCone.Tier3[1].WallSetId, SIDEB_STARTX);
+        DrawSideWall(currentDungeon.WallSets, SIDEB, false, wallCone.Tier3[1].WallSetId, SIDEB_STARTX);
     if(wallCone.Tier3[3].TypeFlag & WALL) 
-        DrawSideWall(currentDungeon, SIDEB, true, wallCone.Tier3[3].WallSetId, SIDEB_STARTX + FORWARDB_WIDTH + SIDEB_WIDTH);
+        DrawSideWall(currentDungeon.WallSets, SIDEB, true, wallCone.Tier3[3].WallSetId, SIDEB_STARTX + FORWARDB_WIDTH + SIDEB_WIDTH);
+    if(wallCone.Tier3[1].TypeFlag & DOOR)
+        DrawSideWall(currentDungeon.DoorSets, SIDEB, false, currentDungeon.DoorList[wallCone.Tier3[1].DoorId].DoorSetId, SIDEB_STARTX);
+    if(wallCone.Tier3[3].TypeFlag & DOOR)
+        DrawSideWall(currentDungeon.DoorSets, SIDEB, true, currentDungeon.DoorList[wallCone.Tier3[3].DoorId].DoorSetId, SIDEB_STARTX + FORWARDB_WIDTH + SIDEB_WIDTH);   
+
 
     //Render ForwardA
     for(int i = 1; i < 4; i++)
@@ -119,7 +143,11 @@ void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wal
 
     //Render SideA
     if(wallCone.Tier4[0].TypeFlag & WALL)
-        DrawSideWall(currentDungeon, SIDEA, false, wallCone.Tier4[0].WallSetId, 0);
+        DrawSideWall(currentDungeon.WallSets, SIDEA, false, wallCone.Tier4[0].WallSetId, 0);
     if(wallCone.Tier4[2].TypeFlag & WALL)
-        DrawSideWall(currentDungeon, SIDEA, true, wallCone.Tier4[2].WallSetId, 0 + FORWARDA_WIDTH + SIDEA_WIDTH);
+        DrawSideWall(currentDungeon.WallSets, SIDEA, true, wallCone.Tier4[2].WallSetId, 0 + FORWARDA_WIDTH + SIDEA_WIDTH);
+    if(wallCone.Tier4[0].TypeFlag & DOOR)
+        DrawSideWall(currentDungeon.DoorSets, SIDEA, false, currentDungeon.DoorList[wallCone.Tier4[0].DoorId].DoorSetId, 0);
+    if(wallCone.Tier4[2].TypeFlag & DOOR)
+        DrawSideWall(currentDungeon.DoorSets, SIDEA, true, currentDungeon.DoorList[wallCone.Tier4[2].DoorId].DoorSetId, 0 + FORWARDA_WIDTH + SIDEA_WIDTH);    
 }

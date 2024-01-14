@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "GameProcessor.h"
 #include "DungeonViewState.h"
+
 using namespace std;
 
 volatile int ticks = 0;
@@ -30,7 +31,7 @@ int main() {
         {
             int old_ticks = ticks;
 
-            ticks= ticks - 1;
+            ticks = ticks - 1;
             if(old_ticks <= ticks)
                 break;
 

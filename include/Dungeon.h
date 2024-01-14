@@ -1,12 +1,15 @@
 #ifndef DUNGEON_H
 #define DUNGEON_H
 
+#include <map>
 #include <vector>
 #include <string>
 #include <fstream>
 #include "json.h"
+#include "DoorType.h"
 #include "WallSet.h"
 #include "WallDeco.h"
+#include "MapSpace.h"
 
 using namespace std;
 
@@ -18,9 +21,10 @@ class Dungeon
         std::string FloorSet;
         std::string Theme;
         std::vector<WallSet> WallSets;
+        std::vector<WallSet> DoorSets;
         std::vector<WallDeco> WallDecos;
-        std::vector< std::vector<int> > WallMap;
-        std::vector< std::vector<int> > DecoMap;
+        std::map<int, DoorType> DoorList;
+        std::vector<std::vector<MapSpace>> WallMap;
         Dungeon() {}
         virtual ~Dungeon();
         void LoadDungeon();

@@ -202,7 +202,7 @@ void MazeUI::DrawMiniMap(int xOffset, int yOffset, Dungeon &currentDungeon, Rota
 
             if (((posA >= 0 && posA < currentDungeon.WallMap.size()) && (posB >= 0 && posB < currentDungeon.WallMap[0].size())))
             {
-                if (currentDungeon.WallMap[posA][posB] > 0)
+                if (currentDungeon.WallMap[posA][posB].WallSetId > 0)
                     visibleMap[i + 2][j + 2] = true;
                 else
                     visibleMap[i + 2][j + 2] = false;

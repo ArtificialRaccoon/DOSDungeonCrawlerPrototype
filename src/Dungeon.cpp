@@ -19,6 +19,15 @@ void Dungeon::LoadDungeon()
         WallSets.push_back(newWallset);
     }
 
+    //Fetch the DoorSets
+    std::vector<std::string> doorSetArray = dungeonObj["DoorSets"];
+    for(int i = 0; i < doorSetArray.size(); i++)
+    {
+        WallSet newWallset;
+        newWallset.LoadWallSet(doorSetArray[i].c_str());
+        DoorSets.push_back(newWallset);
+    }
+
     //Load the theme music
     Theme = dungeonObj.get("Theme");
 
@@ -36,28 +45,46 @@ void Dungeon::LoadDungeon()
     //the length of each row is defined as WallLength
     int wallLength = (int)dungeonObj["WallLength"];
 
-    //Fetch the wall map
     vector<int> wallArray = dungeonObj["Walls"];
     for(int i = 0; i < wallLength; i++)
     {
-        vector<int> row;
+        vector<MapSpace> row;
         for(int j = 0; j < wallLength; j++)
         {
-            row.push_back(wallArray[i * 10 + j]);
+            MapSpace newWall;
+            if(wallArray[i * 10 + j] > 0)
+            {
+                newWall.TypeFlag = WALL;
+                newWall.WallSetId = wallArray[i * 10 + j];
+            }
+            row.push_back(newWall);
         }
         WallMap.push_back(row);
     }
 
-    //Fetch the decoration map
-    vector<int> decoArray = dungeonObj["WallDecos"];
-    for(int i = 0; i < wallLength; i++)
+    vector<json::jobject> switchArray = dungeonObj["Switches"];
+    for(int i = 0; i < switchArray.size(); i++)
     {
-        vector<int> row;
-        for(int j = 0; j < wallLength; j++)
-        {
-            row.push_back(decoArray[i * 10 + j]);
-        }
-        DecoMap.push_back(row);
+        json::jobject switchObj = switchArray[i];
+        vector<int> locArray = switchObj["Location"]; 
+        std::string switchTile = switchObj["SpriteSheet"];
+        int switchState = switchObj["InitialState"];    
+
+        WallMap[locArray[0]][locArray[1]].TypeFlag = WallMap[locArray[0]][locArray[1]].TypeFlag | SWITCH;
+    }
+
+    vector<json::jobject> doorArray = dungeonObj["Doors"];
+    for(int i = 0; i < doorArray.size(); i++)
+    {
+        DoorType doorObj;
+        json::jobject doorJson = doorArray[i];         
+        vector<int> locArray = doorJson["Location"]; 
+        doorObj.Id = doorJson["Id"];
+        doorObj.DoorSetId = doorJson["DoorSetId"];
+        doorObj.DoorSpriteSheet = string(doorJson["DoorSprite"]);        
+        WallMap[locArray[0]][locArray[1]].TypeFlag = WallMap[locArray[0]][locArray[1]].TypeFlag | DOOR; 
+        WallMap[locArray[0]][locArray[1]].DoorId = doorJson["Id"];
+        DoorList[doorJson["Id"]] = doorObj;
     }
 }
 

@@ -134,13 +134,9 @@ void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int delt
     int a, b, mapN1, mapN2;
     bool visionChanged = false;
 
-    // Clear vision cones
-    ClearVisionCones(wallCone);
-    ClearVisionCones(decoCone);
-
     // Update player position
     if (calculateForX) {
-        if (dungeonObj.WallMap[playerY - (deltaSign * deltaX)][playerX + (deltaSign * deltaY)] < 1) {
+        if (dungeonObj.WallMap[playerY - (deltaSign * deltaX)][playerX + (deltaSign * deltaY)].WallSetId < 1) {
             playerX += deltaSign * deltaY;
             playerY -= deltaSign * deltaX;
             visionChanged = true;
@@ -150,7 +146,7 @@ void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int delt
         mapN1 = dungeonObj.WallMap.size();
         mapN2 = dungeonObj.WallMap[0].size();
     } else {
-        if (dungeonObj.WallMap[playerY + (deltaSign * deltaY)][playerX + (deltaSign * deltaX)] < 1) {
+        if (dungeonObj.WallMap[playerY + (deltaSign * deltaY)][playerX + (deltaSign * deltaX)].WallSetId < 1) {
             playerY += deltaSign * deltaY;
             playerX += deltaSign * deltaX;
             visionChanged = true;
@@ -161,11 +157,11 @@ void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int delt
         mapN2 = dungeonObj.WallMap.size();
     }
 
-    UpdateCone(wallCone.Tier0, decoCone.Tier0, calculateForX, a, b, mapN1, mapN2, deltaSign, 4, 7, -3);
-    UpdateCone(wallCone.Tier1, decoCone.Tier1, calculateForX, a, b, mapN1, mapN2, deltaSign, 3, 7, -3);
-    UpdateCone(wallCone.Tier2, decoCone.Tier2, calculateForX, a, b, mapN1, mapN2, deltaSign, 2, 7, -3);
-    UpdateCone(wallCone.Tier3, decoCone.Tier3, calculateForX, a, b, mapN1, mapN2, deltaSign, 1, 5, -2);
-    UpdateCone(wallCone.Tier4, decoCone.Tier4, calculateForX, a, b, mapN1, mapN2, deltaSign, 0, 3, -1);
+    UpdateCone(wallCone.Tier0, calculateForX, a, b, mapN1, mapN2, deltaSign, 4, 7, -3);
+    UpdateCone(wallCone.Tier1, calculateForX, a, b, mapN1, mapN2, deltaSign, 3, 7, -3);
+    UpdateCone(wallCone.Tier2, calculateForX, a, b, mapN1, mapN2, deltaSign, 2, 7, -3);
+    UpdateCone(wallCone.Tier3, calculateForX, a, b, mapN1, mapN2, deltaSign, 1, 5, -2);
+    UpdateCone(wallCone.Tier4, calculateForX, a, b, mapN1, mapN2, deltaSign, 0, 3, -1);
 }
 
 int DungeonViewState::Wrap(int const kX, int const kLowerBound, int const kUpperBound)
@@ -174,26 +170,16 @@ int DungeonViewState::Wrap(int const kX, int const kLowerBound, int const kUpper
     return kLowerBound + (kX >= 0 ? kX % d : -kX % d ? d - (-kX % d) : 0);
 }
 
-void DungeonViewState::ClearVisionCones(VisionCone& cone) {
-    std::fill_n(cone.Tier0, 7, 0);
-    std::fill_n(cone.Tier1, 7, 0);
-    std::fill_n(cone.Tier2, 7, 0);
-    std::fill_n(cone.Tier3, 5, 0);
-    std::fill_n(cone.Tier4, 3, 0);
-}
-
-void DungeonViewState::UpdateCone(int* coneArray, int* decoArray, bool calculateForX, int a, int b, int mapN1, int mapN2, int deltaSign, int xOffset, int arrayLen, int pivotPoint) {
+void DungeonViewState::UpdateCone(MapSpace* coneArray, bool calculateForX, int a, int b, int mapN1, int mapN2, int deltaSign, int xOffset, int arrayLen, int pivotPoint) {
     int absLen = (arrayLen - 1);
 
     for (int i = 0; i < arrayLen; i++) {
         if ((a + (deltaSign * xOffset)) >= 0 && (a + (deltaSign * xOffset)) < mapN1 && (b + (pivotPoint + i)) >= 0 && (b + (pivotPoint + i)) < mapN2){
             if(calculateForX){
-                coneArray[(deltaSign < 0 ? abs(i - absLen) : i)] = dungeonObj.WallMap[b + (pivotPoint + i)][a + (deltaSign * xOffset)];
-                decoArray[(deltaSign < 0 ? abs(i - absLen) : i)] = dungeonObj.DecoMap[b + (pivotPoint + i)][a + (deltaSign * xOffset)];
+                coneArray[(deltaSign < 0 ? abs(i - absLen) : i)] = dungeonObj.WallMap[b + (pivotPoint + i)][a + (deltaSign * xOffset)];                
             }
             else{
-                coneArray[(deltaSign > 0 ? abs(i - absLen) : i)] = dungeonObj.WallMap[a + (deltaSign * xOffset)][b + (pivotPoint + i)];
-                decoArray[(deltaSign > 0 ? abs(i - absLen) : i)] = dungeonObj.DecoMap[a + (deltaSign * xOffset)][b + (pivotPoint + i)];          
+                coneArray[(deltaSign > 0 ? abs(i - absLen) : i)] = dungeonObj.WallMap[a + (deltaSign * xOffset)][b + (pivotPoint + i)];         
             }
         }
     }

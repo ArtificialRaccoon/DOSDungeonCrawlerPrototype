@@ -1,0 +1,91 @@
+{ 
+	"tileheight":8,
+	"tilewidth":8,
+	"tilesetheight":7,
+	"tilesetwidth":6,
+	"TileSet":"SWITCH1",
+	"FORWARDA": {
+		"data":[3, 4,
+			9, 10,
+			15, 16,
+			21, 22],
+		"height":4,
+		"width":2,
+		"starty":40,
+		"startx":56
+	},
+	"SIDEA": {
+		"data":[0],
+		"height":0,
+		"width":0,
+		"starty":0,
+		"startx":0			
+	},	
+	"FORWARDB": {
+		"data":[5,
+			11],
+		"height":2,
+		"width":1,
+		"starty":43,
+		"startx":36		
+	},
+	"SIDEB": {
+		"data":[27, 28,
+			33, 34,
+			39, 40],
+		"height":3,
+		"width":2,
+		"starty":40,
+		"startx":12	
+	},	
+	"FORWARDC": {
+		"data":[17,
+			23],
+		"height":2,
+		"width":1,
+		"starty":38,
+		"startx":24
+	},
+	"SIDEC": {
+		"data":[30],
+		"height":1,
+		"width":1,
+		"starty":43,
+		"startx":8
+	},
+	"FARSIDEC": {
+		"data":[0],
+		"height":0,
+		"width":0,
+		"starty":0,
+		"startx":0
+	},
+	"FORWARDD": {
+		"data":[0],
+		"height":0,
+		"width":0,
+		"starty":0,
+		"startx":0			
+	},
+	"SIDED": {
+		"data":[36],
+		"height":1,
+		"width":1,
+		"starty":43,
+		"startx":4
+	},
+	"FARSIDED1": {
+		"data":[0],
+		"height":0,
+		"width":0,
+		"starty":0,
+		"startx":0
+	},
+	"FARSIDED2": {
+		"data":[0],
+		"height":0,
+		"width":0,
+		"starty":0,
+		"startx":0
+	}
+}

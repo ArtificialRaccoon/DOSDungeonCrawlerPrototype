@@ -11,7 +11,7 @@
 	],	
 	"WallDeco": 	
 	[
-		"SWITCH1"
+		"DECOTILE"
 	],
 	"FloorSet": "TEMPLATE",
 	"Theme": "HALLS",
@@ -33,7 +33,7 @@
 	[
 		{
 		  "Id": 1,
-		  "Location": [ 6, 4 ],
+		  "Location": [ 0, 4 ],
 		  "SpriteSheet": "SWITCH1",
 		  "InitialState": 0
 		}
@@ -43,7 +43,7 @@
 		{
 		  "Id": 1,
 		  "DoorSetId": 1,
-		  "DoorSprite": "",
+		  "DoorSprite": "DOORSHEE",
 		  "Location": [ 4, 4 ],
 		  "Combination": [
 			{

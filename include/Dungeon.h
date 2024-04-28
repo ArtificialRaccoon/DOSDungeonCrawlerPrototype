@@ -7,6 +7,7 @@
 #include <fstream>
 #include "json.h"
 #include "DoorType.h"
+#include "SwitchType.h"
 #include "WallSet.h"
 #include "WallDeco.h"
 #include "MapSpace.h"
@@ -23,7 +24,10 @@ class Dungeon
         std::vector<WallSet> WallSets;
         std::vector<WallSet> DoorSets;
         std::vector<WallDeco> WallDecos;
+        std::map<std::string, WallDeco> SwitchSets;
+        std::map<std::string, WallDeco> DoorClosedSets;
         std::map<int, DoorType> DoorList;
+        std::map<int, SwitchType> SwitchList;
         std::vector<std::vector<MapSpace>> WallMap;
         Dungeon() {}
         virtual ~Dungeon();

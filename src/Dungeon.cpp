@@ -5,7 +5,6 @@ void Dungeon::LoadDungeon()
     std::ifstream ifs(".\\DUNGEONS\\DUN1FLR1.dun");
     std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
     json::jobject dungeonObj = json::jobject::parse(content);
-
     
     //Fetch FloorSet / Background
     FloorSet = dungeonObj.get("FloorSet");
@@ -38,8 +37,8 @@ void Dungeon::LoadDungeon()
         WallDeco newWalldeco;
         newWalldeco.LoadWallDeco(wallDecoArray[i].c_str());
         WallDecos.push_back(newWalldeco);
-    }
-    
+    }    
+
     //"Simpleson" doesn't play nicely with arrays of arrays
     //so instead we use a single dimensional array, where
     //the length of each row is defined as WallLength
@@ -65,12 +64,28 @@ void Dungeon::LoadDungeon()
     vector<json::jobject> switchArray = dungeonObj["Switches"];
     for(int i = 0; i < switchArray.size(); i++)
     {
-        json::jobject switchObj = switchArray[i];
-        vector<int> locArray = switchObj["Location"]; 
-        std::string switchTile = switchObj["SpriteSheet"];
-        int switchState = switchObj["InitialState"];    
-
+        SwitchType switchObj;
+        json::jobject switchJson = switchArray[i];
+        vector<int> locArray = switchJson["Location"]; 
+        switchObj.Id = switchJson["Id"];
+        switchObj.SwitchSpriteSheet = string(switchJson["SpriteSheet"]);
+        switchObj.SwitchState = switchJson["InitialState"];    
         WallMap[locArray[0]][locArray[1]].TypeFlag = WallMap[locArray[0]][locArray[1]].TypeFlag | SWITCH;
+        WallMap[locArray[0]][locArray[1]].SwitchId = switchJson["Id"];
+        SwitchList[switchJson["Id"]] = switchObj;
+
+        //Load Switch Spritesheets
+        std::string upSheetName = string(switchJson["SpriteSheet"]).append("A");
+        WallDeco upSheet;
+        upSheet.LoadWallDeco(upSheetName.c_str());
+        if(SwitchSets.find(upSheetName) == SwitchSets.end())
+            SwitchSets[upSheetName] = upSheet;
+
+        std::string downSheetName = string(switchJson["SpriteSheet"]).append("B");
+        WallDeco downSheet;
+        downSheet.LoadWallDeco(downSheetName.c_str());
+        if(SwitchSets.find(downSheetName) == SwitchSets.end())
+            SwitchSets[downSheetName] = downSheet;
     }
 
     vector<json::jobject> doorArray = dungeonObj["Doors"];
@@ -85,6 +100,8 @@ void Dungeon::LoadDungeon()
         WallMap[locArray[0]][locArray[1]].TypeFlag = WallMap[locArray[0]][locArray[1]].TypeFlag | DOOR; 
         WallMap[locArray[0]][locArray[1]].DoorId = doorJson["Id"];
         DoorList[doorJson["Id"]] = doorObj;
+
+        //Load Door Spritesheets
     }
 }
 

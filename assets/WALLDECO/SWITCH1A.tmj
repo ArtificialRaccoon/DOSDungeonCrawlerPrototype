@@ -8,7 +8,7 @@
 		"data":[1, 2,
 			7, 8,
 			13, 14,
-			18, 19],
+			19, 20],
 		"height":4,
 		"width":2,
 		"starty":40,
@@ -43,7 +43,7 @@
 			23],
 		"height":2,
 		"width":1,
-		"starty":36,
+		"starty":38,
 		"startx":24
 	},
 	"SIDEC": {

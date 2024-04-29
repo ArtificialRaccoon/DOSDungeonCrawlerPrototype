@@ -102,6 +102,10 @@ void Dungeon::LoadDungeon()
         DoorList[doorJson["Id"]] = doorObj;
 
         //Load Door Spritesheets
+        WallDeco doorSheet;
+        doorSheet.LoadWallDeco(doorObj.DoorSpriteSheet);
+        if(DoorClosedSets.find(doorObj.DoorSpriteSheet) == DoorClosedSets.end())
+            DoorClosedSets[doorObj.DoorSpriteSheet] = doorSheet;
     }
 }
 

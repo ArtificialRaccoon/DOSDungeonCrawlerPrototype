@@ -16,8 +16,8 @@
             129, 130, 131, 132, 133, 134, 135, 136, 137],
 		"height":9,
 		"width":9,
-		"starty":40,
-		"startx":56
+		"starty":16,
+		"startx":29
 	},
 	"SIDEA": {
 		"data":[0],
@@ -35,8 +35,8 @@
             90, 91, 92, 93, 94, 95, 96],
 		"height":6,
 		"width":7,
-		"starty":0,
-		"startx":0	
+		"starty":24,
+		"startx":14	
 	},
 	"SIDEB": {
 		"data":[0],
@@ -52,8 +52,8 @@
             154, 155, 156, 157],
 		"height":4,
 		"width":4,
-		"starty":0,
-		"startx":0	
+		"starty":30,
+		"startx":8	
 	},
 	"SIDEC": {
 		"data":[0],

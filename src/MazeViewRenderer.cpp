@@ -44,6 +44,13 @@ void MazeViewRenderer::DrawForwardSwitch(Dungeon &currentDungeon, WallPartId wal
     selectedDecoration.DrawWallDeco(MAZEVIEW, wallPart, xPos, false);
 }
 
+void MazeViewRenderer::DrawForwardDoor(Dungeon &currentDungeon, WallPartId wallPart, int doorId, int xPos)
+{    
+    std::string doorSheetName = currentDungeon.DoorList[doorId].DoorSpriteSheet;
+    WallDeco &selectedDecoration = currentDungeon.DoorClosedSets[doorSheetName];
+    selectedDecoration.DrawWallDeco(MAZEVIEW, wallPart, xPos, false);
+}
+
 void MazeViewRenderer::DrawSideWall(std::vector<WallSet> wallSets, WallPartId wallPart, bool flip, int wallSetIndex, int xPos)
 {
     WallSet &selectedWall = wallSets[wallSetIndex - 1];
@@ -101,7 +108,10 @@ void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wal
         if(wallCone.Tier1[i].TypeFlag & SpaceType::WALL)
             DrawForwardWall(currentDungeon.WallSets, FORWARDC, wallCone.Tier1[i].WallSetId, ForwardXPosition[1][i]);
         if(wallCone.Tier1[i].TypeFlag & SpaceType::DOOR)
+        {
             DrawForwardWall(currentDungeon.DoorSets, FORWARDC, currentDungeon.DoorList[wallCone.Tier1[i].DoorId].DoorSetId, ForwardXPosition[1][i]);
+            DrawForwardDoor(currentDungeon, FORWARDC, wallCone.Tier1[i].DoorId, ForwardXPosition[1][i]);
+        }
         if(wallCone.Tier1[i].TypeFlag & SpaceType::SWITCH)
             DrawForwardSwitch(currentDungeon, FORWARDC, wallCone.Tier1[i].SwitchId, ForwardXPosition[1][i]);        
     }
@@ -125,7 +135,10 @@ void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wal
         if(wallCone.Tier2[i].TypeFlag & SpaceType::WALL)
             DrawForwardWall(currentDungeon.WallSets, FORWARDB, wallCone.Tier2[i].WallSetId, ForwardXPosition[2][i]);
         if(wallCone.Tier2[i].TypeFlag & SpaceType::DOOR)
+        {
             DrawForwardWall(currentDungeon.DoorSets, FORWARDB, currentDungeon.DoorList[wallCone.Tier2[i].DoorId].DoorSetId, ForwardXPosition[2][i]);  
+            DrawForwardDoor(currentDungeon, FORWARDB, wallCone.Tier2[i].DoorId, ForwardXPosition[2][i]);
+        }
         if(wallCone.Tier2[i].TypeFlag & SpaceType::SWITCH)
             DrawForwardSwitch(currentDungeon, FORWARDB, wallCone.Tier2[i].SwitchId, ForwardXPosition[2][i]);
     }
@@ -147,7 +160,10 @@ void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wal
         if(wallCone.Tier3[i].TypeFlag & SpaceType::WALL)
             DrawForwardWall(currentDungeon.WallSets, FORWARDA, wallCone.Tier3[i].WallSetId, ForwardXPosition[3][i + 1]);
         if(wallCone.Tier3[i].TypeFlag & SpaceType::DOOR)
+        {
             DrawForwardWall(currentDungeon.DoorSets, FORWARDA, currentDungeon.DoorList[wallCone.Tier3[i].DoorId].DoorSetId, ForwardXPosition[3][i + 1]);
+            DrawForwardDoor(currentDungeon, FORWARDA, wallCone.Tier3[i].DoorId, ForwardXPosition[3][i + 1]);
+        }
         if(wallCone.Tier3[i].TypeFlag & SpaceType::SWITCH)
             DrawForwardSwitch(currentDungeon, FORWARDA, wallCone.Tier3[i].SwitchId, ForwardXPosition[3][i + 1]);
     }

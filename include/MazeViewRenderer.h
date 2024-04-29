@@ -18,6 +18,7 @@ class MazeViewRenderer
         void DrawForwardWall(std::vector<WallSet> wallSets, WallPartId wallPart, int wallSetIndex, int xPos);
         void DrawForwardDecoration(Dungeon &currentDungeon, WallPartId wallPart, int wallSetIndex, int xPos);        
         void DrawForwardSwitch(Dungeon &currentDungeon, WallPartId wallPart, int switchId, int xPos);   
+        void DrawForwardDoor(Dungeon &currentDungeon, WallPartId wallPart, int doorId, int xPos);   
         void DrawSideWall(std::vector<WallSet> wallSets, WallPartId wallPart, bool flip, int wallSetIndex, int xPos);
         void DrawSideDecoration(Dungeon &currentDungeon, WallPartId wallPart, bool flip, int wallSetIndex, int xPos);
         void DrawSideSwitch(Dungeon &currentDungeon, WallPartId wallPart, bool flip, int switchId, int xPos);

@@ -9,6 +9,7 @@ class DoorType
         int Id;
         int DoorSetId;
         std::string DoorSpriteSheet;
+        bool IsOpen = false;
 };
 
 #endif // DOORTYPE_H

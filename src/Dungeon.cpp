@@ -70,6 +70,8 @@ void Dungeon::LoadDungeon()
         switchObj.Id = switchJson["Id"];
         switchObj.SwitchSpriteSheet = string(switchJson["SpriteSheet"]);
         switchObj.SwitchState = switchJson["InitialState"];    
+        switchObj.Location[0] = locArray[0];
+        switchObj.Location[1] = locArray[1];
         WallMap[locArray[0]][locArray[1]].TypeFlag = WallMap[locArray[0]][locArray[1]].TypeFlag | SWITCH;
         WallMap[locArray[0]][locArray[1]].SwitchId = switchJson["Id"];
         SwitchList[switchJson["Id"]] = switchObj;

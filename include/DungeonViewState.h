@@ -33,6 +33,7 @@ class DungeonViewState : public BaseState
         int playerX, playerY;
         int deltaX, deltaY;
         int ticks, mouseDebounce;
+        bool interactPressed = false;
         Dungeon dungeonObj;
         VisionCone wallCone, decoCone;
         MazeUI mazeUIObj;

@@ -54,6 +54,9 @@ void DungeonViewState::AquireInput(GameProcessor* game)
             case KEY_E:
                 deltaX = -1;
                 break;
+            case KEY_ENTER:
+                interactPressed = true;
+                break;
             case KEY_ESC:
                 exit(0);
                 break;
@@ -114,6 +117,37 @@ void DungeonViewState::ProcessInput(GameProcessor* game)
     }
 
     deltaX = deltaY = 0;
+
+    if(interactPressed)
+    {
+        interactPressed = false;
+        int interactPosition[2] = { playerY, playerX };                
+        switch (facing)
+        {
+            case NORTH:
+                interactPosition[0]--; 
+                break;
+            case EAST:
+                interactPosition[1]++;
+                break;
+            case SOUTH:
+                interactPosition[0]++;
+                break;
+            case WEST:
+                interactPosition[1]--;
+                break;
+        }
+
+        //Check Switches
+        for (std::map<int, SwitchType>::iterator it = dungeonObj.SwitchList.begin(); it != dungeonObj.SwitchList.end(); it++)
+        {
+            SwitchType gameSwitch = it->second;
+            if(interactPosition[0] == gameSwitch.Location[0] && interactPosition[1] == gameSwitch.Location[1])
+                gameSwitch.SwitchState = (gameSwitch.SwitchState == 0 ? 1 : 0);
+        }        
+
+        //Update Door States (check combinations)
+    }
 }
 
 void DungeonViewState::Render(GameProcessor* game)

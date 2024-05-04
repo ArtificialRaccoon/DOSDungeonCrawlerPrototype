@@ -141,12 +141,25 @@ void DungeonViewState::ProcessInput(GameProcessor* game)
         //Check Switches
         for (std::map<int, SwitchType>::iterator it = dungeonObj.SwitchList.begin(); it != dungeonObj.SwitchList.end(); it++)
         {
-            SwitchType gameSwitch = it->second;
+            SwitchType& gameSwitch = it->second;
             if(interactPosition[0] == gameSwitch.Location[0] && interactPosition[1] == gameSwitch.Location[1])
-                gameSwitch.SwitchState = (gameSwitch.SwitchState == 0 ? 1 : 0);
+                gameSwitch.SwitchState = (gameSwitch.SwitchState == 0 ? 1 : 0);                            
         }        
 
         //Update Door States (check combinations)
+        for (std::map<int, DoorType>::iterator it = dungeonObj.DoorList.begin(); it != dungeonObj.DoorList.end(); it++)
+        {
+            bool doorUnlocked = true;
+            DoorType& door = it->second;                        
+
+            for (std::map<int, int>::iterator comboIt = door.Combination.begin(); comboIt != door.Combination.end(); comboIt++)
+            {
+                if(dungeonObj.SwitchList[comboIt->first].SwitchState != comboIt->second)
+                    doorUnlocked = false;                
+            }
+
+            door.IsOpen = doorUnlocked;
+        } 
     }
 }
 

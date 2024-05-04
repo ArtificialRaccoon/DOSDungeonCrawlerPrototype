@@ -10,6 +10,7 @@ class DoorType
         int DoorSetId;
         std::string DoorSpriteSheet;
         bool IsOpen = false;
+        std::map<int, int> Combination;
 };
 
 #endif // DOORTYPE_H

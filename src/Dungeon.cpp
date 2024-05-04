@@ -101,13 +101,24 @@ void Dungeon::LoadDungeon()
         doorObj.DoorSpriteSheet = string(doorJson["DoorSprite"]);        
         WallMap[locArray[0]][locArray[1]].TypeFlag = WallMap[locArray[0]][locArray[1]].TypeFlag | DOOR; 
         WallMap[locArray[0]][locArray[1]].DoorId = doorJson["Id"];
-        DoorList[doorJson["Id"]] = doorObj;
+
+        //Load Combination
+        vector<json::jobject> combination = doorJson["Combination"];
+        for(int j = 0; j < combination.size(); j++)
+        {
+            json::jobject comboItem = combination[j];
+            int switchId = comboItem["SwitchId"];
+            int switchState = comboItem["SwitchState"];
+            doorObj.Combination[switchId] = switchState;
+        }
 
         //Load Door Spritesheets
         WallDeco doorSheet;
         doorSheet.LoadWallDeco(doorObj.DoorSpriteSheet);
         if(DoorClosedSets.find(doorObj.DoorSpriteSheet) == DoorClosedSets.end())
             DoorClosedSets[doorObj.DoorSpriteSheet] = doorSheet;
+
+        DoorList[doorJson["Id"]] = doorObj;
     }
 }
 

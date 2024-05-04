@@ -48,7 +48,7 @@
 		  "Combination": [
 			{
 			  "SwitchId": 1,
-			  "SwitchState": true
+			  "SwitchState": 1
 			}
 		  ]
 		}

@@ -46,9 +46,12 @@ void MazeViewRenderer::DrawForwardSwitch(Dungeon &currentDungeon, WallPartId wal
 
 void MazeViewRenderer::DrawForwardDoor(Dungeon &currentDungeon, WallPartId wallPart, int doorId, int xPos)
 {    
-    std::string doorSheetName = currentDungeon.DoorList[doorId].DoorSpriteSheet;
-    WallDeco &selectedDecoration = currentDungeon.DoorClosedSets[doorSheetName];
-    selectedDecoration.DrawWallDeco(MAZEVIEW, wallPart, xPos, false);
+    if(!currentDungeon.DoorList[doorId].IsOpen)
+    {
+        std::string doorSheetName = currentDungeon.DoorList[doorId].DoorSpriteSheet;
+        WallDeco &selectedDecoration = currentDungeon.DoorClosedSets[doorSheetName];
+        selectedDecoration.DrawWallDeco(MAZEVIEW, wallPart, xPos, false);
+    }
 }
 
 void MazeViewRenderer::DrawSideWall(std::vector<WallSet> wallSets, WallPartId wallPart, bool flip, int wallSetIndex, int xPos)

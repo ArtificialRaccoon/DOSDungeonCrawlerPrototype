@@ -13,9 +13,8 @@ Tooling:
 
 ### To Do (Near Term)
 
-- Interactable Switches
-- Doors
 - Level Transitions
+- Code Cleanup (it's all quite lazy / sloppy)
 
 ### To Do (Later Term)
 

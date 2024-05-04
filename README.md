@@ -37,9 +37,42 @@ Install VSCode, and the [DOS-Dev](https://marketplace.visualstudio.com/items?ite
 
 - Navigation Icons by [DENZI](http://www3.wind.ne.jp/DENZI/diary/)  (CC-BY-SA)
 - Other UI Icons by Bernard Walker, based upon original work by [DENZI](http://www3.wind.ne.jp/DENZI/diary/)  (CC-BY-SA)
-- Character Portraits are sourced from the public domain. (CC0)
 - Heart Icon by [ED/EM](https://edslashem.itch.io/rpg-pixel-art-assets-1) ("Free", no license information provided)
 - Heath/Sanity Font by [ED/EM](https://edslashem.itch.io/rpg-pixel-art-assets-1) ("Free", no license information provided)
 - Brain Icon by Bernard Walker.  (CC0)
 - Maze and Character Window Borders by [PIPOSCHPATZ](https://piposchpatz.itch.io/ui-borders-art-deco-pixel-art) (CC-BY-4.0)
 - Background Texture by [Jestan](https://opengameart.org/content/pixel-texture-pack) (CC-BY-SA)
+- Character Portraits by Corwin ZX (https://corwin-zx.itch.io/pixelart-rpg-character-portraits) CC-BY-SA
+
+## Music Attribution
+
+ACCION.MID - "Acción" by djsaryon
+Source: https://opengameart.org/content/battle-midi
+Copywrite:  CC-BY-SA
+
+WALTZ.MID - "Waltz of the Ghosts" by Aureolus_Omicron
+Source: https://opengameart.org/content/waltz-of-the-ghosts
+Copywrite:  CC-BY-SA
+
+
+The following MIDI files were sourced from "The Ultimate MIDI Pack" (https://opengameart.org/content/ultimate-midi-pack).  All are CC-BY-SA.
+
+WICKED.MID - "Let the Wicked Be No More" by Lippeth
+Bandcamp: https://nathanmaxx.bandcamp.com
+YouTube: https://www.youtube.com/channel/UCF2k6P_IGQU36aZrtLYsoyQ
+Copywrite:  CC-BY-SA
+
+HALLS.MID - "Halls of Wandering Spirits" by Myrgharok
+LAVA.MID - "On a Sea of Lava" by Myrgharok
+ETERNAL.MID - "On a Sea of Lava" by Myrgharok
+No Contact Information
+Copywrite:  CC-BY-SA
+
+TROUBLE.MID - "Trouble in Sight" by Bloo
+Bandcamp: https://bloowuzhere.bandcamp.com/
+Copywrite:  CC-BY-SA
+
+SORROW.MID - "World of No Sorrow" by TrialD
+YouTube: https://www.youtube.com/channel/UC5WpeUu5yVRYnKHGmqeyp3g
+Twitter: https://twitter.com/triald1
+Copywrite:  CC-BY-SA

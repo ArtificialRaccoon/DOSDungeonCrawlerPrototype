@@ -88,7 +88,7 @@ void MazeUI::DrawCharacterWindow(Character *characterObj, int xOffset, int yOffs
         DrawCharacterWindowBorder(xOffset, yOffset, CHARWIN_HEIGHT, CHARWIN_WIDTH);
 
         //Character Portrait
-        masked_blit(PORTSHEET, BUFFER, characterObj->Portrait * PORT_WIDTH, 0, xOffset + 12, yOffset + 7, PORT_WIDTH, PORT_HEIGHT);
+        masked_blit(PORTSHEET, BUFFER, characterObj->Portrait * PORT_WIDTH, 0, xOffset + 14, yOffset + 7, PORT_WIDTH, PORT_HEIGHT);
 
         //Draw the forward slash
         line(BUFFER, xOffset + 39, yOffset + 68, xOffset + 42, yOffset + 65, makecol(255, 255, 255));

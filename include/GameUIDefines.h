@@ -47,7 +47,7 @@
 #define CHAR_MIND_WIDTH 15
 #define CHAR_MIND_HEIGHT 14
 
-#define PORT_WIDTH 48
+#define PORT_WIDTH 38
 #define PORT_HEIGHT 48
 
 #define DIGIT_STARTX 0

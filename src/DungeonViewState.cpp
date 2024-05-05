@@ -157,12 +157,11 @@ void DungeonViewState::ProcessInput(GameProcessor* game)
 
             for (std::map<int, int>::iterator comboIt = door.Combination.begin(); comboIt != door.Combination.end(); comboIt++)
             {
-                if(dungeonObj.SwitchList[comboIt->first].SwitchState != comboIt->second)
+                if(dungeonObj.SwitchList.at(comboIt->first).SwitchState != comboIt->second)
                     doorUnlocked = false;                
             }
 
             door.IsOpen = doorUnlocked;       
-
             if(currentDoorState != door.IsOpen)  
                 play_sample(dungeonObj.Effects[door.Effect], 255, 128, 1000, FALSE);
         } 

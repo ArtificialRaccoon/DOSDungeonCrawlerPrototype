@@ -35,8 +35,8 @@ void MazeViewRenderer::DrawForwardDecoration(Dungeon &currentDungeon, WallPartId
 
 void MazeViewRenderer::DrawForwardSwitch(Dungeon &currentDungeon, WallPartId wallPart, int switchId, int xPos)
 {    
-    std::string switchName = currentDungeon.SwitchList[switchId].SwitchSpriteSheet;
-    if(currentDungeon.SwitchList[switchId].SwitchState == 0)
+    std::string switchName = currentDungeon.SwitchList.at(switchId).SwitchSpriteSheet;
+    if(currentDungeon.SwitchList.at(switchId).SwitchState == 0)
         switchName = switchName.append("A");
     else
         switchName = switchName.append("B");
@@ -68,8 +68,8 @@ void MazeViewRenderer::DrawSideDecoration(Dungeon &currentDungeon, WallPartId wa
 
 void MazeViewRenderer::DrawSideSwitch(Dungeon &currentDungeon, WallPartId wallPart, bool flip, int switchId, int xPos)
 {
-    std::string switchName = currentDungeon.SwitchList[switchId].SwitchSpriteSheet;
-    if(currentDungeon.SwitchList[switchId].SwitchState == 0)
+    std::string switchName = currentDungeon.SwitchList.at(switchId).SwitchSpriteSheet;
+    if(currentDungeon.SwitchList.at(switchId).SwitchState == 0)
         switchName = switchName.append("A");
     else
         switchName = switchName.append("B");

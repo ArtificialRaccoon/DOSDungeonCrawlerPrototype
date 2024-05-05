@@ -43,6 +43,20 @@ Install VSCode, and the [DOS-Dev](https://marketplace.visualstudio.com/items?ite
 - Background Texture by [Jestan](https://opengameart.org/content/pixel-texture-pack) (CC-BY-SA)
 - Character Portraits by Corwin ZX (https://corwin-zx.itch.io/pixelart-rpg-character-portraits) CC-BY-SA
 
+## Sound Effect Attribution
+
+SWITCH.WAV by patchytherat
+Source: https://freesound.org/people/patchytherat/sounds/531394/
+Copywrite:  CC0
+
+DOOR.WAV by joedeshon
+Source: https://freesound.org/people/joedeshon/sounds/117417/
+Copywrite:  CC-BY-04 DEED
+
+STEP.WAV by marb7e
+Source: https://freesound.org/people/marb7e/sounds/620335/
+Copywrite:  CC-BY-SA 4.0
+
 ## Music Attribution
 
 ACCION.MID - "Acción" by djsaryon

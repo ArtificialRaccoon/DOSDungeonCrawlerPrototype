@@ -3,22 +3,23 @@
 	"Name":	 "Test",
 	"WallSets": 	
 	[
-		"BASETILE"
+		"STN1TILE",
+		"STN2TILE"
 	],
 	"DoorSets": 	
 	[
-		"DOORTILE"
+		"STNDTILE"
 	],	
 	"WallDeco": 	
 	[
 		"DECOTILE"
 	],
-	"FloorSet": "TEMPLATE",
+	"FloorSet": "STONE",
 	"Theme": "HALLS",
 	"WallLength": 10,
 	"Walls":
 	[
-		1,1,1,1,1,1,1,1,1,1,
+		1,1,2,1,1,1,1,1,1,1,
 		1,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,1,
@@ -35,7 +36,8 @@
 		  "Id": 1,
 		  "Location": [ 0, 4 ],
 		  "SpriteSheet": "SWITCH1",
-		  "InitialState": 0
+		  "InitialState": 0,
+		  "Effect": "SWITCH"
 		}
 	],
     "Doors": 
@@ -43,8 +45,9 @@
 		{
 		  "Id": 1,
 		  "DoorSetId": 1,
-		  "DoorSprite": "DOORSHEE",
-		  "Location": [ 4, 4 ],
+		  "DoorSprite": "IRONDOOR",
+		  "Location": [ 4, 4 ],		  
+		  "Effect": "DOOR",
 		  "Combination": [
 			{
 			  "SwitchId": 1,

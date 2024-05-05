@@ -8,7 +8,6 @@ void DungeonViewState::InitState()
     mazeUIObj.Init(BUFFER);
     dungeonObj.LoadDungeon();
     mazeRenderer.Init(dungeonObj);
-
     facing = NORTH;
     playerX = 1;
     playerY = 1;
@@ -99,7 +98,7 @@ void DungeonViewState::AquireInput(GameProcessor* game)
 }
 
 void DungeonViewState::ProcessInput(GameProcessor* game)
-{
+{    
     switch(facing)
     {
         case NORTH:
@@ -143,14 +142,18 @@ void DungeonViewState::ProcessInput(GameProcessor* game)
         {
             SwitchType& gameSwitch = it->second;
             if(interactPosition[0] == gameSwitch.Location[0] && interactPosition[1] == gameSwitch.Location[1])
+            {
                 gameSwitch.SwitchState = (gameSwitch.SwitchState == 0 ? 1 : 0);                            
-        }        
-
+                play_sample(dungeonObj.Effects[gameSwitch.Effect], 255, 128, 1000, FALSE);
+            }
+        }           
+        
         //Update Door States (check combinations)
-        for (std::map<int, DoorType>::iterator it = dungeonObj.DoorList.begin(); it != dungeonObj.DoorList.end(); it++)
-        {
+        for (std::map<int, DoorType>::iterator doorIt = dungeonObj.DoorList.begin(); doorIt != dungeonObj.DoorList.end(); doorIt++)
+        {            
+            DoorType& door = doorIt->second;                        
             bool doorUnlocked = true;
-            DoorType& door = it->second;                        
+            bool currentDoorState = door.IsOpen;
 
             for (std::map<int, int>::iterator comboIt = door.Combination.begin(); comboIt != door.Combination.end(); comboIt++)
             {
@@ -158,13 +161,17 @@ void DungeonViewState::ProcessInput(GameProcessor* game)
                     doorUnlocked = false;                
             }
 
-            door.IsOpen = doorUnlocked;
+            door.IsOpen = doorUnlocked;       
+
+            if(currentDoorState != door.IsOpen)  
+                play_sample(dungeonObj.Effects[door.Effect], 255, 128, 1000, FALSE);
         } 
+       
     }
 }
 
 void DungeonViewState::Render(GameProcessor* game)
-{
+{    
     if(firstRender)
         mazeUIObj.DrawMazeBackground();
 
@@ -186,7 +193,7 @@ void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int delt
         if (dungeonObj.WallMap[playerY - (deltaSign * deltaX)][playerX + (deltaSign * deltaY)].WallSetId < 1) {
             bool canMove = false;
             int doorIndex = dungeonObj.WallMap[playerY - (deltaSign * deltaX)][playerX + (deltaSign * deltaY)].DoorId;
-            if((dungeonObj.DoorList[doorIndex].IsOpen && doorIndex > 0) || doorIndex == 0)
+            if(doorIndex > 0 && (dungeonObj.DoorList.at(doorIndex).IsOpen && doorIndex > 0) || doorIndex == 0)
                 canMove = true;
 
             if(canMove){
@@ -203,7 +210,7 @@ void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int delt
         if (dungeonObj.WallMap[playerY + (deltaSign * deltaY)][playerX + (deltaSign * deltaX)].WallSetId < 1) {
             bool canMove = false;
             int doorIndex = dungeonObj.WallMap[playerY + (deltaSign * deltaY)][playerX + (deltaSign * deltaX)].DoorId;
-            if((dungeonObj.DoorList[doorIndex].IsOpen && doorIndex > 0) || doorIndex == 0)
+            if(doorIndex > 0 && (dungeonObj.DoorList.at(doorIndex).IsOpen && doorIndex > 0) || doorIndex == 0)
                 canMove = true;
 
             if(canMove){
@@ -216,7 +223,7 @@ void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int delt
         b = playerX;
         mapN1 = dungeonObj.WallMap[0].size();
         mapN2 = dungeonObj.WallMap.size();
-    }
+    }  
 
     UpdateCone(wallCone.Tier0, calculateForX, a, b, mapN1, mapN2, deltaSign, 4, 7, -3);
     UpdateCone(wallCone.Tier1, calculateForX, a, b, mapN1, mapN2, deltaSign, 3, 7, -3);

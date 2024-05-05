@@ -74,6 +74,10 @@ void Dungeon::LoadDungeon()
         switchObj.Location[1] = locArray[1];
         WallMap[locArray[0]][locArray[1]].TypeFlag = WallMap[locArray[0]][locArray[1]].TypeFlag | SWITCH;
         WallMap[locArray[0]][locArray[1]].SwitchId = switchJson["Id"];
+        
+        //Load Sound Effect
+        Effects[string(switchJson["Effect"])] = load_sample((".\\SFX\\" + string(switchJson["Effect"]) + ".WAV").c_str());
+        switchObj.Effect = string(switchJson["Effect"]);
         SwitchList[switchJson["Id"]] = switchObj;
 
         //Load Switch Spritesheets
@@ -117,9 +121,12 @@ void Dungeon::LoadDungeon()
         doorSheet.LoadWallDeco(doorObj.DoorSpriteSheet);
         if(DoorClosedSets.find(doorObj.DoorSpriteSheet) == DoorClosedSets.end())
             DoorClosedSets[doorObj.DoorSpriteSheet] = doorSheet;
-
-        DoorList[doorJson["Id"]] = doorObj;
-    }
+    
+        //Load Sound Effect
+        Effects[string(doorJson["Effect"])] = load_sample((".\\SFX\\" + string(doorJson["Effect"]) + ".WAV").c_str());
+        doorObj.Effect = string(doorJson["Effect"]);
+        DoorList[doorJson["Id"]] = doorObj;        
+    }    
 }
 
 Dungeon::~Dungeon()

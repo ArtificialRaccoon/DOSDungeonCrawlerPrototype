@@ -29,6 +29,7 @@ class Dungeon
         std::map<int, DoorType> DoorList;
         std::map<int, SwitchType> SwitchList;
         std::vector<std::vector<MapSpace>> WallMap;
+        std::map<std::string, SAMPLE*> Effects;
         Dungeon() {}
         virtual ~Dungeon();
         void LoadDungeon();

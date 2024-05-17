@@ -164,8 +164,7 @@ void DungeonViewState::ProcessInput(GameProcessor* game)
             door.IsOpen = doorUnlocked;       
             if(currentDoorState != door.IsOpen)  
                 play_sample(dungeonObj.Effects[door.Effect], 255, 128, 1000, FALSE);
-        } 
-       
+        }        
     }
 }
 

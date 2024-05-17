@@ -53,7 +53,7 @@ void Dungeon::LoadDungeon()
             MapSpace newWall;
             if(wallArray[i * 10 + j] > 0)
             {
-                newWall.TypeFlag = WALL;
+                newWall.TypeFlag = SpaceType::WALL;
                 newWall.WallSetId = wallArray[i * 10 + j];
             }
             row.push_back(newWall);
@@ -72,7 +72,7 @@ void Dungeon::LoadDungeon()
         switchObj.SwitchState = switchJson["InitialState"];    
         switchObj.Location[0] = locArray[0];
         switchObj.Location[1] = locArray[1];
-        WallMap[locArray[0]][locArray[1]].TypeFlag = WallMap[locArray[0]][locArray[1]].TypeFlag | SWITCH;
+        WallMap[locArray[0]][locArray[1]].TypeFlag = WallMap[locArray[0]][locArray[1]].TypeFlag | SpaceType::SWITCH;
         WallMap[locArray[0]][locArray[1]].SwitchId = switchJson["Id"];
         
         //Load Sound Effect
@@ -103,7 +103,7 @@ void Dungeon::LoadDungeon()
         doorObj.Id = doorJson["Id"];
         doorObj.DoorSetId = doorJson["DoorSetId"];
         doorObj.DoorSpriteSheet = string(doorJson["DoorSprite"]);        
-        WallMap[locArray[0]][locArray[1]].TypeFlag = WallMap[locArray[0]][locArray[1]].TypeFlag | DOOR; 
+        WallMap[locArray[0]][locArray[1]].TypeFlag = WallMap[locArray[0]][locArray[1]].TypeFlag | SpaceType::DOOR; 
         WallMap[locArray[0]][locArray[1]].DoorId = doorJson["Id"];
 
         //Load Combination

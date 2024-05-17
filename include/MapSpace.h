@@ -8,7 +8,7 @@ class MapSpace
     public:
         MapSpace() {}
         virtual ~MapSpace() {}
-        SpaceType TypeFlag = EMPTY;
+        SpaceType TypeFlag = SpaceType::EMPTY;
         int WallSetId = 0;
         int DoorId = 0;
         int SwitchId = 0;

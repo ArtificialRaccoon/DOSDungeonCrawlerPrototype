@@ -1,0 +1,31 @@
+[
+    {
+        "name": "Short Sword",
+        "type": "Weapon",
+        "value": 50,
+        "weaponType": "Sword",
+        "damageDice": {
+            "numDice": 1,
+            "sides": 6
+        },
+        "hasFinesse": true,
+        "hasReach": false
+    },
+    {
+        "name": "Steel Helmet",
+        "type": "Armor",
+        "value": 30,
+        "armorType": "Helmet",
+        "defense": 5,
+        "affinity": [
+            "Fire",
+            "Water"
+        ]
+    },
+    {
+        "name": "Health Potion",
+        "type": "Consumable",
+        "value": 20,
+        "consumableType": "Potion"
+    }
+]

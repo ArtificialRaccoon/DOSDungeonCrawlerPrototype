@@ -1,6 +1,7 @@
 #include "BaseState.h"
 #include "GameProcessor.h"
 #include "GameUIDefines.h"
+#include "Item.h"
 
 void GameProcessor::InitializeGame() {
 	if (allegro_init() != 0)
@@ -21,6 +22,9 @@ void GameProcessor::InitializeGame() {
 	set_mouse_sprite(cursor);
 	set_mouse_sprite_focus(0, 0);
 
+	//Load the default font
+	font = load_bitmap_font(".\\OTHER\\BitScrip.bmp", palette, nullptr);
+
 	//There is a strange bug with my cross compiled version of
 	//DJGPP or Allegro.  If the mouse rubs against the mouse
 	//range for too long, it'll segfault.  This issue happens
@@ -34,6 +38,9 @@ void GameProcessor::InitializeGame() {
 		printf ("Error initializing sound card");
 		exit(0);
 	}	
+
+	//Read in the items available in game
+	std::vector<Item> items = Item::readItemData(".\\OTHER\\ITEMS.jsn");
 }
 
 void GameProcessor::HandleEvents() {

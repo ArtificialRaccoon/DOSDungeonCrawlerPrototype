@@ -22,7 +22,8 @@
             547, 547, 547, 547, 547, 547, 547, 547, 547, 547, 547, 547, 547, 547, 547, 547],
          "height":15,
          "width":16,
-		 "starty":8
+		 "starty":8,		 
+		 "leftx-list":[-104, 24, 152]
         },
  "SIDEA":{
          "data":[17, 18, 19,
@@ -42,7 +43,9 @@
             381, 382, 383],
          "height":15,
          "width":3,
-		 "starty":0
+		 "starty":0,
+		 "leftx":0,
+		 "rightx":152
         },
  "FORWARDB":{
          "data":[313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 
@@ -55,7 +58,8 @@
             495, 496, 497, 498, 499, 500, 501, 502, 503, 504],
          "height":8,
          "width":10,
-		 "starty":20
+		 "starty":20,		 
+		 "leftx-list":[-32, 48, 128]
         }, 
  "SIDEB":{
          "data":[20, 21, 22,  
@@ -72,7 +76,9 @@
             306, 0, 0],
          "height":12,
          "width":3,
-		 "starty":8
+		 "starty":8,
+		 "leftx":24,
+		 "rightx":128
         },
  "FORWARDC":{
          "data":[323, 324, 325, 326, 327, 328, 
@@ -82,7 +88,9 @@
             427, 428, 429, 430, 431, 432],
          "height":5,
          "width":6,
-		 "starty":28
+		 "starty":28,
+		 "leftx":0,
+		 "leftx-list":[-32, 16, 64, 112, 160]
         },
  "SIDEC":{
          "data":[23, 24, 
@@ -95,7 +103,9 @@
             205, 206],
          "height":8,
          "width":2,
-		 "starty":20
+		 "starty":20,
+		 "leftx":48,
+		 "rightx":112
         },
  "FARSIDEC":{
          "data":[434, 435,
@@ -106,7 +116,9 @@
             564, 565],
          "height":6,
          "width":2,
-		 "starty":26
+		 "starty":26,
+		 "leftx":0,
+		 "rightx":160
         },
  "FORWARDD":{
          "data":[453, 454, 455, 456, 
@@ -114,7 +126,8 @@
             505, 506, 507, 508],
          "height":3,
          "width":4,
-		 "starty":32
+		 "starty":32,		 
+		 "leftx-list":[-24, 8, 40, 72, 104, 136, 168]
         },
  "SIDED":{
          "data":[25,
@@ -124,7 +137,9 @@
             129],
          "height":5,
          "width":1,
-		 "starty":28
+		 "starty":28,
+		 "leftx":64,
+		 "rightx":104
         },	
  "FARSIDED1":{
          "data":[437, 438, 439, 
@@ -134,7 +149,9 @@
             541, 542, 543],
          "height":5,
          "width":3,
-		 "starty":28
+		 "starty":28,
+		 "leftx":16,
+		 "rightx":136
         },	
  "FARSIDED2":{
          "data":[441,
@@ -143,6 +160,8 @@
             519],
          "height":4,
          "width":1,
-		 "starty":27
+		 "starty":27,
+		 "leftx":0,
+		 "rightx":168
         }	
 }

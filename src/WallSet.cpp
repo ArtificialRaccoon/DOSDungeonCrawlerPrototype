@@ -40,45 +40,51 @@ void WallSet::LoadPartData(json::jobject parsedObject, std::string key, WallPart
         partToLoad->width = jsonObj["width"];
         partToLoad->tileData = jsonObj["data"];
         partToLoad->startY = jsonObj["starty"];
+        if(jsonObj.has_key("leftx"))
+            partToLoad->leftX = jsonObj["leftx"];
+        if(jsonObj.has_key("leftx-list"))
+            partToLoad->leftXList = jsonObj["leftx-list"];
+        if(jsonObj.has_key("rightx"))
+            partToLoad->rightX = jsonObj["rightx"];
     }
 }
 
-void WallSet::DrawWall(BITMAP *BUFFER, WallPartId wallPart, int startX, bool flip)
+void WallSet::DrawWall(BITMAP *BUFFER, WallPartId wallPart, int xPosIndex, bool flip)
 {
     switch(wallPart)
     {
         case FORWARDA:
-            DrawWall(BUFFER, FORWARD_A, startX, flip);
+            DrawWall(BUFFER, FORWARD_A, FORWARD_A.leftXList[xPosIndex], flip);
             break;
         case FORWARDB:
-            DrawWall(BUFFER, FORWARD_B, startX, flip);
+            DrawWall(BUFFER, FORWARD_B, FORWARD_B.leftXList[xPosIndex], flip);
             break;
         case FORWARDC:
-            DrawWall(BUFFER, FORWARD_C, startX, flip);
+            DrawWall(BUFFER, FORWARD_C, FORWARD_C.leftXList[xPosIndex], flip);
             break;
         case FORWARDD:
-            DrawWall(BUFFER, FORWARD_D, startX, flip);
+            DrawWall(BUFFER, FORWARD_D, FORWARD_D.leftXList[xPosIndex], flip);
             break;
         case SIDEA:
-            DrawWall(BUFFER, SIDE_A, startX, flip);
+            DrawWall(BUFFER, SIDE_A, flip? SIDE_A.rightX : SIDE_A.leftX, flip);
             break;
         case SIDEB:
-            DrawWall(BUFFER, SIDE_B, startX, flip);
+            DrawWall(BUFFER, SIDE_B, flip? SIDE_B.rightX : SIDE_B.leftX, flip);
             break;
         case SIDEC:
-            DrawWall(BUFFER, SIDE_C, startX, flip);
+            DrawWall(BUFFER, SIDE_C, flip? SIDE_C.rightX : SIDE_C.leftX, flip);
             break;
         case SIDED:
-            DrawWall(BUFFER, SIDE_D, startX, flip);
+            DrawWall(BUFFER, SIDE_D, flip? SIDE_D.rightX : SIDE_D.leftX, flip);
             break;
         case FARSIDEC:
-            DrawWall(BUFFER, FARSIDE_C, startX, flip);
+            DrawWall(BUFFER, FARSIDE_C, flip? FARSIDE_C.rightX : FARSIDE_C.leftX, flip);
             break;
         case FARSIDED1:
-            DrawWall(BUFFER, FARSIDE_D1, startX, flip);
+            DrawWall(BUFFER, FARSIDE_D1, flip? FARSIDE_D1.rightX : FARSIDE_D1.leftX, flip);
             break;
         case FARSIDED2:
-            DrawWall(BUFFER, FARSIDE_D2, startX, flip);
+            DrawWall(BUFFER, FARSIDE_D2, flip? FARSIDE_D2.rightX : FARSIDE_D2.leftX, flip);
             break;
         default:
             break;

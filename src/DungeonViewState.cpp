@@ -8,6 +8,7 @@ void DungeonViewState::InitState()
     mazeUIObj.Init(BUFFER);
     dungeonObj.LoadDungeon();
     mazeRenderer.Init(dungeonObj);
+
     facing = NORTH;
     playerX = 1;
     playerY = 1;

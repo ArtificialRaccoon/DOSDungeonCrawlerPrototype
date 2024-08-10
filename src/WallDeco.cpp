@@ -40,49 +40,54 @@ void WallDeco::LoadPartData(json::jobject parsedObject, std::string key, WallPar
         partToLoad->width = jsonObj["width"];
         partToLoad->tileData = jsonObj["data"];
         partToLoad->startY = jsonObj["starty"];
-        partToLoad->startX = jsonObj["startx"];
+        if(jsonObj.has_key("leftx"))
+            partToLoad->leftX = jsonObj["leftx"];
+        if(jsonObj.has_key("leftx-list"))
+            partToLoad->leftXList = jsonObj["leftx-list"];
+        if(jsonObj.has_key("rightx"))
+            partToLoad->rightX = jsonObj["rightx"];
     }
 }
 
-void WallDeco::DrawWallDeco(BITMAP *BUFFER, WallPartId wallPart, int startX, bool flip)
+void WallDeco::DrawWallDeco(BITMAP *BUFFER, WallPartId wallPart, int xPosIndex, bool flip)
 {
     switch(wallPart)
     {
         case FORWARDA:
-            DrawWallDeco(BUFFER, FORWARD_A, FORWARDA_WIDTH, startX, flip);
+            DrawWallDeco(BUFFER, FORWARD_A, FORWARD_A.leftXList[xPosIndex], flip);
             break;
         case FORWARDB:
-            DrawWallDeco(BUFFER, FORWARD_B, FORWARDB_WIDTH, startX, flip);
+            DrawWallDeco(BUFFER, FORWARD_B, FORWARD_B.leftXList[xPosIndex], flip);
             break;
         case FORWARDC:
-            DrawWallDeco(BUFFER, FORWARD_C, FORWARDC_WIDTH, startX, flip);
+            DrawWallDeco(BUFFER, FORWARD_C, FORWARD_C.leftXList[xPosIndex], flip);
             break;
         case FORWARDD:
-            DrawWallDeco(BUFFER, FORWARD_D, FORWARDD_WIDTH, startX, flip);
+            DrawWallDeco(BUFFER, FORWARD_D, FORWARD_D.leftXList[xPosIndex], flip);
             break;
         case SIDEA:
-            DrawWallDeco(BUFFER, SIDE_A, SIDEA_WIDTH, startX, flip);
+            DrawWallDeco(BUFFER, SIDE_A, flip? SIDE_A.rightX : SIDE_A.leftX, flip);
             break;
         case SIDEB:
-            DrawWallDeco(BUFFER, SIDE_B, SIDEB_WIDTH, startX, flip);
+            DrawWallDeco(BUFFER, SIDE_B, flip? SIDE_B.rightX : SIDE_B.leftX, flip);
             break;
         case SIDEC:
-            DrawWallDeco(BUFFER, SIDE_C, SIDEC_WIDTH, startX, flip);
+            DrawWallDeco(BUFFER, SIDE_C, flip? SIDE_C.rightX : SIDE_C.leftX, flip);
             break;
         case SIDED:
-            DrawWallDeco(BUFFER, SIDE_D, SIDED_WIDTH, startX, flip);
+            DrawWallDeco(BUFFER, SIDE_D, flip? SIDE_D.rightX : SIDE_D.leftX, flip);
             break;
         case FARSIDEC:
-            DrawWallDeco(BUFFER, FARSIDE_C, FARSIDEC_WIDTH, startX, flip);
+            DrawWallDeco(BUFFER, FARSIDE_C, flip? FARSIDE_C.rightX : FARSIDE_C.leftX, flip);
             break;
         default:
             break;
     }
 }
 
-void WallDeco::DrawWallDeco(BITMAP *BUFFER, WallPart wallObj, int wallWidth, int startX, bool flip)
+void WallDeco::DrawWallDeco(BITMAP *BUFFER, WallPart wallObj, int startX, bool flip)
 {
-    int destXPos = startX + (flip ? wallWidth - wallObj.width * tileWidth - wallObj.startX : wallObj.startX);
+    int destXPos = startX;
     int destYPos = wallObj.startY;
 
     unsigned tile_index = 0;

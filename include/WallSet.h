@@ -16,7 +16,7 @@ class WallSet
         WallSet() {}
         virtual ~WallSet() {}
         void LoadWallSet(std::string wallSetName);
-        void DrawWall(BITMAP *BUFFER, WallPartId wallPart, int startX, bool flip);
+        void DrawWall(BITMAP *BUFFER, WallPartId wallPart, int xPosIndex, bool flip);        
     protected:
         void DrawWall(BITMAP *BUFFER, WallPart wallObj, int startX, bool flip);
     private:

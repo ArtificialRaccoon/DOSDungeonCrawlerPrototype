@@ -11,8 +11,9 @@ class WallPart
         WallPart() {}
         virtual ~WallPart() {}
         int height, width;
-        int startX, startY;
+        int leftX, rightX, startY;
         int startTileX, startTileY;
+        std::vector<int> leftXList;
         std::vector<int> tileData;
     protected:
 

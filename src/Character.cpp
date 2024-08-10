@@ -2,12 +2,12 @@
 
 Character::Character()
 {
-    CurrentHP = 100;
+    CurrentHP = 93;
     MaxHP = 100;
-    CurrentMP = 100;
+    CurrentMP = 41;
     MaxMP = 100;
     Portrait = 0;
-}
+} 
 
 Character::~Character()
 {

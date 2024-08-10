@@ -12,22 +12,23 @@
 		"height":4,
 		"width":2,
 		"starty":40,
-		"startx":56
+		"leftx-list":[-256, 80, 256]
 	},
 	"SIDEA": {
 		"data":[0],
 		"height":0,
 		"width":0,
 		"starty":0,
-		"startx":0			
+		"leftx":0,
+		"rightx":0			
 	},	
 	"FORWARDB": {
-		"data":[5,
-			11],
+		"data":[6,
+			12],
 		"height":2,
 		"width":1,
 		"starty":43,
-		"startx":36		
+		"leftx-list":[-32, 82, 128]		
 	},
 	"SIDEB": {
 		"data":[27, 28,
@@ -36,56 +37,62 @@
 		"height":3,
 		"width":2,
 		"starty":40,
-		"startx":12	
+		"leftx":36,
+		"rightx":124
 	},	
 	"FORWARDC": {
-		"data":[17,
-			23],
+		"data":[18,
+			24],
 		"height":2,
 		"width":1,
 		"starty":38,
-		"startx":24
+		"leftx-list":[-32, 16, 84, 112, 160]
 	},
 	"SIDEC": {
 		"data":[30],
 		"height":1,
 		"width":1,
 		"starty":43,
-		"startx":8
+		"leftx":60,
+		"rightx":108
 	},
 	"FARSIDEC": {
 		"data":[0],
 		"height":0,
 		"width":0,
 		"starty":0,
-		"startx":0
+		"leftx":0,
+		"rightx":0
 	},
 	"FORWARDD": {
 		"data":[0],
 		"height":0,
 		"width":0,
 		"starty":0,
-		"startx":0			
+		"leftx-list":[0]			
 	},
 	"SIDED": {
 		"data":[36],
 		"height":1,
 		"width":1,
 		"starty":43,
-		"startx":4
+		"leftx":68,
+		"rightx":100
 	},
 	"FARSIDED1": {
 		"data":[0],
 		"height":0,
 		"width":0,
 		"starty":0,
-		"startx":0
+		"leftx":0,
+		"rightx":0
 	},
 	"FARSIDED2": {
 		"data":[0],
 		"height":0,
 		"width":0,
 		"starty":0,
-		"startx":0
+		"leftx":0,
+		"rightx":0
 	}
 }

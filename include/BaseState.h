@@ -1,6 +1,7 @@
 #ifndef BASESTATE_H
 #define BASESTATE_H
 
+#include "GameProcessor.h"
 class GameProcessor;
 
 class BaseState {

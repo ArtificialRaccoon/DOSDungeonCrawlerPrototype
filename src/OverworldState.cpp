@@ -7,7 +7,8 @@ void OverworldState::InitState()
     BUFFER = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
     OVERWORLDMAP = load_bitmap(".\\OTHER\\WRLDMAP.bmp", palette);
     MAPUI = load_bitmap(".\\OTHER\\MAPUI.bmp", palette);
-    
+    mapFont = load_font(".\\OTHER\\BitScrip.bmp", palette, NULL);
+
     ticks = 0;
     mouseDebounce = 0;
     	
@@ -31,6 +32,18 @@ void OverworldState::AquireInput(GameProcessor* game)
     {
         switch(readkey() >> 8)
         {        
+            case KEY_W:
+            case KEY_UP:
+                break;
+            case KEY_A:
+            case KEY_LEFT:
+                break;  
+            case KEY_S:
+            case KEY_DOWN:
+                break; 
+            case KEY_D:
+            case KEY_RIGHT:
+                break;             
             case KEY_ENTER:
                 interactPressed = true;
                 break;
@@ -70,7 +83,8 @@ void OverworldState::ProcessInput(GameProcessor* game)
 
 void OverworldState::Render(GameProcessor* game)
 { 
-    draw_sprite(BUFFER, OVERWORLDMAP, 0, 0);    
+    draw_sprite(BUFFER, OVERWORLDMAP, 0, 0);   
+    textout_centre_ex(BUFFER, mapFont, "Orphan's Bay", 234, 18, makecol(255, 255, 255), -1); 
     show_mouse(BUFFER);
     draw_sprite(screen, BUFFER, 0, 0);
 }

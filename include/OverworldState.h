@@ -27,6 +27,7 @@ class OverworldState : public BaseState
         BITMAP *BUFFER;
         BITMAP *OVERWORLDMAP;
         BITMAP *MAPUI;
+        FONT *mapFont;
         PALETTE palette;
     private:
         int ticks, mouseDebounce;

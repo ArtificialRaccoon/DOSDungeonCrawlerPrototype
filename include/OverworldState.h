@@ -2,11 +2,14 @@
 #define OVERWORLDSTATE_H
 
 #include <cstdlib>
+#include <algorithm>
 #include "BaseState.h"
 #include "DungeonViewState.h"
 #include "GlobalEnumerations.h"
 #include "GameUIDefines.h"
 #include "allegro.h"
+#include "GUIElement.h"
+#include "json.h"
 
 class OverworldState : public BaseState
 {
@@ -29,11 +32,16 @@ class OverworldState : public BaseState
         BITMAP *MAPUI;
         FONT *mapFont;
         PALETTE palette;
+        std::vector<GUIElement> GUI;
+    
     private:
         int ticks, mouseDebounce;
         bool interactPressed = false;
         static OverworldState mOverworldState;
         MIDI *theme;        
+    
+    private:
+        void getNextGUIElement(bool forward);
 };
 
 #endif // OVERWORLDSTATE_H

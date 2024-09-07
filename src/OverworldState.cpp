@@ -14,6 +14,17 @@ void OverworldState::InitState()
     	
 	theme = load_midi(".\\MUSIC\\TROUBLE.MID");
 	play_midi(theme, TRUE);    
+
+    std::ifstream ifs(".\\OTHER\\WRLDMAP.jsn");
+    std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
+    json::jobject guiJson = json::jobject::parse(content);
+    std::vector<json::jobject> guiElements = guiJson["gui_elements"];
+
+    for(int i = 0; i < guiElements.size(); i++)
+    {
+        GUIElement newElement(guiElements[i]);
+        GUI.push_back(newElement);
+    }
 }
 
 void OverworldState::Pause()
@@ -34,22 +45,28 @@ void OverworldState::AquireInput(GameProcessor* game)
         {        
             case KEY_W:
             case KEY_UP:
+                getNextGUIElement(false);
                 break;
-            case KEY_A:
-            case KEY_LEFT:
-                break;  
             case KEY_S:
             case KEY_DOWN:
-                break; 
-            case KEY_D:
-            case KEY_RIGHT:
-                break;             
+                getNextGUIElement(true);
+                break;            
             case KEY_ENTER:
                 interactPressed = true;
                 break;
             case KEY_ESC:
                 exit(0);
                 break;
+        }
+    }
+
+    for(auto &iterator : GUI)
+    {
+        if(iterator.HitTest(mouse_x, mouse_y))
+        {
+            std::for_each(GUI.begin(), GUI.end(), [](auto &guiElement) { guiElement.setSelected(false); });
+            iterator.setSelected(true);
+            break;      
         }
     }
 
@@ -82,9 +99,44 @@ void OverworldState::ProcessInput(GameProcessor* game)
 }
 
 void OverworldState::Render(GameProcessor* game)
-{ 
+{
     draw_sprite(BUFFER, OVERWORLDMAP, 0, 0);   
-    textout_centre_ex(BUFFER, mapFont, "Orphan's Bay", 234, 18, makecol(255, 255, 255), -1); 
+    for(auto iterator : GUI)
+    {
+        if(iterator.getSelected())
+        {
+            iterator.DrawElement(BUFFER, MAPUI, palette, mapFont, false);        
+            textout_centre_ex(BUFFER, mapFont, iterator.getTextOverlay().c_str(), 234, 18, makecol(255, 255, 255), -1);
+        }
+    }
     show_mouse(BUFFER);
     draw_sprite(screen, BUFFER, 0, 0);
+}
+
+
+void OverworldState::getNextGUIElement(bool forward)
+{    
+    auto it = std::find_if(GUI.begin(), GUI.end(), [](const GUIElement& elem) {
+        return elem.getSelected();
+    });
+
+    if (it == GUI.end()) // No selected element found
+    {
+        GUI.front().setSelected(true);
+    }
+    else
+    {
+        it->setSelected(false); // Deselect current element
+
+        if (forward)
+        {
+            it = (it + 1 == GUI.end()) ? GUI.begin() : std::next(it);
+        }
+        else
+        {
+            it = (it == GUI.begin()) ? std::prev(GUI.end()) : std::prev(it);
+        }
+
+        it->setSelected(true); // Select the new element
+    }
 }

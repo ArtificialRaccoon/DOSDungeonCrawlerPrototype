@@ -1,0 +1,88 @@
+{
+  "gui_elements": [
+    {
+      "id": "button1",  
+      "bounding_box": {
+        "x": 28,         
+        "y": 23,         
+        "width": 11,     
+        "height": 11     
+      },
+      "sprite_tiles": [-1],
+      "text_overlay": "Militia Outpost",  
+      "sprite_overlay": {
+        "tiles": [2, 3, 4, 
+				  6, 7, 8, 
+				  10, 11, 12],
+        "x": 50, 
+        "y": 98,
+        "overlayWidth": 3,
+        "overlayHeight": 3
+      },
+      "action": "unset"
+    },
+    {
+      "id": "button2",  
+      "bounding_box": {
+        "x": 50,         
+        "y": 98,         
+        "width": 16,     
+        "height": 17     
+      },
+      "sprite_tiles": [-1],
+      "text_overlay": "Orphan's Bay",  
+      "sprite_overlay": {
+        "tiles": [2, 3, 4, 
+				  6, 7, 8, 
+				  10, 11, 12],
+        "x": 50, 
+        "y": 98,
+        "overlayWidth": 3,
+        "overlayHeight": 3
+      },
+      "action": "unset"
+    },
+    {
+      "id": "button3",  
+      "bounding_box": {
+        "x": 48,         
+        "y": 157,         
+        "width": 10,     
+        "height": 9     
+      },
+      "sprite_tiles": [-1],
+      "text_overlay": "Bandit Camp",  
+      "sprite_overlay": {
+        "tiles": [2, 3, 4, 
+				  6, 7, 8, 
+				  10, 11, 12],
+        "x": 50, 
+        "y": 98,
+        "overlayWidth": 3,
+        "overlayHeight": 3
+      },
+      "action": "unset"
+    },
+    {
+      "id": "button4",  
+      "bounding_box": {
+        "x": 138,         
+        "y": 181,         
+        "width": 9,     
+        "height": 9     
+      },
+      "sprite_tiles": [-1],
+      "text_overlay": "Nyxara Ruins",  
+      "sprite_overlay": {
+        "tiles": [2, 3, 4, 
+				  6, 7, 8, 
+				  10, 11, 12],
+        "x": 50, 
+        "y": 98,
+        "overlayWidth": 3,
+        "overlayHeight": 3
+      },
+      "action": "unset"
+    }        
+  ]
+}

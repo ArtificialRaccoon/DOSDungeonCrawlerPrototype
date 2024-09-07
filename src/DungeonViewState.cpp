@@ -145,7 +145,7 @@ void DungeonViewState::ProcessInput(GameProcessor* game)
             if(interactPosition[0] == gameSwitch.Location[0] && interactPosition[1] == gameSwitch.Location[1])
             {
                 gameSwitch.SwitchState = (gameSwitch.SwitchState == 0 ? 1 : 0);                            
-                play_sample(dungeonObj.Effects[gameSwitch.Effect], 255, 128, 1000, FALSE);
+                play_sample(dungeonObj.Effects.at(gameSwitch.Effect), 255, 128, 1000, FALSE);
             }
         }           
         
@@ -164,7 +164,7 @@ void DungeonViewState::ProcessInput(GameProcessor* game)
 
             door.IsOpen = doorUnlocked;       
             if(currentDoorState != door.IsOpen)  
-                play_sample(dungeonObj.Effects[door.Effect], 255, 128, 1000, FALSE);
+                play_sample(dungeonObj.Effects.at(door.Effect), 255, 128, 1000, FALSE);
         }        
     }
 }

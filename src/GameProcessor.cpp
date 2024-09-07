@@ -63,7 +63,7 @@ void GameProcessor::ProcessEvents() {
 		newX = 0;
 		mouse_on_screen = false;
 	} else if (mouse_x > SCREEN_WIDTH - 1) {
-		newY = SCREEN_WIDTH - 1;
+		newX = SCREEN_WIDTH - 1;
 		mouse_on_screen = false;
 	} else
 		newX = mouse_x;

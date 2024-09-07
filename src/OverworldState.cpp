@@ -116,27 +116,16 @@ void OverworldState::Render(GameProcessor* game)
 
 void OverworldState::getNextGUIElement(bool forward)
 {    
-    auto it = std::find_if(GUI.begin(), GUI.end(), [](const GUIElement& elem) {
-        return elem.getSelected();
-    });
-
-    if (it == GUI.end()) // No selected element found
+    auto it = std::find_if(GUI.begin(), GUI.end(), [](GUIElement& elem) { return elem.getSelected(); });
+    if (it != GUI.end()) 
     {
-        GUI.front().setSelected(true);
-    }
-    else
-    {
-        it->setSelected(false); // Deselect current element
-
+        it->setSelected(false);
         if (forward)
-        {
-            it = (it + 1 == GUI.end()) ? GUI.begin() : std::next(it);
-        }
+            it = (it + 1 == GUI.end()) ? GUI.begin() : it + 1;
         else
-        {
-            it = (it == GUI.begin()) ? std::prev(GUI.end()) : std::prev(it);
-        }
-
-        it->setSelected(true); // Select the new element
-    }
+            it = (it == GUI.begin()) ? GUI.end() - 1 : it - 1;
+    } 
+    else
+        it = GUI.begin();
+    it->setSelected(true);
 }

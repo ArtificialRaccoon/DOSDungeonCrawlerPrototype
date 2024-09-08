@@ -19,8 +19,10 @@ void OverworldState::InitState()
     std::ifstream ifs(".\\OTHER\\WRLDMAP.jsn");
     std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
     json::jobject guiJson = json::jobject::parse(content);
-    std::vector<json::jobject> guiElements = guiJson["gui_elements"];
+    tilesetWidth = guiJson["tilesetWidth"];
+    tilesetHeight = guiJson["tilesetHeight"];
 
+    std::vector<json::jobject> guiElements = guiJson["guiElements"];
     for(int i = 0; i < guiElements.size(); i++)
     {
         GUIElement newElement(guiElements[i]);
@@ -138,7 +140,7 @@ void OverworldState::Render(GameProcessor* game)
     {
         if(iterator.getSelected())
         {
-            iterator.DrawElement(BUFFER, MAPUI, palette, mapFont, false);        
+            iterator.DrawElement(BUFFER, MAPUI, palette, mapFont, tilesetWidth, tilesetHeight, false);        
             textout_centre_ex(BUFFER, mapFont, iterator.getTextOverlay().c_str(), 234, 18, makecol(255, 255, 255), -1);
         }
     }

@@ -1,0 +1,101 @@
+{
+  "guiElements": [
+    {
+      "id": "btnInn",  
+      "boundingBox": {
+        "x": 208,         
+        "y": 54,         
+        "width": 80,     
+        "height": 16     
+      },
+      "spriteTiles": [-1],
+      "spriteWidth": 3,
+      "spriteHeight": 2,    
+      "textOverlay": "Inn",  
+      "textX": 208,
+      "textY": 55,      
+      "spriteOverlay": {
+        "tiles": [101, 102, 102, 102, 102, 102, 102, 102, 102, 103,
+        117, 118, 118, 118, 118, 118, 118, 118, 118, 119],
+        "x": 208, 
+        "y": 54,
+        "overlayWidth": 10,
+        "overlayHeight": 2
+      },
+      "action": 0
+    },
+    {
+      "id": "btnSmithy",  
+      "boundingBox": {
+        "x": 208,         
+        "y": 74,         
+        "width": 80,     
+        "height": 16     
+      },
+      "spriteTiles": [-1],
+      "spriteWidth": 3,
+      "spriteHeight": 2,    
+      "textOverlay": "Smithy", 
+      "textX": 208,
+      "textY": 75,       
+      "spriteOverlay": {
+        "tiles": [101, 102, 102, 102, 102, 102, 102, 102, 102, 103,
+        117, 118, 118, 118, 118, 118, 118, 118, 118, 119],
+        "x": 208, 
+        "y": 74,
+        "overlayWidth": 10,
+        "overlayHeight": 2
+      },
+      "action": 0
+    },    
+    {
+      "id": "btnTemple",  
+      "boundingBox": {
+        "x": 208,         
+        "y": 94,         
+        "width": 80,     
+        "height": 16     
+      },
+      "spriteTiles": [-1],
+      "spriteWidth": 3,
+      "spriteHeight": 2,    
+      "textOverlay": "Temple",  
+      "textX": 208,
+      "textY": 95,      
+      "spriteOverlay": {
+        "tiles": [101, 102, 102, 102, 102, 102, 102, 102, 102, 103,
+        117, 118, 118, 118, 118, 118, 118, 118, 118, 119],
+        "x": 208, 
+        "y": 94,
+        "overlayWidth": 10,
+        "overlayHeight": 2
+      },
+      "action": 0
+    },
+    {
+      "id": "btnExit",  
+      "boundingBox": {
+        "x": 208,         
+        "y": 114,         
+        "width": 80,     
+        "height": 16     
+      },
+      "spriteTiles": [-1],
+      "spriteWidth": 3,
+      "spriteHeight": 2,    
+      "textOverlay": "Exit Town",
+      "textX": 208,
+      "textY": 115,      
+      "spriteOverlay": {
+        "tiles": [101, 102, 102, 102, 102, 102, 102, 102, 102, 103,
+        117, 118, 118, 118, 118, 118, 118, 118, 118, 119],
+        "x": 208, 
+        "y": 114,
+        "overlayWidth": 10,
+        "overlayHeight": 2
+      },
+      "action": 0
+    }],
+    "tilesetWidth": 16,
+    "tilesetHeight": 8
+}

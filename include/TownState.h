@@ -36,6 +36,8 @@ class TownState : public BaseState
         BITMAP *CHARSHOP;
         BITMAP *CHARTAVE;
         BITMAP *CHARTMPL;
+        BITMAP *UI;
+        FONT *mapFont;
         PALETTE palette;
         std::vector<GUIElement> GUI;
     
@@ -43,7 +45,10 @@ class TownState : public BaseState
         int ticks, mouseDebounce;
         bool interactPressed = false;
         static TownState mTownState;
-        MIDI *theme;        
+        MIDI *theme;     
+
+        int tilesetWidth;
+        int tilesetHeight;   
     
 };
 

@@ -36,6 +36,7 @@ class OverworldState : public BaseState
         std::vector<GUIElement> GUI;
     
     private:
+        int tilesetWidth, tilesetHeight;  
         int ticks, mouseDebounce;
         bool interactPressed = false;
         static OverworldState mOverworldState;

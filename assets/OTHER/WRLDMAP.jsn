@@ -1,16 +1,20 @@
 {
-  "gui_elements": [
+  "guiElements": [
     {
       "id": "button1",  
-      "bounding_box": {
+      "boundingBox": {
         "x": 28,         
         "y": 23,         
         "width": 11,     
         "height": 11     
       },
-      "sprite_tiles": [-1],
-      "text_overlay": "Militia Outpost",  
-      "sprite_overlay": {
+      "spriteTiles": [-1],
+      "spriteWidth": 3,
+      "spriteHeight": 3,     
+      "textOverlay": "Militia Outpost",  
+      "textX": 234,
+      "textY": 18,      
+      "spriteOverlay": {
         "tiles": [2, 3, 4, 
 				  6, 7, 8, 
 				  10, 11, 12],
@@ -23,15 +27,19 @@
     },
     {
       "id": "button2",  
-      "bounding_box": {
+      "boundingBox": {
         "x": 50,         
         "y": 98,         
         "width": 16,     
         "height": 17     
       },
-      "sprite_tiles": [-1],
-      "text_overlay": "Orphan's Bay",  
-      "sprite_overlay": {
+      "spriteTiles": [-1],
+      "spriteWidth": 3,
+      "spriteHeight": 3,       
+      "textOverlay": "Orphan's Bay",  
+      "textX": 234,
+      "textY": 18,      
+      "spriteOverlay": {
         "tiles": [2, 3, 4, 
 				  6, 7, 8, 
 				  10, 11, 12],
@@ -44,15 +52,19 @@
     },
     {
       "id": "button3",  
-      "bounding_box": {
+      "boundingBox": {
         "x": 48,         
         "y": 157,         
         "width": 10,     
         "height": 9     
       },
-      "sprite_tiles": [-1],
-      "text_overlay": "Bandit Camp",  
-      "sprite_overlay": {
+      "spriteTiles": [-1],
+      "spriteWidth": 3,
+      "spriteHeight": 3,       
+      "textOverlay": "Bandit Camp", 
+      "textX": 234,
+      "textY": 18,       
+      "spriteOverlay": {
         "tiles": [2, 3, 4, 
 				  6, 7, 8, 
 				  10, 11, 12],
@@ -65,15 +77,19 @@
     },
     {
       "id": "button4",  
-      "bounding_box": {
+      "boundingBox": {
         "x": 138,         
         "y": 181,         
         "width": 9,     
         "height": 9     
       },
-      "sprite_tiles": [-1],
-      "text_overlay": "Nyxara Ruins",  
-      "sprite_overlay": {
+      "spriteTiles": [-1],
+      "spriteWidth": 3,
+      "spriteHeight": 3,       
+      "textOverlay": "Nyxara Ruins",  
+      "textX": 234,
+      "textY": 18,
+      "spriteOverlay": {
         "tiles": [2, 3, 4, 
 				  6, 7, 8, 
 				  10, 11, 12],
@@ -84,5 +100,7 @@
       },
       "action": 3
     }        
-  ]
+  ],
+  "tilesetWidth": 4,
+  "tilesetHeight": 4
 }

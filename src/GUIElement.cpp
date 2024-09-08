@@ -10,14 +10,18 @@ GUIElement::GUIElement(std::string inputJson)
 {
     json::jobject guiObject = json::jobject::parse(inputJson);
     this->id = guiObject.get("id");
-    this->textOverlay = guiObject.get("text_overlay");
+    this->textOverlay = guiObject.get("textOverlay");
+    this->textX = guiObject["textX"];
+    this->textY = guiObject["textY"];
     this->action = guiObject["action"];
-    this->spriteTiles = guiObject["sprite_tiles"];
+    this->spriteTiles = guiObject["spriteTiles"];
+    this->spriteWidth = guiObject["spriteWidth"];
+    this->spriteHeight = guiObject["spriteHeight"];
 
     //Bounding Box
-    if(guiObject.has_key("bounding_box"))
+    if(guiObject.has_key("boundingBox"))
     {
-        json::jobject bbObj = guiObject["bounding_box"];
+        json::jobject bbObj = guiObject["boundingBox"];
         this->x = bbObj["x"];
         this->y = bbObj["y"];
         this->height = bbObj["height"];
@@ -25,9 +29,9 @@ GUIElement::GUIElement(std::string inputJson)
     }
     
     //Overlay
-    if(guiObject.has_key("sprite_overlay"))
+    if(guiObject.has_key("spriteOverlay"))
     {
-        json::jobject overlayObj = guiObject["sprite_overlay"];   
+        json::jobject overlayObj = guiObject["spriteOverlay"];   
         this->overlayTiles = overlayObj["tiles"];
         this->overlayX = overlayObj["x"];
         this->overlayY = overlayObj["y"];
@@ -36,7 +40,7 @@ GUIElement::GUIElement(std::string inputJson)
     }
 }
 
-void GUIElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT, bool drawText)
+void GUIElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT, int tilesetWidth, int tilesetHeight, bool drawText)
 {    
     unsigned tile_index = 0;
     int srcXPos = 0;
@@ -52,20 +56,20 @@ void GUIElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FON
         destXPos = this->x;
         destYPos = this->y;
 
-        for (int y = 0; y < this->height; y++)
+        for (int y = 0; y < this->spriteHeight; y++)
         {
             destXPos = this->x;
-            tile_index = y * this->width;
+            tile_index = y * this->spriteWidth;
 
-            for (int x = 0; x < this->width; x++)
+            for (int x = 0; x < this->spriteWidth; x++)
             {
                 bool H = this->spriteTiles[tile_index] & FLIPPED_HORIZONTALLY_FLAG;
                 unsigned tileID = this->spriteTiles[tile_index];
 
                 tileID &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
                 
-                srcXPos = tileWidth * ((tileID - 1) % 4);
-                srcYPos = tileHeight * floor((tileID - 1) / 4);
+                srcXPos = tileWidth * ((tileID - 1) % tilesetWidth);
+                srcYPos = tileHeight * floor((tileID - 1) / tilesetWidth);
                 masked_blit(SHEET, BUFFER, srcXPos, srcYPos, destXPos, destYPos, tileWidth, tileHeight);
                 
                 tile_index += 1;
@@ -94,8 +98,8 @@ void GUIElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FON
 
                 tileID &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
                 
-                srcXPos = tileWidth * ((tileID - 1) % 4);
-                srcYPos = tileHeight * floor((tileID - 1) / 4);
+                srcXPos = tileWidth * ((tileID - 1) % tilesetWidth);
+                srcYPos = tileHeight * floor((tileID - 1) / tilesetWidth);
                 masked_blit(SHEET, BUFFER, srcXPos, srcYPos, destXPos, destYPos, tileWidth, tileHeight);
                 
                 tile_index += 1;
@@ -106,5 +110,5 @@ void GUIElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FON
     }
     
     if(drawText)
-        textout_centre_ex(BUFFER, FONT, this->textOverlay.c_str(), 234, 18, makecol(255, 255, 255), -1);
+        textout_centre_ex(BUFFER, FONT, this->textOverlay.substr(1, this->textOverlay.length() - 2).c_str(), this->textX + this->width / 2, this->textY, makecol(255, 255, 255), -1);
 }

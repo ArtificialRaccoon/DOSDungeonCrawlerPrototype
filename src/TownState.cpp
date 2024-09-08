@@ -12,17 +12,7 @@ void TownState::InitState()
     theme = load_midi(".\\MUSIC\\SORROW.MID");
     play_midi(theme, TRUE);    
 
-    std::ifstream ifs(".\\OTHER\\WRLDMAP.jsn");
-    std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
-    json::jobject guiJson = json::jobject::parse(content);
-    std::vector<json::jobject> guiElements = guiJson["gui_elements"];
-
-    for(int i = 0; i < guiElements.size(); i++)
-    {
-        GUIElement newElement(guiElements[i]);
-        GUI.push_back(newElement);
-    }
-
+    UI = load_bitmap(".\\OTHER\\MAINGUI.bmp", palette);
     BGTOWN = load_bitmap(".\\OTHER\\BGTOWN.bmp", palette);
     BGSHOP = load_bitmap(".\\OTHER\\BGSHOP.bmp", palette);
     BGTAVE = load_bitmap(".\\OTHER\\BGTAVE.bmp", palette);
@@ -30,6 +20,21 @@ void TownState::InitState()
     CHARSHOP = load_bitmap(".\\OTHER\\SPRITE2.bmp", palette);
     CHARTAVE = load_bitmap(".\\OTHER\\SPRITE3.bmp", palette);
     CHARTMPL = load_bitmap(".\\OTHER\\SPRITE4.bmp", palette);
+    mapFont = load_font(".\\OTHER\\BitScrip.bmp", palette, NULL);
+
+    std::ifstream ifs(".\\OTHER\\TOWNMENU.jsn");
+    std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
+    json::jobject guiJson = json::jobject::parse(content);
+
+    tilesetWidth = guiJson["tilesetWidth"];
+    tilesetHeight = guiJson["tilesetHeight"];
+
+    std::vector<json::jobject> guiElements = guiJson["guiElements"];
+    for(int i = 0; i < guiElements.size(); i++)
+    {
+        GUIElement newElement(guiElements[i]);
+        GUI.push_back(newElement);
+    }
 }
 
 void TownState::Pause()
@@ -104,6 +109,12 @@ void TownState::ProcessInput(GameProcessor* game)
 void TownState::Render(GameProcessor* game)
 {
     draw_sprite(BUFFER, BGTOWN, 0, 0);
+
+    for(auto iterator : GUI)
+    {
+        iterator.DrawElement(BUFFER, UI, palette, mapFont, tilesetWidth, tilesetHeight, true);
+    }
+
     show_mouse(BUFFER);
     draw_sprite(screen, BUFFER, 0, 0);
 }

@@ -11,7 +11,7 @@ class GUIElement
 {
     public:
         GUIElement(std::string inputJson);
-        void DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT, bool drawText);
+        void DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT, int tilesetWidth, int tilesetHeight, bool drawText);
         bool HitTest(int px, int py) const { return (px >= x && px <= (x + width) && py >= y && py <= (y + height)); }  
         int getAction() const { return action; }
         std::string getId() const { return id; }                
@@ -22,8 +22,12 @@ class GUIElement
         std::string id = "";
         int x = 0;
         int y = 0;
+        int textX = 0;
+        int textY = 0;        
         int width = 0;
         int height = 0;
+        int spriteWidth = 0;
+        int spriteHeight = 0;
         std::vector<int> spriteTiles;
         std::string textOverlay = "";
         std::vector<int> overlayTiles;

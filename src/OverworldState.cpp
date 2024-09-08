@@ -1,4 +1,5 @@
 #include "OverworldState.h"
+#include "TownState.h"
 
 OverworldState OverworldState::mOverworldState;
 
@@ -39,6 +40,7 @@ void OverworldState::Resume()
 
 void OverworldState::AquireInput(GameProcessor* game)
 {
+    interactPressed = false;
     if(keypressed())
     {
         switch(readkey() >> 8)
@@ -72,6 +74,15 @@ void OverworldState::AquireInput(GameProcessor* game)
 
     if(mouse_b & 1 && mouseDebounce == 0)
     {
+        for(auto &iterator : GUI)
+        {
+            if(iterator.HitTest(mouse_x, mouse_y))
+            {
+                interactPressed = true;
+                break;      
+            }
+        }
+
         mouseDebounce++;
     }
 
@@ -95,7 +106,29 @@ void OverworldState::AquireInput(GameProcessor* game)
 void OverworldState::ProcessInput(GameProcessor* game)
 { 
     if(interactPressed)
-        game->ChangeState(DungeonViewState::Instance());
+    {
+        for(auto &iterator : GUI)
+        {
+            if(iterator.getSelected())
+            {
+                switch(iterator.getAction())
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        game->ChangeState(TownState::Instance());
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        game->ChangeState(DungeonViewState::Instance());
+                        break;
+                    default:
+                        break;
+                }                
+            }
+        }        
+    }
 }
 
 void OverworldState::Render(GameProcessor* game)
@@ -128,4 +161,14 @@ void OverworldState::getNextGUIElement(bool forward)
     else
         it = GUI.begin();
     it->setSelected(true);
+}
+
+void OverworldState::UnloadResources()
+{
+    destroy_bitmap(BUFFER);
+    destroy_bitmap(OVERWORLDMAP);
+    destroy_bitmap(MAPUI);
+    destroy_font(mapFont);
+	destroy_midi(theme);
+    GUI.clear();
 }

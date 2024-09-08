@@ -1,5 +1,5 @@
-#ifndef OVERWORLDSTATE_H
-#define OVERWORLDSTATE_H
+#ifndef TOWNSTATE_H
+#define TOWNSTATE_H
 
 #include <cstdlib>
 #include <algorithm>
@@ -11,7 +11,7 @@
 #include "GUIElement.h"
 #include "json.h"
 
-class OverworldState : public BaseState
+class TownState : public BaseState
 {
     public:
         void InitState();
@@ -21,28 +21,30 @@ class OverworldState : public BaseState
         void ProcessInput(GameProcessor* game);
         void Render(GameProcessor* game);
         void UnloadResources();
-        static OverworldState* Instance()
+        static TownState* Instance()
         {
-            return &mOverworldState;
+            return &mTownState;
         }
 
     protected:
-        OverworldState() { }
+        TownState() { }
         BITMAP *BUFFER;
-        BITMAP *OVERWORLDMAP;
-        BITMAP *MAPUI;
-        FONT *mapFont;
+        BITMAP *BGTOWN;
+        BITMAP *BGSHOP;
+        BITMAP *BGTAVE;
+        BITMAP *BGTMPL;
+        BITMAP *CHARSHOP;
+        BITMAP *CHARTAVE;
+        BITMAP *CHARTMPL;
         PALETTE palette;
         std::vector<GUIElement> GUI;
     
     private:
         int ticks, mouseDebounce;
         bool interactPressed = false;
-        static OverworldState mOverworldState;
+        static TownState mTownState;
         MIDI *theme;        
     
-    private:
-        void getNextGUIElement(bool forward);
 };
 
-#endif // OVERWORLDSTATE_H
+#endif // TOWNSTATE_H

@@ -18,6 +18,7 @@ class DungeonViewState : public BaseState
         void AquireInput(GameProcessor* game);
         void ProcessInput(GameProcessor* game);
         void Render(GameProcessor* game);
+        void UnloadResources();
         static DungeonViewState* Instance()
         {
             return &mDungeonViewState;

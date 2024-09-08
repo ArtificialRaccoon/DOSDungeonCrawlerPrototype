@@ -12,6 +12,7 @@ public:
 	virtual void AquireInput(GameProcessor *game) = 0;
 	virtual void ProcessInput(GameProcessor *game) = 0;
 	virtual void Render(GameProcessor *game) = 0;
+	virtual void UnloadResources() = 0;
 	void ChangeState(GameProcessor *game, BaseState *state);
 
 protected:

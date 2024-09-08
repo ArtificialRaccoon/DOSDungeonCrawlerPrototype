@@ -13,8 +13,8 @@ class GUIElement
         GUIElement(std::string inputJson);
         void DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT, bool drawText);
         bool HitTest(int px, int py) const { return (px >= x && px <= (x + width) && py >= y && py <= (y + height)); }  
-        std::string getId() const { return id; }        
-        std::string getAction() const { return action; }
+        int getAction() const { return action; }
+        std::string getId() const { return id; }                
         std::string getTextOverlay() const { return textOverlay; }
         void setSelected(bool input) { selected = input; }    
         bool getSelected() const { return selected; }           
@@ -31,7 +31,7 @@ class GUIElement
         int overlayY = 0;
         int overlayWidth = 0;
         int overlayHeight = 0;     
-        std::string action= "unset";
+        int action = -1;
         bool selected = false;
         BITMAP* spriteSheet;
 };

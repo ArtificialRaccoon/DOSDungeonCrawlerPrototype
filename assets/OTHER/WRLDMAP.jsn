@@ -14,12 +14,12 @@
         "tiles": [2, 3, 4, 
 				  6, 7, 8, 
 				  10, 11, 12],
-        "x": 50, 
-        "y": 98,
+        "x": 24, 
+        "y": 19,
         "overlayWidth": 3,
         "overlayHeight": 3
       },
-      "action": "unset"
+      "action": 0
     },
     {
       "id": "button2",  
@@ -40,7 +40,7 @@
         "overlayWidth": 3,
         "overlayHeight": 3
       },
-      "action": "unset"
+      "action": 1
     },
     {
       "id": "button3",  
@@ -56,12 +56,12 @@
         "tiles": [2, 3, 4, 
 				  6, 7, 8, 
 				  10, 11, 12],
-        "x": 50, 
-        "y": 98,
+        "x": 44, 
+        "y": 153,
         "overlayWidth": 3,
         "overlayHeight": 3
       },
-      "action": "unset"
+      "action": 2
     },
     {
       "id": "button4",  
@@ -77,12 +77,12 @@
         "tiles": [2, 3, 4, 
 				  6, 7, 8, 
 				  10, 11, 12],
-        "x": 50, 
-        "y": 98,
+        "x": 134, 
+        "y": 177,
         "overlayWidth": 3,
         "overlayHeight": 3
       },
-      "action": "unset"
+      "action": 3
     }        
   ]
 }

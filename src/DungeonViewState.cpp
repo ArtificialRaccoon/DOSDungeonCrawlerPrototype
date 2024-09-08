@@ -251,3 +251,8 @@ void DungeonViewState::UpdateCone(MapSpace* coneArray, bool calculateForX, int a
         }
     }
 }
+
+void DungeonViewState::UnloadResources()
+{
+    
+}

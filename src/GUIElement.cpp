@@ -11,7 +11,7 @@ GUIElement::GUIElement(std::string inputJson)
     json::jobject guiObject = json::jobject::parse(inputJson);
     this->id = guiObject.get("id");
     this->textOverlay = guiObject.get("text_overlay");
-    this->action = guiObject.get("action");
+    this->action = guiObject["action"];
     this->spriteTiles = guiObject["sprite_tiles"];
 
     //Bounding Box

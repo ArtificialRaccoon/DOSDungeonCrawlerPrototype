@@ -2,6 +2,7 @@
 #include "GameProcessor.h"
 #include "DungeonViewState.h"
 #include "OverworldState.h"
+#include "TownState.h"
 
 using namespace std;
 

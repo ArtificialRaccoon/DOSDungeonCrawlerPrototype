@@ -34,11 +34,24 @@ void TownState::InitState()
     {
         GUI.push_back(std::make_unique<PanelElement>(panelElements[i]));
     }
-    
+
     std::vector<json::jobject> buttonElements = guiJson["buttonElements"];
     for(int i = 0; i < buttonElements.size(); i++)
+    {        
+        GUI.push_back(std::make_unique<ButtonElement>(buttonElements[i], true, true));
+    }
+
+    //Preselect the Inn when first showing the screen
+    auto it = std::find_if(GUI.begin(), GUI.end(), [](const std::unique_ptr<GUIElement>& elem) 
     {
-        GUI.push_back(std::make_unique<ButtonElement>(buttonElements[i]));
+        return dynamic_cast<ButtonElement*>(elem.get()) != nullptr;
+    });
+
+    if (it != GUI.end()) 
+    {
+        ButtonElement* button = dynamic_cast<ButtonElement*>(it->get());
+        if (button)
+            button->setSelected(true);
     }
 }
 
@@ -54,15 +67,18 @@ void TownState::Resume()
 
 void TownState::AquireInput(GameProcessor* game)
 {
+    interactPressed = false;
     if(keypressed())
     {
         switch(readkey() >> 8)
         {        
             case KEY_W:
             case KEY_UP:
+                getNextGUIElement(false);
                 break;
             case KEY_S:
             case KEY_DOWN:
+                getNextGUIElement(true);
                 break;            
             case KEY_ENTER:
                 interactPressed = true;
@@ -85,6 +101,15 @@ void TownState::AquireInput(GameProcessor* game)
 
     if(mouse_b & 1 && mouseDebounce == 0)
     {
+        for(auto &iterator : GUI)
+        {
+            if(iterator->HitTest(mouse_x, mouse_y))
+            {
+                interactPressed = true;
+                break;      
+            }
+        }
+
         mouseDebounce++;
     }
 
@@ -108,7 +133,28 @@ void TownState::AquireInput(GameProcessor* game)
 void TownState::ProcessInput(GameProcessor* game)
 { 
     if(interactPressed)
-        game->ChangeState(DungeonViewState::Instance());
+    {
+        for(auto &iterator : GUI)
+        {
+            if(iterator->getSelected())
+            {
+                switch(iterator->getAction())
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:                        
+                        game->ChangeState(OverworldState::Instance());
+                        break;
+                    default:
+                        break;
+                }                
+            }
+        }        
+    }
 }
 
 void TownState::Render(GameProcessor* game)
@@ -117,11 +163,37 @@ void TownState::Render(GameProcessor* game)
 
     for(auto& iterator : GUI)
     {
-        iterator->DrawElement(BUFFER, UI, palette, mapFont, tilesetWidth, tilesetHeight, true);
+        iterator->DrawElement(BUFFER, UI, palette, mapFont, tilesetWidth, tilesetHeight);
     }
 
     show_mouse(BUFFER);
     draw_sprite(screen, BUFFER, 0, 0);
+}
+
+void TownState::getNextGUIElement(bool forward)
+{
+    auto it = std::find_if(GUI.begin(), GUI.end(), [](const std::unique_ptr<GUIElement>& elem) {
+        auto button = dynamic_cast<ButtonElement*>(elem.get());
+        return button && button->getSelected();
+    });
+
+    if (it != GUI.end()) 
+    {
+        (*it)->setSelected(false); 
+        do 
+        {
+            if (forward)
+                it = (it + 1 == GUI.end()) ? GUI.begin() : it + 1;
+            else
+                it = (it == GUI.begin()) ? GUI.end() - 1 : it - 1;
+        } while (dynamic_cast<ButtonElement*>((*it).get()) == nullptr);
+
+    } 
+    else
+        it = std::find_if(GUI.begin(), GUI.end(), [](const std::unique_ptr<GUIElement>& elem) { return dynamic_cast<ButtonElement*>(elem.get()) != nullptr; });
+
+    if (it != GUI.end())
+        (*it)->setSelected(true);
 }
 
 void TownState::UnloadResources()

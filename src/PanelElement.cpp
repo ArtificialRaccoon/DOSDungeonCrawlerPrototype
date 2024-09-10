@@ -14,7 +14,7 @@ PanelElement::PanelElement(std::string inputJson)
     this->spriteHeight = guiObject["spriteHeight"];
 }
 
-void PanelElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT, int tilesetWidth, int tilesetHeight, bool drawText)
+void PanelElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT, int tilesetWidth, int tilesetHeight)
 {
     unsigned tile_index = 0;
     int srcXPos = 0;
@@ -53,6 +53,5 @@ void PanelElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, F
         }
     }
 
-    if(drawText)
-        textout_centre_ex(BUFFER, FONT, this->textOverlay.substr(1, this->textOverlay.length() - 2).c_str(), this->textX + this->width / 2, this->textY, makecol(255, 255, 255), -1);
+    textout_centre_ex(BUFFER, FONT, this->textOverlay.substr(1, this->textOverlay.length() - 2).c_str(), this->textX + this->width / 2, this->textY, makecol(255, 255, 255), -1);
 }

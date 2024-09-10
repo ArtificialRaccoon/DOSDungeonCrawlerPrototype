@@ -46,7 +46,7 @@
         "overlayWidth": 10,
         "overlayHeight": 2
       },
-      "action": 0
+      "action": 1
     },    
     {
       "id": "btnTemple",  
@@ -70,7 +70,7 @@
         "overlayWidth": 10,
         "overlayHeight": 2
       },
-      "action": 0
+      "action": 2
     },
     {
       "id": "btnExit",  
@@ -94,7 +94,7 @@
         "overlayWidth": 10,
         "overlayHeight": 2
       },
-      "action": 0
+      "action": 3
     }
   ],
   "panelElements":[

@@ -25,7 +25,7 @@ void OverworldState::InitState()
     std::vector<json::jobject> buttonElements = guiJson["buttonElements"];
     for(int i = 0; i < buttonElements.size(); i++)
     {
-        GUI.push_back(std::make_unique<ButtonElement>(buttonElements[i]));
+        GUI.push_back(std::make_unique<ButtonElement>(buttonElements[i], false, false));
     }
 }
 
@@ -139,7 +139,7 @@ void OverworldState::Render(GameProcessor* game)
     {
         if(iterator->getSelected())
         {
-            iterator->DrawElement(BUFFER, MAPUI, palette, mapFont, tilesetWidth, tilesetHeight, false);        
+            iterator->DrawElement(BUFFER, MAPUI, palette, mapFont, tilesetWidth, tilesetHeight);        
             textout_centre_ex(BUFFER, mapFont, iterator->getTextOverlay().c_str(), 234, 18, makecol(255, 255, 255), -1);
         }
     }

@@ -93,6 +93,7 @@ void GameProcessor::DeallocateResources() {
 void GameProcessor::ChangeState(BaseState *state) {
 	// cleanup the current state
 	if (!states.empty()) {
+		states.back()->UnloadResources();
 		states.pop_back();
 	}
 

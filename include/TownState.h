@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <memory>
 #include "BaseState.h"
-#include "DungeonViewState.h"
+#include "OverworldState.h"
 #include "GlobalEnumerations.h"
 #include "GameUIDefines.h"
 #include "allegro.h"
@@ -22,6 +22,7 @@ class TownState : public BaseState
         void AquireInput(GameProcessor* game);
         void ProcessInput(GameProcessor* game);
         void Render(GameProcessor* game);
+        void getNextGUIElement(bool forward);
         void UnloadResources();
         static TownState* Instance()
         {

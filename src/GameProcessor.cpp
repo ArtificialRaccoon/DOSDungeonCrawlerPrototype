@@ -3,7 +3,8 @@
 #include "GameUIDefines.h"
 #include "Item.h"
 
-void GameProcessor::InitializeGame() {
+void GameProcessor::InitializeGame() 
+{
 	if (allegro_init() != 0)
 		exit(0);
 
@@ -11,7 +12,8 @@ void GameProcessor::InitializeGame() {
 	install_mouse();
 
 	set_color_depth(8);
-	if (set_gfx_mode(GFX_VGA, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0) != 0) {
+	if (set_gfx_mode(GFX_VGA, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0) != 0) 
+	{
 		set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
 		allegro_message("Unable to set any graphic mode\n%s\n", allegro_error);
 		exit(0);
@@ -43,11 +45,10 @@ void GameProcessor::InitializeGame() {
 	std::vector<Item> items = Item::readItemData(".\\OTHER\\ITEMS.jsn");
 }
 
-void GameProcessor::HandleEvents() {
-	states.back()->ProcessInput(this);
-}
+void GameProcessor::HandleEvents() { states.back()->ProcessInput(this); }
 
-void GameProcessor::ProcessEvents() {
+void GameProcessor::ProcessEvents() 
+{
 	show_mouse(NULL);
 	poll_mouse();
 
@@ -59,22 +60,30 @@ void GameProcessor::ProcessEvents() {
 	bool mouse_on_screen = true;
 	int newX, newY = 0;
 
-	if (mouse_x < 0) {
+	if (mouse_x < 0) 
+	{
 		newX = 0;
 		mouse_on_screen = false;
-	} else if (mouse_x > SCREEN_WIDTH - 1) {
+	} 
+	else if (mouse_x > SCREEN_WIDTH - 1) 
+	{
 		newX = SCREEN_WIDTH - 1;
 		mouse_on_screen = false;
-	} else
+	} 
+	else
 		newX = mouse_x;
 
-	if (mouse_y < 0) {
+	if (mouse_y < 0) 
+	{
 		newY = 0;
 		mouse_on_screen = false;
-	} else if (mouse_y > SCREEN_HEIGHT - 1) {
+	} 
+	else if (mouse_y > SCREEN_HEIGHT - 1) 
+	{
 		newY = SCREEN_HEIGHT - 1;
 		mouse_on_screen = false;
-	} else
+	} 
+	else
 		newY = mouse_y;
 
 	if (!mouse_on_screen)
@@ -83,16 +92,15 @@ void GameProcessor::ProcessEvents() {
 	states.back()->AquireInput(this);
 }
 
-void GameProcessor::Render() {
-	states.back()->Render(this);
-}
+void GameProcessor::Render() { states.back()->Render(this); }
 
-void GameProcessor::DeallocateResources() {
-}
+void GameProcessor::DeallocateResources() {}
 
-void GameProcessor::ChangeState(BaseState *state) {
+void GameProcessor::ChangeState(BaseState *state) 
+{
 	// cleanup the current state
-	if (!states.empty()) {
+	if (!states.empty()) 
+	{
 		states.back()->UnloadResources();
 		states.pop_back();
 	}
@@ -102,25 +110,24 @@ void GameProcessor::ChangeState(BaseState *state) {
 	states.back()->InitState();
 }
 
-void GameProcessor::PushState(BaseState *state) {
+void GameProcessor::PushState(BaseState *state) 
+{
 	// pause current state
-	if (!states.empty()) {
+	if (!states.empty())
 		states.back()->Pause();
-	}
 
 	// store and init the new state
 	states.push_back(state);
 	states.back()->InitState();
 }
 
-void GameProcessor::PopState() {
+void GameProcessor::PopState() 
+{
 	// cleanup the current state
-	if (!states.empty()) {
+	if (!states.empty()) 
 		states.pop_back();
-	}
 
 	// resume previous state
-	if (!states.empty()) {
+	if (!states.empty())
 		states.back()->Resume();
-	}
 }

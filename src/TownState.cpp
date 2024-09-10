@@ -29,11 +29,16 @@ void TownState::InitState()
     tilesetWidth = guiJson["tilesetWidth"];
     tilesetHeight = guiJson["tilesetHeight"];
 
-    std::vector<json::jobject> guiElements = guiJson["guiElements"];
-    for(int i = 0; i < guiElements.size(); i++)
+    std::vector<json::jobject> panelElements = guiJson["panelElements"];
+    for(int i = 0; i < panelElements.size(); i++)
     {
-        GUIElement newElement(guiElements[i]);
-        GUI.push_back(newElement);
+        GUI.push_back(std::make_unique<PanelElement>(panelElements[i]));
+    }
+    
+    std::vector<json::jobject> buttonElements = guiJson["buttonElements"];
+    for(int i = 0; i < buttonElements.size(); i++)
+    {
+        GUI.push_back(std::make_unique<ButtonElement>(buttonElements[i]));
     }
 }
 
@@ -70,10 +75,10 @@ void TownState::AquireInput(GameProcessor* game)
 
     for(auto &iterator : GUI)
     {
-        if(iterator.HitTest(mouse_x, mouse_y))
+        if(iterator->HitTest(mouse_x, mouse_y))
         {
-            std::for_each(GUI.begin(), GUI.end(), [](auto &guiElement) { guiElement.setSelected(false); });
-            iterator.setSelected(true);
+            std::for_each(GUI.begin(), GUI.end(), [](auto &guiElement) { guiElement->setSelected(false); });
+            iterator->setSelected(true);
             break;      
         }
     }
@@ -110,9 +115,9 @@ void TownState::Render(GameProcessor* game)
 {
     draw_sprite(BUFFER, BGTOWN, 0, 0);
 
-    for(auto iterator : GUI)
+    for(auto& iterator : GUI)
     {
-        iterator.DrawElement(BUFFER, UI, palette, mapFont, tilesetWidth, tilesetHeight, true);
+        iterator->DrawElement(BUFFER, UI, palette, mapFont, tilesetWidth, tilesetHeight, true);
     }
 
     show_mouse(BUFFER);

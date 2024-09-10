@@ -10,15 +10,15 @@
 class GUIElement 
 {
     public:
-        GUIElement(std::string inputJson);
-        void DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT, int tilesetWidth, int tilesetHeight, bool drawText);
+        virtual void DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT, int tilesetWidth, int tilesetHeight, bool drawText) = 0;
         bool HitTest(int px, int py) const { return (px >= x && px <= (x + width) && py >= y && py <= (y + height)); }  
         int getAction() const { return action; }
         std::string getId() const { return id; }                
         std::string getTextOverlay() const { return textOverlay; }
         void setSelected(bool input) { selected = input; }    
-        bool getSelected() const { return selected; }           
-    private:
+        bool getSelected() const { return selected; }       
+
+    protected:
         std::string id = "";
         int x = 0;
         int y = 0;
@@ -37,7 +37,13 @@ class GUIElement
         int overlayHeight = 0;     
         int action = -1;
         bool selected = false;
-        BITMAP* spriteSheet;
+
+    protected:
+        const int tileWidth = 8;
+        const int tileHeight = 8;
+        const unsigned FLIPPED_HORIZONTALLY_FLAG  = 0x80000000;
+        const unsigned FLIPPED_VERTICALLY_FLAG    = 0x40000000;
+        const unsigned FLIPPED_DIAGONALLY_FLAG    = 0x20000000;        
 };
 
 #endif //GUIELEMENT_H

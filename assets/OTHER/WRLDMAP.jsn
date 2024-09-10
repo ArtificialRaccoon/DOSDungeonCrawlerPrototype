@@ -1,5 +1,5 @@
 {
-  "guiElements": [
+  "buttonElements": [
     {
       "id": "button1",  
       "boundingBox": {

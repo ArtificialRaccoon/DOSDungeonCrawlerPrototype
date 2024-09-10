@@ -1,12 +1,6 @@
-#include "GUIElement.h"
+#include "ButtonElement.h"
 
-const int tileWidth = 8;
-const int tileHeight = 8;
-const unsigned FLIPPED_HORIZONTALLY_FLAG  = 0x80000000;
-const unsigned FLIPPED_VERTICALLY_FLAG    = 0x40000000;
-const unsigned FLIPPED_DIAGONALLY_FLAG    = 0x20000000;
-
-GUIElement::GUIElement(std::string inputJson)
+ButtonElement::ButtonElement(std::string inputJson)
 {
     json::jobject guiObject = json::jobject::parse(inputJson);
     this->id = guiObject.get("id");
@@ -40,8 +34,8 @@ GUIElement::GUIElement(std::string inputJson)
     }
 }
 
-void GUIElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT, int tilesetWidth, int tilesetHeight, bool drawText)
-{    
+void ButtonElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT, int tilesetWidth, int tilesetHeight, bool drawText)
+{
     unsigned tile_index = 0;
     int srcXPos = 0;
     int srcYPos = 0;

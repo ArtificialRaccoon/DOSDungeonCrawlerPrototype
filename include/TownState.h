@@ -3,12 +3,14 @@
 
 #include <cstdlib>
 #include <algorithm>
+#include <memory>
 #include "BaseState.h"
 #include "DungeonViewState.h"
 #include "GlobalEnumerations.h"
 #include "GameUIDefines.h"
 #include "allegro.h"
-#include "GUIElement.h"
+#include "PanelElement.h"
+#include "ButtonElement.h"
 #include "json.h"
 
 class TownState : public BaseState
@@ -39,7 +41,7 @@ class TownState : public BaseState
         BITMAP *UI;
         FONT *mapFont;
         PALETTE palette;
-        std::vector<GUIElement> GUI;
+        std::vector<std::unique_ptr<GUIElement>> GUI;
     
     private:
         int ticks, mouseDebounce;

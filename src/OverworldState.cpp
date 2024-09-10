@@ -22,11 +22,10 @@ void OverworldState::InitState()
     tilesetWidth = guiJson["tilesetWidth"];
     tilesetHeight = guiJson["tilesetHeight"];
 
-    std::vector<json::jobject> guiElements = guiJson["guiElements"];
-    for(int i = 0; i < guiElements.size(); i++)
+    std::vector<json::jobject> buttonElements = guiJson["buttonElements"];
+    for(int i = 0; i < buttonElements.size(); i++)
     {
-        GUIElement newElement(guiElements[i]);
-        GUI.push_back(newElement);
+        GUI.push_back(std::make_unique<ButtonElement>(buttonElements[i]));
     }
 }
 
@@ -66,10 +65,10 @@ void OverworldState::AquireInput(GameProcessor* game)
 
     for(auto &iterator : GUI)
     {
-        if(iterator.HitTest(mouse_x, mouse_y))
+        if(iterator->HitTest(mouse_x, mouse_y))
         {
-            std::for_each(GUI.begin(), GUI.end(), [](auto &guiElement) { guiElement.setSelected(false); });
-            iterator.setSelected(true);
+            std::for_each(GUI.begin(), GUI.end(), [](auto &guiElement) { guiElement->setSelected(false); });
+            iterator->setSelected(true);
             break;      
         }
     }
@@ -78,7 +77,7 @@ void OverworldState::AquireInput(GameProcessor* game)
     {
         for(auto &iterator : GUI)
         {
-            if(iterator.HitTest(mouse_x, mouse_y))
+            if(iterator->HitTest(mouse_x, mouse_y))
             {
                 interactPressed = true;
                 break;      
@@ -111,9 +110,9 @@ void OverworldState::ProcessInput(GameProcessor* game)
     {
         for(auto &iterator : GUI)
         {
-            if(iterator.getSelected())
+            if(iterator->getSelected())
             {
-                switch(iterator.getAction())
+                switch(iterator->getAction())
                 {
                     case 0:
                         break;
@@ -136,12 +135,12 @@ void OverworldState::ProcessInput(GameProcessor* game)
 void OverworldState::Render(GameProcessor* game)
 {
     draw_sprite(BUFFER, OVERWORLDMAP, 0, 0);   
-    for(auto iterator : GUI)
+    for(auto& iterator : GUI)
     {
-        if(iterator.getSelected())
+        if(iterator->getSelected())
         {
-            iterator.DrawElement(BUFFER, MAPUI, palette, mapFont, tilesetWidth, tilesetHeight, false);        
-            textout_centre_ex(BUFFER, mapFont, iterator.getTextOverlay().c_str(), 234, 18, makecol(255, 255, 255), -1);
+            iterator->DrawElement(BUFFER, MAPUI, palette, mapFont, tilesetWidth, tilesetHeight, false);        
+            textout_centre_ex(BUFFER, mapFont, iterator->getTextOverlay().c_str(), 234, 18, makecol(255, 255, 255), -1);
         }
     }
     show_mouse(BUFFER);
@@ -151,10 +150,10 @@ void OverworldState::Render(GameProcessor* game)
 
 void OverworldState::getNextGUIElement(bool forward)
 {    
-    auto it = std::find_if(GUI.begin(), GUI.end(), [](GUIElement& elem) { return elem.getSelected(); });
+    auto it = std::find_if(GUI.begin(), GUI.end(), [](const std::unique_ptr<GUIElement>& elem) { return elem->getSelected(); });
     if (it != GUI.end()) 
     {
-        it->setSelected(false);
+        (*it)->setSelected(false);
         if (forward)
             it = (it + 1 == GUI.end()) ? GUI.begin() : it + 1;
         else
@@ -162,7 +161,7 @@ void OverworldState::getNextGUIElement(bool forward)
     } 
     else
         it = GUI.begin();
-    it->setSelected(true);
+    (*it)->setSelected(true);
 }
 
 void OverworldState::UnloadResources()

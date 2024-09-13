@@ -12,15 +12,13 @@ void TownState::InitState()
     theme = load_midi(".\\MUSIC\\SORROW.MID");
     play_midi(theme, TRUE);    
 
-    UI = load_bitmap(".\\OTHER\\MAINGUI.bmp", palette);
-    BGTOWN = load_bitmap(".\\OTHER\\BGTOWN.bmp", palette);
-    BGSHOP = load_bitmap(".\\OTHER\\BGSHOP.bmp", palette);
-    BGTAVE = load_bitmap(".\\OTHER\\BGTAVE.bmp", palette);
-    BGTMPL = load_bitmap(".\\OTHER\\BGTMPL.bmp", palette);
-    CHARSHOP = load_bitmap(".\\OTHER\\SPRITE2.bmp", palette);
-    CHARTAVE = load_bitmap(".\\OTHER\\SPRITE3.bmp", palette);
-    CHARTMPL = load_bitmap(".\\OTHER\\SPRITE4.bmp", palette);
-    mapFont = load_font(".\\OTHER\\BitScrip.bmp", palette, NULL);
+    BGTOWN = load_bitmap(".\\OTHER\\BGTOWN.bmp", CommonGUI::Instance().GetPalette());
+    BGSHOP = load_bitmap(".\\OTHER\\BGSHOP.bmp", CommonGUI::Instance().GetPalette());
+    BGTAVE = load_bitmap(".\\OTHER\\BGTAVE.bmp", CommonGUI::Instance().GetPalette());
+    BGTMPL = load_bitmap(".\\OTHER\\BGTMPL.bmp", CommonGUI::Instance().GetPalette());
+    CHARSHOP = load_bitmap(".\\OTHER\\SPRITE2.bmp", CommonGUI::Instance().GetPalette());
+    CHARTAVE = load_bitmap(".\\OTHER\\SPRITE3.bmp", CommonGUI::Instance().GetPalette());
+    CHARTMPL = load_bitmap(".\\OTHER\\SPRITE4.bmp", CommonGUI::Instance().GetPalette());
 
     std::ifstream ifs(".\\OTHER\\TOWNMENU.jsn");
     std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
@@ -38,7 +36,7 @@ void TownState::InitState()
     std::vector<json::jobject> buttonElements = guiJson["buttonElements"];
     for(int i = 0; i < buttonElements.size(); i++)
     {        
-        GUI.push_back(std::make_unique<ButtonElement>(buttonElements[i], true, true));
+        GUI.push_back(std::make_unique<ButtonElement>(buttonElements[i], true));
     }
 
     //Preselect the Inn when first showing the screen
@@ -146,8 +144,8 @@ void TownState::ProcessInput(GameProcessor* game)
                         break;
                     case 2:
                         break;
-                    case 3:                        
-                        game->ChangeState(OverworldState::Instance());
+                    case 3:    
+                        game->ChangeState(DungeonViewState::Instance());
                         break;
                     default:
                         break;
@@ -163,7 +161,7 @@ void TownState::Render(GameProcessor* game)
 
     for(auto& iterator : GUI)
     {
-        iterator->DrawElement(BUFFER, UI, palette, mapFont, tilesetWidth, tilesetHeight);
+        iterator->DrawElement(BUFFER, CommonGUI::Instance().GetBitmap(), CommonGUI::Instance().GetPalette(), CommonGUI::Instance().GetFont(), tilesetWidth, tilesetHeight);
     }
 
     show_mouse(BUFFER);

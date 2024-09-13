@@ -11,11 +11,10 @@
 class ButtonElement : public GUIElement
 {
     public:
-        ButtonElement(std::string inputJson, bool drawText, bool drawSelection);
+        ButtonElement(std::string inputJson, bool drawText);
         void DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT, int tilesetWidth, int tilesetHeight); 
     private:
-        bool drawText;
-        bool drawSelection;    
+        bool drawText;  
 };
 
 #endif //BUTTONELEMENT_H

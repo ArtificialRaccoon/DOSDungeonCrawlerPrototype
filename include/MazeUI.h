@@ -1,6 +1,7 @@
 #ifndef MAZEUI_H
 #define MAZEUI_H
 
+#include "CommonGUI.h"
 #include "GameUIDefines.h"
 #include "GlobalEnumerations.h"
 #include "GameProcessor.h"
@@ -15,7 +16,6 @@ class MazeUI
         BITMAP *MAZEBORDER_CORNER;
         BITMAP *CHAR_TOPCORNER, *CHAR_BOTTOMCORNER;
         BITMAP *ARROW;
-        PALETTE palette;
         BITMAP *BUFFER;
         MazeUI() {}
         virtual ~MazeUI();

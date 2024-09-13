@@ -1,9 +1,8 @@
 #include "ButtonElement.h"
 
-ButtonElement::ButtonElement(std::string inputJson, bool drawText, bool drawSelection)
+ButtonElement::ButtonElement(std::string inputJson, bool drawText)
 {
     this->drawText = drawText;
-    this->drawSelection = drawSelection;
     json::jobject guiObject = json::jobject::parse(inputJson);
     this->id = guiObject.get("id");
     this->textOverlay = guiObject.get("textOverlay");
@@ -104,10 +103,12 @@ void ButtonElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, 
             destYPos += tileHeight;
         }
     }
-    
-    if(getSelected() && this->drawSelection)
-        rect(BUFFER, this->x, this->y, this->x + this->width, this->y + this->height, makecol(255,255,255));
 
     if(this->drawText)
-        textout_centre_ex(BUFFER, FONT, this->textOverlay.substr(1, this->textOverlay.length() - 2).c_str(), this->textX + this->width / 2, this->textY, makecol(255, 255, 255), -1);
+    {
+        if(getSelected())
+            textout_centre_ex(BUFFER, FONT, this->textOverlay.substr(1, this->textOverlay.length() - 2).c_str(), this->textX + this->width / 2, this->textY, makecol(255, 255, 255), -1);
+        else
+            textout_centre_ex(BUFFER, FONT, this->textOverlay.substr(1, this->textOverlay.length() - 2).c_str(), this->textX + this->width / 2, this->textY, makecol(55, 55, 55), -1);
+    }
 }

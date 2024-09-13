@@ -1,7 +1,6 @@
 #include "Globals.h"
 #include "GameProcessor.h"
 #include "DungeonViewState.h"
-#include "OverworldState.h"
 #include "TownState.h"
 
 using namespace std;
@@ -23,7 +22,7 @@ int main() {
     LOCK_FUNCTION(timer); //Set timer function
     install_int_ex(timer, BPS_TO_TIMER(60));
 
-    objGame.ChangeState(OverworldState::Instance());
+    objGame.ChangeState(TownState::Instance());
 	while ( true )
 	{
 	    while(ticks == 0)

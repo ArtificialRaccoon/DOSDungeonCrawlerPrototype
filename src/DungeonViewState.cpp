@@ -170,7 +170,7 @@ void DungeonViewState::ProcessInput(GameProcessor* game)
 }
 
 void DungeonViewState::Render(GameProcessor* game)
-{    
+{        
     if(firstRender)
         mazeUIObj.DrawMazeBackground();
 
@@ -179,6 +179,7 @@ void DungeonViewState::Render(GameProcessor* game)
     mazeUIObj.DrawMazeUI(72, 0, dungeonObj, facing, playerX, playerY, game, !firstRender);    
     show_mouse(BUFFER);
     draw_sprite(screen, BUFFER, 0, 0);
+    
     firstRender = false;
 }
 

@@ -2,6 +2,8 @@
 #define BASESTATE_H
 
 #include "GameProcessor.h"
+#include "CommonGUI.h"
+
 class GameProcessor;
 
 class BaseState {

@@ -83,7 +83,7 @@
       "spriteTiles": [-1],
       "spriteWidth": 3,
       "spriteHeight": 2,    
-      "textOverlay": "Exit Town",
+      "textOverlay": "Labyrinth",
       "textX": 208,
       "textY": 115,      
       "spriteOverlay": {

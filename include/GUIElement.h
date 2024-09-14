@@ -10,7 +10,7 @@
 class GUIElement 
 {
     public:
-        virtual void DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT, int tilesetWidth, int tilesetHeight) = 0;
+        virtual void DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT) = 0;
         bool HitTest(int px, int py) const { return (px >= x && px <= (x + width) && py >= y && py <= (y + height)); }  
         int getAction() const { return action; }
         std::string getId() const { return id; }                
@@ -35,6 +35,8 @@ class GUIElement
         int overlayY = 0;
         int overlayWidth = 0;
         int overlayHeight = 0;     
+        int tilesetWidth = 0;
+        int tilesetHeight = 0;     
         int action = -1;
         bool selected = false;
 

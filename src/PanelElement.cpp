@@ -1,6 +1,6 @@
 #include "PanelElement.h"
 
-PanelElement::PanelElement(std::string inputJson)
+PanelElement::PanelElement(std::string inputJson, int tilesetWidth, int tilesetHeight)
 {
     json::jobject guiObject = json::jobject::parse(inputJson);
     this->id = guiObject.get("id");
@@ -12,9 +12,11 @@ PanelElement::PanelElement(std::string inputJson)
     this->spriteTiles = guiObject["spriteTiles"];
     this->spriteWidth = guiObject["spriteWidth"];
     this->spriteHeight = guiObject["spriteHeight"];
+    this->tilesetHeight = tilesetHeight;
+    this->tilesetWidth = tilesetWidth;
 }
 
-void PanelElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT, int tilesetWidth, int tilesetHeight)
+void PanelElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT)
 {
     unsigned tile_index = 0;
     int srcXPos = 0;
@@ -42,8 +44,8 @@ void PanelElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, F
 
                 tileID &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
                 
-                srcXPos = tileWidth * ((tileID - 1) % tilesetWidth);
-                srcYPos = tileHeight * floor((tileID - 1) / tilesetWidth);
+                srcXPos = tileWidth * ((tileID - 1) % this->tilesetWidth);
+                srcYPos = tileHeight * floor((tileID - 1) / this->tilesetWidth);
                 masked_blit(SHEET, BUFFER, srcXPos, srcYPos, destXPos, destYPos, tileWidth, tileHeight);
                 
                 tile_index += 1;

@@ -1,13 +1,12 @@
-#ifndef TOWNSTATE_H
-#define TOWNSTATE_H
+#ifndef INNSTATE_H
+#define INNSTATE_H
 
 #include <cstdlib>
 #include <algorithm>
 #include <memory>
 #include <fstream>
 #include "BaseState.h"
-#include "InnState.h"
-#include "DungeonViewState.h"
+#include "TownState.h"
 #include "GlobalEnumerations.h"
 #include "GameUIDefines.h"
 #include "allegro.h"
@@ -15,7 +14,7 @@
 #include "ButtonElement.h"
 #include "json.h"
 
-class TownState : public BaseState
+class InnState : public BaseState
 {
     public:
         void InitState();
@@ -26,22 +25,23 @@ class TownState : public BaseState
         void Render(GameProcessor* game);
         void getNextGUIElement(bool forward);
         void UnloadResources();
-        static TownState* Instance()
+        static InnState* Instance()
         {
-            return &mTownState;
+            return &mInnState;
         }
 
     protected:
-        TownState() { }
+        InnState() { }
         BITMAP *BUFFER;
         BITMAP *CURRENT_BG;
-        BITMAP *BGTOWN;
+        BITMAP *BGTAVE;
+        BITMAP *INNKEEPER;
         std::vector<std::unique_ptr<GUIElement>> GUI;
     
     private:
         int ticks, mouseDebounce;
         bool interactPressed = false;
-        static TownState mTownState;
+        static InnState mInnState;
         MIDI *theme;     
 
         int tilesetWidth;
@@ -49,4 +49,4 @@ class TownState : public BaseState
     
 };
 
-#endif // TOWNSTATE_H
+#endif // INNSTATE_H

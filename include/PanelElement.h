@@ -11,8 +11,8 @@
 class PanelElement : public GUIElement
 {
     public:
-        PanelElement(std::string inputJson);
-        void DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT, int tilesetWidth, int tilesetHeight);
+        PanelElement(std::string inputJson, int tilesetWidth, int tilesetHeight);
+        void DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT);
 };
 
 #endif //PANELELEMENT_H

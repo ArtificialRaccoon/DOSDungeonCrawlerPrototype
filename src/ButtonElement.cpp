@@ -1,6 +1,6 @@
 #include "ButtonElement.h"
 
-ButtonElement::ButtonElement(std::string inputJson, bool drawText)
+ButtonElement::ButtonElement(std::string inputJson, int tilesetWidth, int tilesetHeight, bool drawText)
 {
     this->drawText = drawText;
     json::jobject guiObject = json::jobject::parse(inputJson);
@@ -12,17 +12,15 @@ ButtonElement::ButtonElement(std::string inputJson, bool drawText)
     this->spriteTiles = guiObject["spriteTiles"];
     this->spriteWidth = guiObject["spriteWidth"];
     this->spriteHeight = guiObject["spriteHeight"];
+    this->tilesetWidth = tilesetWidth;
+    this->tilesetHeight = tilesetHeight;
 
     //Bounding Box
-    if(guiObject.has_key("boundingBox"))
-    {
-        json::jobject bbObj = guiObject["boundingBox"];
-        this->x = bbObj["x"];
-        this->y = bbObj["y"];
-        this->height = bbObj["height"];
-        this->width = bbObj["width"];
-    }
-    
+    this->x = guiObject["x"];
+    this->y = guiObject["y"];
+    this->height = this->spriteHeight * 8;
+    this->width = this->spriteWidth * 8;
+
     //Overlay
     if(guiObject.has_key("spriteOverlay"))
     {
@@ -35,7 +33,7 @@ ButtonElement::ButtonElement(std::string inputJson, bool drawText)
     }
 }
 
-void ButtonElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT, int tilesetWidth, int tilesetHeight)
+void ButtonElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, FONT *FONT)
 {
     unsigned tile_index = 0;
     int srcXPos = 0;
@@ -63,8 +61,8 @@ void ButtonElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, 
 
                 tileID &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
                 
-                srcXPos = tileWidth * ((tileID - 1) % tilesetWidth);
-                srcYPos = tileHeight * floor((tileID - 1) / tilesetWidth);
+                srcXPos = tileWidth * ((tileID - 1) % this->tilesetWidth);
+                srcYPos = tileHeight * floor((tileID - 1) / this->tilesetWidth);
                 masked_blit(SHEET, BUFFER, srcXPos, srcYPos, destXPos, destYPos, tileWidth, tileHeight);
                 
                 tile_index += 1;
@@ -93,8 +91,8 @@ void ButtonElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, 
 
                 tileID &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
                 
-                srcXPos = tileWidth * ((tileID - 1) % tilesetWidth);
-                srcYPos = tileHeight * floor((tileID - 1) / tilesetWidth);
+                srcXPos = tileWidth * ((tileID - 1) % this->tilesetWidth);
+                srcYPos = tileHeight * floor((tileID - 1) / this->tilesetWidth);
                 masked_blit(SHEET, BUFFER, srcXPos, srcYPos, destXPos, destYPos, tileWidth, tileHeight);
                 
                 tile_index += 1;

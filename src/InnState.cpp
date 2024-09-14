@@ -1,20 +1,18 @@
-#include "TownState.h"
+#include "InnState.h"
 
-TownState TownState::mTownState;
+InnState InnState::mInnState;
 
-void TownState::InitState()
+void InnState::InitState()
 {
     BUFFER = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
 
     ticks = 0;
-    mouseDebounce = 0;
-    	
-    theme = load_midi(".\\MUSIC\\SORROW.MID");
-    play_midi(theme, TRUE);    
+    mouseDebounce = 0;    	 
 
-    BGTOWN = load_bitmap(".\\OTHER\\BGTOWN.bmp", CommonGUI::Instance().GetPalette());
+    BGTAVE = load_bitmap(".\\OTHER\\BGTAVE.bmp", CommonGUI::Instance().GetPalette());
+    INNKEEPER = load_bitmap(".\\OTHER\\SPRITE2.bmp", CommonGUI::Instance().GetPalette());
 
-    std::ifstream ifs(".\\OTHER\\TOWNMENU.jsn");
+    std::ifstream ifs(".\\OTHER\\INNMENU.jsn");
     std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
     json::jobject guiJson = json::jobject::parse(content);
 
@@ -47,17 +45,17 @@ void TownState::InitState()
     }
 }
 
-void TownState::Pause()
+void InnState::Pause()
 {
 
 }
 
-void TownState::Resume()
+void InnState::Resume()
 {
 
 }
 
-void TownState::AquireInput(GameProcessor* game)
+void InnState::AquireInput(GameProcessor* game)
 {
     interactPressed = false;
     if(keypressed())
@@ -122,7 +120,7 @@ void TownState::AquireInput(GameProcessor* game)
     }
 }
 
-void TownState::ProcessInput(GameProcessor* game)
+void InnState::ProcessInput(GameProcessor* game)
 { 
     if(interactPressed)
     {
@@ -133,17 +131,13 @@ void TownState::ProcessInput(GameProcessor* game)
                 switch(iterator->getAction())
                 {
                     case 0:
-                        game->ChangeState(InnState::Instance());
                         break;
                     case 1:
                         break;
                     case 2:
                         break;
                     case 3:    
-                        //Unload the state resources for everything in town
-                        InnState::Instance()->UnloadResources();
-                        UnloadResources();                    
-                        game->ChangeState(DungeonViewState::Instance());
+                        game->ChangeState(TownState::Instance());
                         break;
                     default:
                         break;
@@ -153,9 +147,10 @@ void TownState::ProcessInput(GameProcessor* game)
     }
 }
 
-void TownState::Render(GameProcessor* game)
+void InnState::Render(GameProcessor* game)
 {
-    draw_sprite(BUFFER, BGTOWN, 0, 0);
+    draw_sprite(BUFFER, BGTAVE, 0, 0);
+    draw_sprite(BUFFER, INNKEEPER, 0, 0);
 
     for(auto& iterator : GUI)
     {
@@ -166,7 +161,7 @@ void TownState::Render(GameProcessor* game)
     draw_sprite(screen, BUFFER, 0, 0);
 }
 
-void TownState::getNextGUIElement(bool forward)
+void InnState::getNextGUIElement(bool forward)
 {
     auto it = std::find_if(GUI.begin(), GUI.end(), [](const std::unique_ptr<GUIElement>& elem) {
         auto button = dynamic_cast<ButtonElement*>(elem.get());
@@ -192,10 +187,11 @@ void TownState::getNextGUIElement(bool forward)
         (*it)->setSelected(true);
 }
 
-void TownState::UnloadResources()
+void InnState::UnloadResources()
 {
     destroy_bitmap(BUFFER);
-    destroy_bitmap(BGTOWN);
+    destroy_bitmap(BGTAVE);
+    destroy_bitmap(INNKEEPER);
     destroy_midi(theme);
     GUI.clear();
 }

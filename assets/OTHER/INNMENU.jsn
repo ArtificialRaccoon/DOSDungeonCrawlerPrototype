@@ -8,9 +8,7 @@
                       117, 118, 118, 118, 118, 118, 118, 118, 118, 118, 118, 119],
       "spriteWidth": 12,
       "spriteHeight": 2,    
-      "textOverlay": "Get a Room",  
-      "textX": 192,
-      "textY": 55,      
+      "textOverlay": "Get a Room",      
       "spriteOverlay": {
         "tiles": [-1],
         "x": 0, 
@@ -28,9 +26,7 @@
                       117, 118, 118, 118, 118, 118, 118, 118, 118, 118, 118, 119],
       "spriteWidth": 12,
       "spriteHeight": 2,       
-      "textOverlay": "Talk to Orla", 
-      "textX": 192,
-      "textY": 75,       
+      "textOverlay": "Talk to Orla",      
       "spriteOverlay": {
         "tiles": [-1],
         "x": 0, 
@@ -48,9 +44,7 @@
                       117, 118, 118, 118, 118, 118, 118, 118, 118, 118, 118, 119],
       "spriteWidth": 12,
       "spriteHeight": 2,     
-      "textOverlay": "Back to Town",  
-      "textX": 208,
-      "textY": 95,      
+      "textOverlay": "Back to Town",     
       "spriteOverlay": {
         "tiles": [-1],
         "x": 0, 

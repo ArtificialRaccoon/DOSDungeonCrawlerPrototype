@@ -76,7 +76,7 @@ void TownState::AquireInput(GameProcessor* game)
                 interactPressed = true;
                 break;
             case KEY_ESC:
-                exit(0);
+                game->PushState(PauseState::Instance());
                 break;
         }
     }
@@ -133,7 +133,7 @@ void TownState::ProcessInput(GameProcessor* game)
                 switch(iterator->getAction())
                 {
                     case 0:
-                        game->ChangeState(InnState::Instance());
+                        game->PushState(InnState::Instance());
                         break;
                     case 1:
                         break;
@@ -141,8 +141,7 @@ void TownState::ProcessInput(GameProcessor* game)
                         break;
                     case 3:    
                         //Unload the state resources for everything in town
-                        InnState::Instance()->UnloadResources();
-                        UnloadResources();                    
+                        this->UnloadResources();                    
                         game->ChangeState(DungeonViewState::Instance());
                         break;
                     default:

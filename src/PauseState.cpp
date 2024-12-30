@@ -1,18 +1,16 @@
-#include "InnState.h"
+#include "PauseState.h"
 
-InnState InnState::mInnState;
+PauseState PauseState::mPauseState;
 
-void InnState::InitState()
+void PauseState::InitState()
 {
     BUFFER = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
+    clear_to_color(BUFFER, makecol(16, 16, 16));
 
     ticks = 0;
-    mouseDebounce = 0;    	 
+    mouseDebounce = 0;
 
-    BGTAVE = load_bitmap(".\\OTHER\\BGTAVE.bmp", CommonGUI::Instance().GetPalette());
-    INNKEEPER = load_bitmap(".\\OTHER\\SPRITE2.bmp", CommonGUI::Instance().GetPalette());
-
-    std::ifstream ifs(".\\OTHER\\INNMENU.jsn");
+    std::ifstream ifs(".\\OTHER\\PAUSMENU.jsn");
     std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
     json::jobject guiJson = json::jobject::parse(content);
 
@@ -45,17 +43,17 @@ void InnState::InitState()
     }
 }
 
-void InnState::Pause()
+void PauseState::Pause()
 {
 
 }
 
-void InnState::Resume()
+void PauseState::Resume()
 {
 
 }
 
-void InnState::AquireInput(GameProcessor* game)
+void PauseState::AquireInput(GameProcessor* game)
 {
     interactPressed = false;
     if(keypressed())
@@ -74,7 +72,7 @@ void InnState::AquireInput(GameProcessor* game)
                 interactPressed = true;
                 break;
             case KEY_ESC:
-                exit(0);
+                game->PopState();
                 break;
         }
     }
@@ -120,7 +118,7 @@ void InnState::AquireInput(GameProcessor* game)
     }
 }
 
-void InnState::ProcessInput(GameProcessor* game)
+void PauseState::ProcessInput(GameProcessor* game)
 { 
     if(interactPressed)
     {
@@ -134,23 +132,21 @@ void InnState::ProcessInput(GameProcessor* game)
                         break;
                     case 1:
                         break;
-                    case 2:  
-                        this->UnloadResources();
-                        game->PopState();
+                    case 2:
+                        break;
+                    case 3:    
+                        exit(0);
                         break;
                     default:
                         break;
-                }                
+                } 
             }
         }        
     }
 }
 
-void InnState::Render(GameProcessor* game)
+void PauseState::Render(GameProcessor* game)
 {
-    draw_sprite(BUFFER, BGTAVE, 0, 0);
-    draw_sprite(BUFFER, INNKEEPER, 0, 0);
-
     for(auto& iterator : GUI)
     {
         iterator->DrawElement(BUFFER, CommonGUI::Instance().GetBitmap(), CommonGUI::Instance().GetPalette(), CommonGUI::Instance().GetFont());
@@ -160,7 +156,7 @@ void InnState::Render(GameProcessor* game)
     draw_sprite(screen, BUFFER, 0, 0);
 }
 
-void InnState::getNextGUIElement(bool forward)
+void PauseState::getNextGUIElement(bool forward)
 {
     auto it = std::find_if(GUI.begin(), GUI.end(), [](const std::unique_ptr<GUIElement>& elem) {
         auto button = dynamic_cast<ButtonElement*>(elem.get());
@@ -186,11 +182,8 @@ void InnState::getNextGUIElement(bool forward)
         (*it)->setSelected(true);
 }
 
-void InnState::UnloadResources()
+void PauseState::UnloadResources()
 {
     destroy_bitmap(BUFFER);
-    destroy_bitmap(BGTAVE);
-    destroy_bitmap(INNKEEPER);
-    destroy_midi(theme);
     GUI.clear();
 }

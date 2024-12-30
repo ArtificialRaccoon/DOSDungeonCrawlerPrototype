@@ -8,9 +8,7 @@
                       117, 118, 118, 118, 118, 118, 118, 118, 118, 119],
       "spriteWidth": 10,
       "spriteHeight": 2,   
-      "textOverlay": "Inn",  
-      "textX": 208,
-      "textY": 55,      
+      "textOverlay": "Inn",      
       "spriteOverlay": {
         "tiles": [-1],
         "x": 0, 
@@ -28,9 +26,7 @@
                       117, 118, 118, 118, 118, 118, 118, 118, 118, 119],
       "spriteWidth": 10,
       "spriteHeight": 2,   
-      "textOverlay": "Smithy", 
-      "textX": 208,
-      "textY": 75,       
+      "textOverlay": "Smithy",      
       "spriteOverlay": {
         "tiles": [-1],
         "x": 0, 
@@ -48,9 +44,7 @@
                       117, 118, 118, 118, 118, 118, 118, 118, 118, 119],
       "spriteWidth": 10,
       "spriteHeight": 2,     
-      "textOverlay": "Temple",  
-      "textX": 208,
-      "textY": 95,      
+      "textOverlay": "Temple",      
       "spriteOverlay": {
         "tiles": [-1],
         "x": 0, 
@@ -68,9 +62,7 @@
                       117, 118, 118, 118, 118, 118, 118, 118, 118, 119],
       "spriteWidth": 10,
       "spriteHeight": 2,    
-      "textOverlay": "Labyrinth",
-      "textX": 208,
-      "textY": 115,      
+      "textOverlay": "Labyrinth",   
       "spriteOverlay": {
         "tiles": [-1],
         "x": 0, 

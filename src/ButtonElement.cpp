@@ -6,8 +6,7 @@ ButtonElement::ButtonElement(std::string inputJson, int tilesetWidth, int tilese
     json::jobject guiObject = json::jobject::parse(inputJson);
     this->id = guiObject.get("id");
     this->textOverlay = guiObject.get("textOverlay");
-    this->textX = guiObject["textX"];
-    this->textY = guiObject["textY"];
+    this->textOverlay = this->textOverlay.substr(1, this->textOverlay.length() - 2);
     this->action = guiObject["action"];
     this->spriteTiles = guiObject["spriteTiles"];
     this->spriteWidth = guiObject["spriteWidth"];
@@ -18,8 +17,8 @@ ButtonElement::ButtonElement(std::string inputJson, int tilesetWidth, int tilese
     //Bounding Box
     this->x = guiObject["x"];
     this->y = guiObject["y"];
-    this->height = this->spriteHeight * 8;
-    this->width = this->spriteWidth * 8;
+    this->height = this->spriteHeight * this->tileHeight;
+    this->width = this->spriteWidth * this->tileWidth;
 
     //Overlay
     if(guiObject.has_key("spriteOverlay"))
@@ -105,8 +104,20 @@ void ButtonElement::DrawElement(BITMAP *BUFFER, BITMAP *SHEET, PALETTE palette, 
     if(this->drawText)
     {
         if(getSelected())
-            textout_centre_ex(BUFFER, FONT, this->textOverlay.substr(1, this->textOverlay.length() - 2).c_str(), this->textX + this->width / 2, this->textY, makecol(255, 255, 255), -1);
+            textout_centre_ex(BUFFER, 
+            FONT, 
+            this->textOverlay.c_str(), 
+            this->x + this->width / 2, 
+            this->y + 1, 
+            makecol(255, 255, 255), 
+            -1);
         else
-            textout_centre_ex(BUFFER, FONT, this->textOverlay.substr(1, this->textOverlay.length() - 2).c_str(), this->textX + this->width / 2, this->textY, makecol(55, 55, 55), -1);
+            textout_centre_ex(BUFFER, 
+            FONT, 
+            this->textOverlay.c_str(), 
+            this->x + this->width / 2, 
+            this->y + 1, 
+            makecol(55, 55, 55), 
+            -1);
     }
 }

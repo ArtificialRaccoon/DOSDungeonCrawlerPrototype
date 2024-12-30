@@ -1,12 +1,11 @@
-#ifndef TOWNSTATE_H
-#define TOWNSTATE_H
+#ifndef PAUSESTATE_H
+#define PAUSESTATE_H
 
 #include <cstdlib>
 #include <algorithm>
 #include <memory>
 #include <fstream>
 #include "BaseState.h"
-#include "PauseState.h"
 #include "InnState.h"
 #include "DungeonViewState.h"
 #include "GlobalEnumerations.h"
@@ -16,7 +15,7 @@
 #include "ButtonElement.h"
 #include "json.h"
 
-class TownState : public BaseState
+class PauseState : public BaseState
 {
     public:
         void InitState();
@@ -27,27 +26,24 @@ class TownState : public BaseState
         void Render(GameProcessor* game);
         void getNextGUIElement(bool forward);
         void UnloadResources();
-        static TownState* Instance()
+        static PauseState* Instance()
         {
-            return &mTownState;
+            return &mPauseState;
         }
 
     protected:
-        TownState() { }
+        PauseState() { }
         BITMAP *BUFFER;
-        BITMAP *CURRENT_BG;
-        BITMAP *BGTOWN;
         std::vector<std::unique_ptr<GUIElement>> GUI;
     
     private:
         int ticks, mouseDebounce;
         bool interactPressed = false;
-        static TownState mTownState;
-        MIDI *theme;     
+        static PauseState mPauseState;
 
         int tilesetWidth;
         int tilesetHeight;   
     
 };
 
-#endif // TOWNSTATE_H
+#endif // PAUSESTATE_H

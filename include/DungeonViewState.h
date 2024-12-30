@@ -2,6 +2,7 @@
 #define DUNGEONVIEWSTATE_H
 
 #include <cstdlib>
+#include "PauseState.h"
 #include "CommonGUI.h"
 #include "Dungeon.h"
 #include "MazeViewRenderer.h"
@@ -44,6 +45,12 @@ class DungeonViewState : public BaseState
         int Wrap(int input, int const lowerBound, int const upperBound);
         void UpdateCone(MapSpace* coneArray, bool calculateForX, int a, int b, int mapN1, int mapN2, int deltaSign, int xOffset, int arrayLen, int pivotPoint);
         MIDI *theme; 
+
+    private:
+        double fps = 0.0;
+        int frame_count = 0;
+        unsigned long last_time = 0;
+        char fps_text[20]; 
 };
 
 #endif // DUNGEONVIEWSTATE_H

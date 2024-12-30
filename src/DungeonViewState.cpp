@@ -58,7 +58,7 @@ void DungeonViewState::AquireInput(GameProcessor* game)
                 interactPressed = true;
                 break;
             case KEY_ESC:
-                exit(0);
+                game->PushState(PauseState::Instance());
                 break;
         }
     }
@@ -170,13 +170,26 @@ void DungeonViewState::ProcessInput(GameProcessor* game)
 }
 
 void DungeonViewState::Render(GameProcessor* game)
-{        
+{     
+    unsigned long current_time = time(NULL);
+    if (current_time != last_time) {
+        fps = frame_count;
+        frame_count = 0;
+        last_time = current_time;
+    }
+
     if(firstRender)
         mazeUIObj.DrawMazeBackground();
 
     mazeRenderer.RenderVisionCone(dungeonObj, wallCone, decoCone);    
     draw_sprite(BUFFER, mazeRenderer.MAZEVIEW, 72, 8);    
     mazeUIObj.DrawMazeUI(72, 0, dungeonObj, facing, playerX, playerY, game, !firstRender);    
+
+    rectfill(BUFFER, 8, 8, 100, 20, 66);
+    sprintf(fps_text, "FPS: %.2f", fps);
+    textout_ex(BUFFER, font, fps_text, 10, 10, 16, -1);
+    frame_count++;
+
     show_mouse(BUFFER);
     draw_sprite(screen, BUFFER, 0, 0);
     

@@ -19,6 +19,7 @@ class CommonGUI
         CommonGUI();
         BITMAP *GUI_SHEET;
         FONT *SCRIPT_FONT;
+        FONT *ARCANA_FONT;
         PALETTE palette;
 };
 

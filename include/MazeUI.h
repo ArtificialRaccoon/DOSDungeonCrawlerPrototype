@@ -13,25 +13,25 @@ class MazeUI
     public:
         BITMAP *SHEET;
         BITMAP *PORTSHEET;
-        BITMAP *MAZEBORDER_CORNER;
-        BITMAP *CHAR_TOPCORNER, *CHAR_BOTTOMCORNER;
-        BITMAP *ARROW;
         BITMAP *BUFFER;
         MazeUI() {}
         virtual ~MazeUI();
         void Init(BITMAP *INPUT_BUFFER);
-        void DrawMazeUI(int startX, int startY, Dungeon &currentDungeon, Rotation facing, int playerX, int playerY, GameProcessor* game, bool update);             
-        void LoadUISprite(BITMAP *bmpData, BITMAP *sprite, PALETTE palData, int startX, int startY, int sizeW, int sizeH);
-        void DrawMazeWindowBorder(int startX, int startY, int windowBorderH, int windowBorderW, Rotation facing);
-        void DrawMazeBackground();
-        void DrawCharacterWindowBorder(int startX, int startY, int windowBorderH, int windowBorderW);
-        void DrawCharacterBackground(int startX, int startY, int windowH, int windowW);
-        void DrawDigits(int startX, int startY, int value, int width);
-        void DrawCharacterWindow(Character *characterObj, int xOffset, int yOffset, bool update);
-        void DrawMiniMap(int xOffset, int yOffset, Dungeon &currentDungeon, Rotation facing, int playerX, int playerY, GameProcessor* game);
-        void DrawNavigation();
-        void DrawUserButtons();
-        void DrawButton(BITMAP *SHEET, int xPos, int yPos, int sheetX, int sheetY, int buttonWidth, int buttonHeight);
+        void DrawMazeUI();
+        void DrawMazeUILayer(std::vector<int>*);        
+        void DrawTile(int tileIndex);
+        void DrawTileLayer(std::vector<int>* tileData, int tileIndex);
+
+    private:
+        int guiWidth;
+        int guiHeight;
+        int tileWidth;
+        int tileHeight;    
+        std::vector<int> backgroundTileData;
+        std::vector<int> mazeborderTileData;
+        std::vector<int> mainuiTileData;
+        std::vector<int> portraitbackgroundTileData;
+        std::vector<int> portraitbordersTileData;
 };
 
 #endif // MAZEUI_H

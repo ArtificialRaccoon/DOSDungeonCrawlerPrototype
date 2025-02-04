@@ -29,6 +29,7 @@ class DungeonViewState : public BaseState
     protected:
         DungeonViewState() { }
         void ComputeVision(bool calculateForX, int deltaSign, int deltaY, int deltaX);
+        BITMAP *DISPLAY;
         BITMAP *BUFFER;
 
     private:
@@ -50,7 +51,7 @@ class DungeonViewState : public BaseState
         double fps = 0.0;
         int frame_count = 0;
         unsigned long last_time = 0;
-        char fps_text[20]; 
+        char fps_text[20];       
 };
 
 #endif // DUNGEONVIEWSTATE_H

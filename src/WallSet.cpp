@@ -3,130 +3,67 @@
 const unsigned FLIPPED_HORIZONTALLY_FLAG  = 0x80000000;
 const unsigned FLIPPED_VERTICALLY_FLAG    = 0x40000000;
 const unsigned FLIPPED_DIAGONALLY_FLAG    = 0x20000000;
+const int backgroundWidth = 18;
+const int backgroundHeight = 17;
 
 void WallSet::LoadWallSet(std::string wallSetName)
 {
     std::ifstream ifs((".\\WALLSETS\\" + wallSetName + ".tmj").c_str());
-    std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
+    std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));    
     json::jobject parsedObject = json::jobject::parse(content);
-
+    
     tileWidth = parsedObject["tilewidth"];
     tileHeight = parsedObject["tileheight"];
-    tilesetWidth = parsedObject["tilesetwidth"];
-    tilesetHeight = parsedObject["tilesetheight"];
+    tilesetWidth = parsedObject["width"];
+    tilesetHeight = parsedObject["height"];
 
-    LoadPartData(parsedObject, "FORWARDA", &FORWARD_A);
-    LoadPartData(parsedObject, "SIDEA", &SIDE_A);
-    LoadPartData(parsedObject, "FORWARDB", &FORWARD_B);
-    LoadPartData(parsedObject, "SIDEB", &SIDE_B);    
-    LoadPartData(parsedObject, "FORWARDC", &FORWARD_C);
-    LoadPartData(parsedObject, "SIDEC", &SIDE_C);
-    LoadPartData(parsedObject, "FARSIDEC", &FARSIDE_C);
-    LoadPartData(parsedObject, "FORWARDD", &FORWARD_D);
-    LoadPartData(parsedObject, "SIDED", &SIDE_D);
-    LoadPartData(parsedObject, "FARSIDED1", &FARSIDE_D1);
-    LoadPartData(parsedObject, "FARSIDED2", &FARSIDE_D2);
+    for (auto it = AltWallPartStrings.begin(); it != AltWallPartStrings.end(); ++it) 
+    {
+        WallTileMap[it->second] = parsedObject[it->first];
+    }
 
-    TILESHEET = load_bitmap((".\\WALLSETS\\" + ((std::string)parsedObject["TileSet"]) + ".bmp").c_str(), CommonGUI::Instance().GetPalette());    
+    TILESHEET = load_bitmap((".\\WALLSETS\\" + ((std::string)parsedObject["TileSet"]) + ".bmp").c_str(), CommonGUI::Instance().GetPalette());
     TILE = create_bitmap(tileWidth, tileHeight);
 }
 
-void WallSet::LoadPartData(json::jobject parsedObject, std::string key, WallPart *partToLoad)
+void WallSet::DrawWall(BITMAP *BUFFER, AltWallPartId wallPart)
 {
-    if(parsedObject.has_key(key))
-    {
-        json::jobject jsonObj = parsedObject[key];
-        partToLoad->height = jsonObj["height"];
-        partToLoad->width = jsonObj["width"];
-        partToLoad->tileData = jsonObj["data"];
-        partToLoad->startY = jsonObj["starty"];
-        if(jsonObj.has_key("leftx"))
-            partToLoad->leftX = jsonObj["leftx"];
-        if(jsonObj.has_key("leftx-list"))
-            partToLoad->leftXList = jsonObj["leftx-list"];
-        if(jsonObj.has_key("rightx"))
-            partToLoad->rightX = jsonObj["rightx"];
-    }
-}
+    int tilesetWidth = 16;
+    int tilesetHeight = 11;
 
-void WallSet::DrawWall(BITMAP *BUFFER, WallPartId wallPart, int xPosIndex, bool flip)
-{
-    switch(wallPart)
-    {
-        case FORWARDA:
-            DrawWall(BUFFER, FORWARD_A, FORWARD_A.leftXList[xPosIndex], flip);
-            break;
-        case FORWARDB:
-            DrawWall(BUFFER, FORWARD_B, FORWARD_B.leftXList[xPosIndex], flip);
-            break;
-        case FORWARDC:
-            DrawWall(BUFFER, FORWARD_C, FORWARD_C.leftXList[xPosIndex], flip);
-            break;
-        case FORWARDD:
-            DrawWall(BUFFER, FORWARD_D, FORWARD_D.leftXList[xPosIndex], flip);
-            break;
-        case SIDEA:
-            DrawWall(BUFFER, SIDE_A, flip? SIDE_A.rightX : SIDE_A.leftX, flip);
-            break;
-        case SIDEB:
-            DrawWall(BUFFER, SIDE_B, flip? SIDE_B.rightX : SIDE_B.leftX, flip);
-            break;
-        case SIDEC:
-            DrawWall(BUFFER, SIDE_C, flip? SIDE_C.rightX : SIDE_C.leftX, flip);
-            break;
-        case SIDED:
-            DrawWall(BUFFER, SIDE_D, flip? SIDE_D.rightX : SIDE_D.leftX, flip);
-            break;
-        case FARSIDEC:
-            DrawWall(BUFFER, FARSIDE_C, flip? FARSIDE_C.rightX : FARSIDE_C.leftX, flip);
-            break;
-        case FARSIDED1:
-            DrawWall(BUFFER, FARSIDE_D1, flip? FARSIDE_D1.rightX : FARSIDE_D1.leftX, flip);
-            break;
-        case FARSIDED2:
-            DrawWall(BUFFER, FARSIDE_D2, flip? FARSIDE_D2.rightX : FARSIDE_D2.leftX, flip);
-            break;
-        default:
-            break;
-    }
-}
-
-void WallSet::DrawWall(BITMAP *BUFFER, WallPart wallObj, int startX, bool flip)
-{
-    int destXPos = startX;
-    int destYPos = wallObj.startY;
+    int destXPos = 0;
+    int destYPos = 0;
     int srcXPos = 0;
     int srcYPos = 0;
 
     unsigned tile_index = 0;
 
-    for (int y = 0; y < wallObj.height; y++)
+    for (int y = 0; y < backgroundHeight; y++)
     {
-        destXPos = startX;
-        tile_index = flip ? (y + 1) * wallObj.width - 1 : y * wallObj.width;
+        destXPos = 0;
+        tile_index = y * backgroundWidth;
 
-        for (int x = 0; x < wallObj.width; x++)
+        for (int x = 0; x < backgroundWidth; x++)
         {
-            bool H = wallObj.tileData[tile_index] & FLIPPED_HORIZONTALLY_FLAG;
-            unsigned tileID = wallObj.tileData[tile_index];
-
+            unsigned tileID = WallTileMap[wallPart][tile_index];
+            bool flipped_horizontally = (tileID & FLIPPED_HORIZONTALLY_FLAG);
+            bool flipped_vertically = (tileID & FLIPPED_VERTICALLY_FLAG);
             tileID &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
-
             srcXPos = tileWidth * ((tileID - 1) % tilesetWidth);
             srcYPos = tileHeight * floor((tileID - 1) / tilesetWidth);
 
-            if (flip)
-            {
-                clear_bitmap(TILE);
-                masked_blit(TILESHEET, TILE, srcXPos, srcYPos, 0, 0, tileWidth, tileHeight);
+            clear_bitmap(TILE);
+            blit(TILESHEET, TILE, srcXPos, srcYPos, 0, 0, tileWidth, tileHeight);
+            if(flipped_horizontally && flipped_vertically)
+                draw_sprite_vh_flip(BUFFER, TILE, destXPos, destYPos);
+            else if(flipped_horizontally)
                 draw_sprite_h_flip(BUFFER, TILE, destXPos, destYPos);
-            }
+            else if(flipped_vertically)
+                draw_sprite_v_flip(BUFFER, TILE, destXPos, destYPos);
             else
-            {
-                masked_blit(TILESHEET, BUFFER, srcXPos, srcYPos, destXPos, destYPos, tileWidth, tileHeight);
-            }
+                masked_blit(TILE, BUFFER, 0, 0, destXPos, destYPos, tileWidth, tileHeight);
 
-            tile_index += flip ? -1 : 1;
+            tile_index += 1;
             destXPos += tileWidth;
         }
 

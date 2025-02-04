@@ -4,10 +4,11 @@ DungeonViewState DungeonViewState::mDungeonViewState;
 
 void DungeonViewState::InitState()
 {
-    BUFFER = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
+    DISPLAY = create_video_bitmap(SCREEN_W, SCREEN_H);
+    BUFFER = create_video_bitmap(SCREEN_W, SCREEN_H);
     mazeUIObj.Init(BUFFER);
     dungeonObj.LoadDungeon();
-    mazeRenderer.Init(dungeonObj);
+    mazeRenderer.Init(BUFFER, dungeonObj);
 
     facing = NORTH;
     playerX = 1;
@@ -15,7 +16,7 @@ void DungeonViewState::InitState()
 
     ticks = 0;
     mouseDebounce = 0;
-    	
+
 	theme = load_midi((".\\MUSIC\\" + dungeonObj.Theme + ".MID").c_str());
 	play_midi(theme, TRUE);    
 }
@@ -179,19 +180,16 @@ void DungeonViewState::Render(GameProcessor* game)
     }
 
     if(firstRender)
-        mazeUIObj.DrawMazeBackground();
-
+        mazeUIObj.DrawMazeUI();
     mazeRenderer.RenderVisionCone(dungeonObj, wallCone, decoCone);    
-    draw_sprite(BUFFER, mazeRenderer.MAZEVIEW, 72, 8);    
-    mazeUIObj.DrawMazeUI(72, 0, dungeonObj, facing, playerX, playerY, game, !firstRender);    
-
+    
     rectfill(BUFFER, 8, 8, 100, 20, 66);
     sprintf(fps_text, "FPS: %.2f", fps);
     textout_ex(BUFFER, font, fps_text, 10, 10, 16, -1);
     frame_count++;
 
     show_mouse(BUFFER);
-    draw_sprite(screen, BUFFER, 0, 0);
+    blit(BUFFER, DISPLAY, 0, 0, 0, 0, 320, 200);
     
     firstRender = false;
 }

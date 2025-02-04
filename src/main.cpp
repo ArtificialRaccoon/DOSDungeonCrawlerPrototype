@@ -22,7 +22,7 @@ int main() {
     LOCK_FUNCTION(timer); //Set timer function
     install_int_ex(timer, BPS_TO_TIMER(60));
 
-    objGame.ChangeState(TownState::Instance());
+    objGame.ChangeState(DungeonViewState::Instance());
 	while ( true )
 	{
 	    while(ticks == 0)

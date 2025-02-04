@@ -18,7 +18,7 @@ class WallSet
         WallSet() {}
         virtual ~WallSet() {}
         void LoadWallSet(std::string wallSetName);    
-        void DrawWall(BITMAP *BUFFER, AltWallPartId wallPart);
+        void DrawWall(BITMAP *BUFFER, WallPartId wallPart);
 
     private:
         int tilesetWidth;
@@ -26,13 +26,13 @@ class WallSet
         int tileWidth;
         int tileHeight;
         
-        std::unordered_map<AltWallPartId, std::vector<int>> WallTileMap;
+        std::unordered_map<WallPartId, std::vector<int>> WallTileMap;
 
         BITMAP* TILE;
         BITMAP* TILESHEET;
 
     private:
-        std::unordered_map<std::string, AltWallPartId> AltWallPartStrings = 
+        std::unordered_map<std::string, WallPartId> WallPartStrings = 
         {
             {"FORWARDA_LEFT1", FORWARDA_LEFT1}, {"FORWARDA_CENTER", FORWARDA_CENTER}, {"FORWARDA_RIGHT1", FORWARDA_RIGHT1},
             {"FORWARDB_LEFT1", FORWARDB_LEFT1}, {"FORWARDB_CENTER", FORWARDB_CENTER}, {"FORWARDB_RIGHT1", FORWARDB_RIGHT1},

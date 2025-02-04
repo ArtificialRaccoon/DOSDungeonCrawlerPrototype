@@ -17,7 +17,7 @@ void WallSet::LoadWallSet(std::string wallSetName)
     tilesetWidth = parsedObject["width"];
     tilesetHeight = parsedObject["height"];
 
-    for (auto it = AltWallPartStrings.begin(); it != AltWallPartStrings.end(); ++it) 
+    for (auto it = WallPartStrings.begin(); it != WallPartStrings.end(); ++it) 
     {
         WallTileMap[it->second] = parsedObject[it->first];
     }
@@ -26,7 +26,7 @@ void WallSet::LoadWallSet(std::string wallSetName)
     TILE = create_bitmap(tileWidth, tileHeight);
 }
 
-void WallSet::DrawWall(BITMAP *BUFFER, AltWallPartId wallPart)
+void WallSet::DrawWall(BITMAP *BUFFER, WallPartId wallPart)
 {
     int tilesetWidth = 16;
     int tilesetHeight = 11;

@@ -15,5 +15,5 @@ void MazeViewRenderer::Init(BITMAP* inputBUFFER, Dungeon &currentDungeon)
 
 void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wallCone, VisionCone &decoCone)
 {
-  currentDungeon.WallSets[0].DrawWall(MAZEVIEW, AltWallPartId::FORWARDC_RIGHT1);
+  currentDungeon.WallSets[0].DrawWall(MAZEVIEW, WallPartId::FORWARDC_RIGHT1);
 }

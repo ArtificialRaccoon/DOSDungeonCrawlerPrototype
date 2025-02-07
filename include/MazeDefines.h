@@ -18,7 +18,7 @@ typedef enum
     FARSIDED2_LEFT1, FARSIDED2_RIGHT1
 } WallPartId;
 
-#define MAZEVIEW_X 88
+#define MAZEVIEW_X 72
 #define MAZEVIEW_Y 8
 #define MAZEVIEW_WIDTH 176
 #define MAZEVIEW_HEIGHT 120

@@ -38,6 +38,7 @@ class DungeonViewState : public BaseState
         int deltaX, deltaY;
         int ticks, mouseDebounce;
         bool interactPressed = false;
+        bool screenInvalidated = false;
         Dungeon dungeonObj;
         VisionCone wallCone, decoCone;
         MazeUI mazeUIObj;

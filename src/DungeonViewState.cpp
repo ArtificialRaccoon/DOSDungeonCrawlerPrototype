@@ -42,12 +42,14 @@ void DungeonViewState::AquireInput(GameProcessor* game)
                 break;
             case KEY_A:
                 facing = (Rotation)(Wrap((int)facing - 1, 0, 3));
+                screenInvalidated = true;
                 break;
             case KEY_S:
                 deltaY = -1;
                 break;
             case KEY_D:
                 facing = (Rotation)(Wrap((int)facing + 1, 0, 3));
+                screenInvalidated = true;
                 break;
             case KEY_Q:
                 deltaX = 1;
@@ -181,8 +183,10 @@ void DungeonViewState::Render(GameProcessor* game)
 
     if(firstRender)
         mazeUIObj.DrawMazeUI();
-    mazeRenderer.RenderVisionCone(dungeonObj, wallCone, decoCone);    
-    
+
+    if(firstRender || screenInvalidated)
+        mazeRenderer.RenderVisionCone(dungeonObj, wallCone, decoCone);
+
     rectfill(BUFFER, 8, 8, 100, 20, 66);
     sprintf(fps_text, "FPS: %.2f", fps);
     textout_ex(BUFFER, font, fps_text, 10, 10, 16, -1);
@@ -192,42 +196,49 @@ void DungeonViewState::Render(GameProcessor* game)
     blit(BUFFER, DISPLAY, 0, 0, 0, 0, 320, 200);
     
     firstRender = false;
+    screenInvalidated = false;
 }
 
 void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int deltaY, int deltaX)
 {
     int a, b, mapN1, mapN2;
-    bool visionChanged = false;
 
     // Update player position
-    if (calculateForX) {
-        if (dungeonObj.WallMap[playerY - (deltaSign * deltaX)][playerX + (deltaSign * deltaY)].WallSetId < 1) {
+    if (calculateForX)
+    {
+        if (dungeonObj.WallMap[playerY - (deltaSign * deltaX)][playerX + (deltaSign * deltaY)].WallSetId < 1) 
+        {
             bool canMove = false;
             int doorIndex = dungeonObj.WallMap[playerY - (deltaSign * deltaX)][playerX + (deltaSign * deltaY)].DoorId;
             if(doorIndex > 0 && (dungeonObj.DoorList.at(doorIndex).IsOpen && doorIndex > 0) || doorIndex == 0)
                 canMove = true;
 
-            if(canMove){
+            if(canMove)
+            {
                 playerX += deltaSign * deltaY;
                 playerY -= deltaSign * deltaX;
-                visionChanged = true;
+                screenInvalidated |= (deltaSign * deltaY != 0) || (deltaSign * deltaX != 0);
             }
         }
         a = playerX;
         b = playerY;
         mapN1 = dungeonObj.WallMap.size();
         mapN2 = dungeonObj.WallMap[0].size();
-    } else {
-        if (dungeonObj.WallMap[playerY + (deltaSign * deltaY)][playerX + (deltaSign * deltaX)].WallSetId < 1) {
+    } 
+    else
+    {
+        if (dungeonObj.WallMap[playerY + (deltaSign * deltaY)][playerX + (deltaSign * deltaX)].WallSetId < 1)
+        {
             bool canMove = false;
             int doorIndex = dungeonObj.WallMap[playerY + (deltaSign * deltaY)][playerX + (deltaSign * deltaX)].DoorId;
             if(doorIndex > 0 && (dungeonObj.DoorList.at(doorIndex).IsOpen && doorIndex > 0) || doorIndex == 0)
                 canMove = true;
 
-            if(canMove){
+            if(canMove)
+            {
                 playerY += deltaSign * deltaY;
                 playerX += deltaSign * deltaX;
-                visionChanged = true;
+                screenInvalidated |= (deltaSign * deltaY != 0) || (deltaSign * deltaX != 0);
             }
         }
         a = playerY;

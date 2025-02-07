@@ -3,8 +3,8 @@
 const unsigned FLIPPED_HORIZONTALLY_FLAG  = 0x80000000;
 const unsigned FLIPPED_VERTICALLY_FLAG    = 0x40000000;
 const unsigned FLIPPED_DIAGONALLY_FLAG    = 0x20000000;
-const int backgroundWidth = 18;
-const int backgroundHeight = 17;
+const int backgroundWidth = 22;
+const int backgroundHeight = 15;
 
 void WallSet::LoadWallSet(std::string wallSetName)
 {
@@ -26,10 +26,10 @@ void WallSet::LoadWallSet(std::string wallSetName)
     TILE = create_bitmap(tileWidth, tileHeight);
 }
 
-void WallSet::DrawWall(BITMAP *BUFFER, WallPartId wallPart)
+void WallSet::DrawWall(BITMAP *BUFFER, WallPartId wallPart, int layer, std::vector<TileReference> &lastDrawn)
 {
-    int tilesetWidth = 16;
-    int tilesetHeight = 11;
+    int tilesetWidth = 26;
+    int tilesetHeight = 22;
 
     int destXPos = 0;
     int destYPos = 0;
@@ -44,29 +44,36 @@ void WallSet::DrawWall(BITMAP *BUFFER, WallPartId wallPart)
         tile_index = y * backgroundWidth;
 
         for (int x = 0; x < backgroundWidth; x++)
-        {
+        {            
             unsigned tileID = WallTileMap[wallPart][tile_index];
-            bool flipped_horizontally = (tileID & FLIPPED_HORIZONTALLY_FLAG);
-            bool flipped_vertically = (tileID & FLIPPED_VERTICALLY_FLAG);
-            tileID &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
-            srcXPos = tileWidth * ((tileID - 1) % tilesetWidth);
-            srcYPos = tileHeight * floor((tileID - 1) / tilesetWidth);
+            TileReference newTile(layer, tileID);
 
-            clear_bitmap(TILE);
-            blit(TILESHEET, TILE, srcXPos, srcYPos, 0, 0, tileWidth, tileHeight);
-            if(flipped_horizontally && flipped_vertically)
-                draw_sprite_vh_flip(BUFFER, TILE, destXPos, destYPos);
-            else if(flipped_horizontally)
-                draw_sprite_h_flip(BUFFER, TILE, destXPos, destYPos);
-            else if(flipped_vertically)
-                draw_sprite_v_flip(BUFFER, TILE, destXPos, destYPos);
-            else
-                masked_blit(TILE, BUFFER, 0, 0, destXPos, destYPos, tileWidth, tileHeight);
+            if (lastDrawn[tile_index] != newTile)
+            {                
+                // Update lastDrawn with the newly drawn tile
+                lastDrawn[tile_index] = newTile;
+     
+                bool flipped_horizontally = (tileID & FLIPPED_HORIZONTALLY_FLAG);
+                bool flipped_vertically = (tileID & FLIPPED_VERTICALLY_FLAG);
+                tileID &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
+                srcXPos = tileWidth * ((tileID - 1) % tilesetWidth);
+                srcYPos = tileHeight * floor((tileID - 1) / tilesetWidth);
+            
+                clear_bitmap(TILE);
+                blit(TILESHEET, TILE, srcXPos, srcYPos, 0, 0, tileWidth, tileHeight);
+                if(flipped_horizontally && flipped_vertically)
+                    draw_sprite_vh_flip(BUFFER, TILE, destXPos, destYPos);
+                else if(flipped_horizontally)
+                    draw_sprite_h_flip(BUFFER, TILE, destXPos, destYPos);
+                else if(flipped_vertically)
+                    draw_sprite_v_flip(BUFFER, TILE, destXPos, destYPos);
+                else
+                    masked_blit(TILE, BUFFER, 0, 0, destXPos, destYPos, tileWidth, tileHeight);
+            }
 
             tile_index += 1;
             destXPos += tileWidth;
         }
-
         destYPos += tileHeight;
     }
 }

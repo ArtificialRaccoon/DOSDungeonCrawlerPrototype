@@ -184,7 +184,7 @@ void DungeonViewState::Render(GameProcessor* game)
     if(firstRender)
         mazeUIObj.DrawMazeUI();
 
-    if(firstRender || screenInvalidated)
+    //if(firstRender || screenInvalidated)
         mazeRenderer.RenderVisionCone(dungeonObj, wallCone, decoCone);
 
     rectfill(BUFFER, 8, 8, 100, 20, 66);
@@ -260,17 +260,18 @@ int DungeonViewState::Wrap(int const kX, int const kLowerBound, int const kUpper
     return kLowerBound + (kX >= 0 ? kX % d : -kX % d ? d - (-kX % d) : 0);
 }
 
-void DungeonViewState::UpdateCone(MapSpace* coneArray, bool calculateForX, int a, int b, int mapN1, int mapN2, int deltaSign, int xOffset, int arrayLen, int pivotPoint) {
+void DungeonViewState::UpdateCone(MapSpace* coneArray, bool calculateForX, int a, int b, int mapN1, int mapN2, int deltaSign, int xOffset, int arrayLen, int pivotPoint) 
+{
     int absLen = (arrayLen - 1);
 
-    for (int i = 0; i < arrayLen; i++) {
-        if ((a + (deltaSign * xOffset)) >= 0 && (a + (deltaSign * xOffset)) < mapN1 && (b + (pivotPoint + i)) >= 0 && (b + (pivotPoint + i)) < mapN2){
-            if(calculateForX){
-                coneArray[(deltaSign < 0 ? abs(i - absLen) : i)] = dungeonObj.WallMap[b + (pivotPoint + i)][a + (deltaSign * xOffset)];                
-            }
-            else{
-                coneArray[(deltaSign > 0 ? abs(i - absLen) : i)] = dungeonObj.WallMap[a + (deltaSign * xOffset)][b + (pivotPoint + i)];         
-            }
+    for (int i = 0; i < arrayLen; i++) 
+    {
+        if ((a + (deltaSign * xOffset)) >= 0 && (a + (deltaSign * xOffset)) < mapN1 && (b + (pivotPoint + i)) >= 0 && (b + (pivotPoint + i)) < mapN2)
+        {
+            if(calculateForX)
+                coneArray[(deltaSign < 0 ? abs(i - absLen) : i)] = dungeonObj.WallMap[b + (pivotPoint + i)][a + (deltaSign * xOffset)];
+            else
+                coneArray[(deltaSign > 0 ? abs(i - absLen) : i)] = dungeonObj.WallMap[a + (deltaSign * xOffset)][b + (pivotPoint + i)];
         }
     }
 }

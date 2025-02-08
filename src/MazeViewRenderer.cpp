@@ -21,37 +21,19 @@ void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wal
         
 	for(int i = FORWARDD_LEFT3; i <= FORWARDD_RIGHT3; i++)
 	{
-		if(wallCone.Tier1[i].TypeFlag != SpaceType::EMPTY)
-			currentDungeon.WallSets[wallCone.Tier1[i].WallSetId - 1].DrawWall(MAZEVIEW, (WallPartId)i, 0, lastDrawn);			
+		if(wallCone.Tier0[i].TypeFlag != SpaceType::EMPTY)
+			currentDungeon.WallSets[wallCone.Tier0[i].WallSetId - 1].DrawWall(MAZEVIEW, (WallPartId)i, 0, lastDrawn);			
 	}	
-
-	/*if(wallCone.Tier1[5].TypeFlag & SpaceType::DOOR)
-        currentDungeon.DoorSets[0].DrawWall(MAZEVIEW, FARSIDED1_LEFT1, 0, lastDrawn);	
-	if(wallCone.Tier1[5].TypeFlag & SpaceType::DOOR)
-        currentDungeon.DoorSets[0].DrawWall(MAZEVIEW, FARSIDED1_RIGHT1, 0, lastDrawn);*/
 
 	for(int i = FARSIDED2_LEFT1; i <= FARSIDED2_RIGHT1; i++)
 	{
 		int conePosition = i - FARSIDED2_LEFT1; 
 		if(conePosition >= 3)
 			conePosition++;
-		
+
 		if(wallCone.Tier1[conePosition].TypeFlag != SpaceType::EMPTY)
 			currentDungeon.WallSets[wallCone.Tier1[conePosition].WallSetId - 1].DrawWall(MAZEVIEW, (WallPartId)i, 0, lastDrawn);
 	}
-
-	/*if(wallCone.Tier1[0].TypeFlag & SpaceType::WALL)
-        currentDungeon.WallSets[0].DrawWall(MAZEVIEW, FARSIDED2_LEFT1, 0, lastDrawn);
-	if(wallCone.Tier1[1].TypeFlag & SpaceType::WALL)
-        currentDungeon.WallSets[0].DrawWall(MAZEVIEW, FARSIDED1_LEFT1, 0, lastDrawn);
-	if(wallCone.Tier1[2].TypeFlag & SpaceType::WALL)
-        currentDungeon.WallSets[0].DrawWall(MAZEVIEW, SIDED_LEFT1, 0, lastDrawn);
-	if(wallCone.Tier1[4].TypeFlag & SpaceType::WALL)
-        currentDungeon.WallSets[0].DrawWall(MAZEVIEW, SIDED_RIGHT1, 0, lastDrawn);
-	if(wallCone.Tier1[5].TypeFlag & SpaceType::WALL)
-        currentDungeon.WallSets[0].DrawWall(MAZEVIEW, FARSIDED1_RIGHT1, 0, lastDrawn);	
-	if(wallCone.Tier1[6].TypeFlag & SpaceType::WALL)
-        currentDungeon.WallSets[0].DrawWall(MAZEVIEW, FARSIDED2_RIGHT1, 0, lastDrawn);*/
 
 	for(int i = FORWARDC_LEFT2; i <= FORWARDC_RIGHT2; i++)
 	{
@@ -60,14 +42,14 @@ void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wal
 			currentDungeon.WallSets[wallCone.Tier1[conePosition].WallSetId - 1].DrawWall(MAZEVIEW, (WallPartId)i, 0, lastDrawn);		
 	}
 
-	if(wallCone.Tier2[1].TypeFlag & SpaceType::WALL)
-        currentDungeon.WallSets[0].DrawWall(MAZEVIEW, FARSIDEC_LEFT1, 0, lastDrawn);
-	if(wallCone.Tier2[2].TypeFlag & SpaceType::WALL)
-        currentDungeon.WallSets[0].DrawWall(MAZEVIEW, SIDEC_LEFT1, 0, lastDrawn);
-	if(wallCone.Tier2[4].TypeFlag & SpaceType::WALL)
-        currentDungeon.WallSets[0].DrawWall(MAZEVIEW, SIDEC_RIGHT1, 0, lastDrawn);
-	if(wallCone.Tier2[5].TypeFlag & SpaceType::WALL)
-        currentDungeon.WallSets[0].DrawWall(MAZEVIEW, FARSIDEC_RIGHT1, 0, lastDrawn);	
+	for(int i = FARSIDEC_LEFT1; i <= FARSIDEC_RIGHT1; i++)
+	{
+		int conePosition = i - FARSIDEC_LEFT1 + 1;
+		if(conePosition >= 3)
+			conePosition++;		
+		if(wallCone.Tier2[conePosition].TypeFlag != SpaceType::EMPTY)
+			currentDungeon.WallSets[wallCone.Tier2[conePosition].WallSetId - 1].DrawWall(MAZEVIEW, (WallPartId)i, 0, lastDrawn);		
+	}
 
 	for(int i = FORWARDB_LEFT1; i <= FORWARDB_RIGHT1; i++)
 	{
@@ -76,10 +58,14 @@ void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wal
 			currentDungeon.WallSets[wallCone.Tier2[conePosition].WallSetId - 1].DrawWall(MAZEVIEW, (WallPartId)i, 0, lastDrawn);
 	}
 
-	if(wallCone.Tier3[1].TypeFlag & SpaceType::WALL)
-        currentDungeon.WallSets[0].DrawWall(MAZEVIEW, SIDEB_LEFT1, 0, lastDrawn);
-	if(wallCone.Tier3[3].TypeFlag & SpaceType::WALL)
-        currentDungeon.WallSets[0].DrawWall(MAZEVIEW, SIDEB_RIGHT1, 0, lastDrawn);
+	for(int i = SIDEB_LEFT1; i <= SIDEB_RIGHT1; i++)
+	{
+		int conePosition = i - SIDEB_LEFT1 + 1;
+		if(conePosition >= 2)
+			conePosition++;			
+		if(wallCone.Tier3[conePosition].TypeFlag != SpaceType::EMPTY)
+			currentDungeon.WallSets[wallCone.Tier3[conePosition].WallSetId - 1].DrawWall(MAZEVIEW, (WallPartId)i, 0, lastDrawn);
+	}
 
 	for(int i = FORWARDA_LEFT1; i <= FORWARDA_RIGHT1; i++)
 	{
@@ -88,8 +74,12 @@ void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wal
 			currentDungeon.WallSets[wallCone.Tier3[conePosition].WallSetId - 1].DrawWall(MAZEVIEW, (WallPartId)i, 0, lastDrawn);
 	}
 
-	if(wallCone.Tier4[0].TypeFlag & SpaceType::WALL)
-        currentDungeon.WallSets[0].DrawWall(MAZEVIEW, SIDEA_LEFT1, 0, lastDrawn);
-	if(wallCone.Tier4[2].TypeFlag & SpaceType::WALL)
-        currentDungeon.WallSets[0].DrawWall(MAZEVIEW, SIDEA_RIGHT1, 0, lastDrawn);
+	for(int i = SIDEA_LEFT1; i <= SIDEA_RIGHT1; i++)
+	{
+		int conePosition = i - SIDEA_LEFT1;
+		if(conePosition >= 1)
+			conePosition++;		
+		if(wallCone.Tier4[conePosition].TypeFlag != SpaceType::EMPTY)
+			currentDungeon.WallSets[wallCone.Tier4[conePosition].WallSetId - 1].DrawWall(MAZEVIEW, (WallPartId)i, 0, lastDrawn);
+	}
 }

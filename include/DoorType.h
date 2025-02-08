@@ -8,7 +8,7 @@ class DoorType
         DoorType() {}
         virtual ~DoorType() {}
         int Id;
-        int DoorSetId;
+        int WallSetId;
         std::string DoorSpriteSheet;
         bool IsOpen = false;
         std::map<int, int> Combination;

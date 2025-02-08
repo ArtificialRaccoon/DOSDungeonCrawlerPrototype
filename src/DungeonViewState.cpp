@@ -184,7 +184,7 @@ void DungeonViewState::Render(GameProcessor* game)
     if(firstRender)
         mazeUIObj.DrawMazeUI();
 
-    //if(firstRender || screenInvalidated)
+    if(firstRender || screenInvalidated)
         mazeRenderer.RenderVisionCone(dungeonObj, wallCone, decoCone);
 
     rectfill(BUFFER, 8, 8, 100, 20, 66);

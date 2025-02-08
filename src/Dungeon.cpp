@@ -41,7 +41,36 @@ void Dungeon::LoadDungeon()
             row.push_back(newWall);
         }
         WallMap.push_back(row);
-    }   
+    }
+
+    vector<json::jobject> doorArray = dungeonObj["Doors"];
+    for(int i = 0; i < doorArray.size(); i++)
+    {
+        DoorType doorObj;
+        json::jobject doorJson = doorArray[i];         
+        vector<int> locArray = doorJson["Location"]; 
+        doorObj.Id = doorJson["Id"];
+        doorObj.WallSetId = doorJson["WallSetId"];
+        doorObj.DoorSpriteSheet = string(doorJson["DoorSprite"]);        
+        WallMap[locArray[0]][locArray[1]].TypeFlag = WallMap[locArray[0]][locArray[1]].TypeFlag | SpaceType::DOOR; 
+        WallMap[locArray[0]][locArray[1]].DoorId = doorJson["Id"];
+        WallMap[locArray[0]][locArray[1]].WallSetId = doorObj.WallSetId;
+
+        //Load Combination
+        vector<json::jobject> combination = doorJson["Combination"];
+        for(int j = 0; j < combination.size(); j++)
+        {
+            json::jobject comboItem = combination[j];
+            int switchId = comboItem["SwitchId"];
+            int switchState = comboItem["SwitchState"];
+            doorObj.Combination[switchId] = switchState;
+        }
+    
+        //Load Sound Effect
+        Effects[string(doorJson["Effect"])] = load_sample((".\\SFX\\" + string(doorJson["Effect"]) + ".WAV").c_str());
+        doorObj.Effect = string(doorJson["Effect"]);
+        DoorList[doorJson["Id"]] = doorObj;        
+    } 
 }
 
 Dungeon::~Dungeon()

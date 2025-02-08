@@ -17,40 +17,45 @@ void WallSet::LoadWallSet(std::string wallSetName)
     tilesetWidth = parsedObject["width"];
     tilesetHeight = parsedObject["height"];
 
-    WallTileMap.push_back(parsedObject["FORWARDA_CENTER"]);
-    WallTileMap.push_back(parsedObject["FORWARDA_LEFT1"]);
-    WallTileMap.push_back(parsedObject["FORWARDA_RIGHT1"]);
-    WallTileMap.push_back(parsedObject["FORWARDB_CENTER"]);
-    WallTileMap.push_back(parsedObject["FORWARDB_LEFT1"]);
-    WallTileMap.push_back(parsedObject["FORWARDB_RIGHT1"]);
-    WallTileMap.push_back(parsedObject["FORWARDC_CENTER"]);
-    WallTileMap.push_back(parsedObject["FORWARDC_LEFT1"]);
-    WallTileMap.push_back(parsedObject["FORWARDC_LEFT2"]);
-    WallTileMap.push_back(parsedObject["FORWARDC_RIGHT1"]);
-    WallTileMap.push_back(parsedObject["FORWARDC_RIGHT2"]);
-    WallTileMap.push_back(parsedObject["FORWARDD_CENTER"]);
-    WallTileMap.push_back(parsedObject["FORWARDD_LEFT1"]);
+    WallTileMap.push_back(parsedObject["FORWARDD_LEFT3"]);    
     WallTileMap.push_back(parsedObject["FORWARDD_LEFT2"]);
-    WallTileMap.push_back(parsedObject["FORWARDD_LEFT3"]);
+    WallTileMap.push_back(parsedObject["FORWARDD_LEFT1"]);
+    WallTileMap.push_back(parsedObject["FORWARDD_CENTER"]);
     WallTileMap.push_back(parsedObject["FORWARDD_RIGHT1"]);
     WallTileMap.push_back(parsedObject["FORWARDD_RIGHT2"]);
     WallTileMap.push_back(parsedObject["FORWARDD_RIGHT3"]);
 
-    WallTileMap.push_back(parsedObject["SIDEA_LEFT1"]);
-    WallTileMap.push_back(parsedObject["SIDEA_RIGHT1"]);
-    WallTileMap.push_back(parsedObject["SIDEB_LEFT1"]);
-    WallTileMap.push_back(parsedObject["SIDEB_RIGHT1"]);
+    WallTileMap.push_back(parsedObject["FARSIDED2_LEFT1"]);    
+    WallTileMap.push_back(parsedObject["FARSIDED1_LEFT1"]);    
+    WallTileMap.push_back(parsedObject["SIDED_LEFT1"]);
+    WallTileMap.push_back(parsedObject["SIDED_RIGHT1"]); 
+    WallTileMap.push_back(parsedObject["FARSIDED1_RIGHT1"]);
+    WallTileMap.push_back(parsedObject["FARSIDED2_RIGHT1"]);  
+
+    WallTileMap.push_back(parsedObject["FORWARDC_LEFT2"]);
+    WallTileMap.push_back(parsedObject["FORWARDC_LEFT1"]);    
+    WallTileMap.push_back(parsedObject["FORWARDC_CENTER"]);
+    WallTileMap.push_back(parsedObject["FORWARDC_RIGHT1"]);
+    WallTileMap.push_back(parsedObject["FORWARDC_RIGHT2"]);
+
+    WallTileMap.push_back(parsedObject["FARSIDEC_LEFT1"]);    
     WallTileMap.push_back(parsedObject["SIDEC_LEFT1"]);
     WallTileMap.push_back(parsedObject["SIDEC_RIGHT1"]);
-    WallTileMap.push_back(parsedObject["SIDED_LEFT1"]);
-    WallTileMap.push_back(parsedObject["SIDED_RIGHT1"]);  
-
-    WallTileMap.push_back(parsedObject["FARSIDEC_LEFT1"]);
     WallTileMap.push_back(parsedObject["FARSIDEC_RIGHT1"]);
-    WallTileMap.push_back(parsedObject["FARSIDED1_LEFT1"]);
-    WallTileMap.push_back(parsedObject["FARSIDED1_RIGHT1"]);
-    WallTileMap.push_back(parsedObject["FARSIDED2_LEFT1"]);
-    WallTileMap.push_back(parsedObject["FARSIDED2_RIGHT1"]);                  
+
+    WallTileMap.push_back(parsedObject["FORWARDB_LEFT1"]);
+    WallTileMap.push_back(parsedObject["FORWARDB_CENTER"]);
+    WallTileMap.push_back(parsedObject["FORWARDB_RIGHT1"]);
+
+    WallTileMap.push_back(parsedObject["SIDEB_LEFT1"]);
+    WallTileMap.push_back(parsedObject["SIDEB_RIGHT1"]);
+    
+    WallTileMap.push_back(parsedObject["FORWARDA_LEFT1"]);
+    WallTileMap.push_back(parsedObject["FORWARDA_CENTER"]);
+    WallTileMap.push_back(parsedObject["FORWARDA_RIGHT1"]);
+
+    WallTileMap.push_back(parsedObject["SIDEA_LEFT1"]);
+    WallTileMap.push_back(parsedObject["SIDEA_RIGHT1"]);
 
     TILESHEET = load_bitmap((".\\WALLSETS\\" + ((std::string)parsedObject["TileSet"]) + ".bmp").c_str(), CommonGUI::Instance().GetPalette());
     TILE = create_bitmap(tileWidth, tileHeight);

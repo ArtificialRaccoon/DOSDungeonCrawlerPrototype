@@ -3,10 +3,7 @@
 	"Name":	 "Test",
 	"WallSets": 	
 	[
-		"STN1TILE"
-	],
-	"DoorSets": 	
-	[
+		"STN1TILE",
 		"STNDTILE"
 	],	
 	"WallDeco": 	
@@ -28,5 +25,21 @@
 		1,0,0,1,1,1,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,1,
 		1,1,1,1,1,1,1,1,1,1
+	],
+	"Doors": 
+	[
+		{
+		  "Id": 1,
+		  "WallSetId": 2,
+		  "DoorSprite": "IRONDOOR",
+		  "Location": [ 4, 4 ],		  
+		  "Effect": "DOOR",
+		  "Combination": [
+			{
+			  "SwitchId": 1,
+			  "SwitchState": 0
+			}
+		  ]
+		}
 	]
 }

@@ -21,7 +21,6 @@ class Dungeon
         std::string FloorSet;
         std::string Theme;
         std::vector<WallSet> WallSets;
-        std::vector<WallSet> DoorSets;
         std::map<int, DoorType> DoorList;
         std::map<int, SwitchType> SwitchList;
         std::vector<std::vector<MapSpace>> WallMap;

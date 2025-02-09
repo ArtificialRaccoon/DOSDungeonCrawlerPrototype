@@ -1,24 +1,98 @@
 #include "MazeViewRenderer.h"
 
+const unsigned FLIPPED_HORIZONTALLY_FLAG  = 0x80000000;
+const unsigned FLIPPED_VERTICALLY_FLAG    = 0x40000000;
+const unsigned FLIPPED_DIAGONALLY_FLAG    = 0x20000000;
+const int backgroundWidth = 22;
+const int backgroundHeight = 15;
+
 void MazeViewRenderer::Init(BITMAP* inputBUFFER, Dungeon &currentDungeon)
 {    
     BACKGROUND = create_bitmap(MAZEVIEW_WIDTH, MAZEVIEW_HEIGHT);
     MAZEVIEW = create_sub_bitmap(inputBUFFER, MAZEVIEW_X, MAZEVIEW_Y, MAZEVIEW_WIDTH, MAZEVIEW_HEIGHT);    
-    BACKGROUND = load_bitmap((".\\BACKSETS\\" + currentDungeon.FloorSet + ".bmp").c_str(), CommonGUI::Instance().GetPalette());
+    LoadBackground(currentDungeon.FloorSet);
 	lastDrawn.resize(15 * 22, TileReference(-1, -1));
+}
 
-    if (!BACKGROUND) {
-      set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
-      allegro_message("Error reading backset bitmap");
-      allegro_message(currentDungeon.FloorSet.c_str());
-      exit(0);
+void MazeViewRenderer::LoadBackground(std::string backgroundName)
+{
+	std::ifstream ifs((".\\BACKSETS\\" + backgroundName + ".tmj").c_str());
+    std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));    
+    json::jobject parsedObject = json::jobject::parse(content);
+    
+    backgroundTileWidth = parsedObject["tilewidth"];
+    backgroundTileHeight = parsedObject["tileheight"];
+    backgroundTilesetWidth = parsedObject["width"];
+    backgroundTilesetHeight = parsedObject["height"];
+	normalTileMap = parsedObject["data"];
+	flippedTileMap = parsedObject["data"];
+	for (int row = 0; row < backgroundTilesetHeight; row++) 
+	{
+        std::reverse(flippedTileMap.begin() + row * backgroundTilesetWidth, flippedTileMap.begin() + (row + 1) * backgroundTilesetWidth);
+    }
+
+	BACKGROUND = load_bitmap((".\\BACKSETS\\" + ((std::string)parsedObject["TileSet"]) + ".bmp").c_str(), CommonGUI::Instance().GetPalette());
+	if (!BACKGROUND)
+	{
+		set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
+		allegro_message("Error reading backset bitmap");
+		allegro_message(backgroundName.c_str());
+		exit(0);
+    }
+
+	TILE = create_bitmap(backgroundTileWidth, backgroundTileHeight);
+}
+
+void MazeViewRenderer::DrawBackground()
+{
+	std::vector<int> *tileMap = flippedHorizontally ? &flippedTileMap : &normalTileMap;
+	int destYPos = 0;
+	for (int y = 0; y < backgroundHeight; y++)
+    {
+        int destXPos = 0;
+        unsigned tileIndex = y * backgroundWidth;
+
+        for (int x = 0; x < backgroundWidth; x++)
+        {                        
+            unsigned tileID = (*tileMap)[tileIndex];
+            TileReference newTile(0, tileID);
+
+            if (lastDrawn[tileIndex] != newTile)
+            {                
+                lastDrawn[tileIndex] = newTile;
+                if (tileID == 0)
+                {
+                    tileIndex++;
+                    destXPos += backgroundTileWidth;
+                    continue;
+                }
+
+                tileID &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);                
+                int srcXPos = backgroundTileWidth * ((tileID - 1) % backgroundTilesetWidth);
+                int srcYPos = backgroundTileHeight * ((tileID - 1) / backgroundTilesetWidth);
+
+				if (flippedHorizontally)
+                {
+                    blit(BACKGROUND, TILE, srcXPos, srcYPos, 0, 0, backgroundTileWidth, backgroundTileHeight);
+                    draw_sprite_h_flip(MAZEVIEW, TILE, destXPos, destYPos);
+                }
+				else
+					masked_blit(BACKGROUND, MAZEVIEW, srcXPos, srcYPos, destXPos, destYPos, backgroundTileWidth, backgroundTileHeight);            
+            }
+
+            tileIndex++;
+            destXPos += backgroundTileWidth;
+        }
+        destYPos += backgroundTileHeight;
     }
 }
 
 void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wallCone, VisionCone &decoCone)
 {
-	clear_bitmap(MAZEVIEW);	
-        
+	//I might want to load a list of tiles from the wallsets which have 
+	//transparency so I can only redraw those ones.  Not needed right now.
+	DrawBackground();
+
 	for(int i = FORWARDD_LEFT3; i <= FORWARDD_RIGHT3; i++)
 	{
 		if(wallCone.Tier0[i].TypeFlag != SpaceType::EMPTY)

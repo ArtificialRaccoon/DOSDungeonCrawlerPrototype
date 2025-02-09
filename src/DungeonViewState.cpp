@@ -184,7 +184,7 @@ void DungeonViewState::Render(GameProcessor* game)
     if(firstRender)
         mazeUIObj.DrawMazeUI();
 
-    if(firstRender || screenInvalidated)
+    if(firstRender || screenInvalidated)    
         mazeRenderer.RenderVisionCone(dungeonObj, wallCone, decoCone);
 
     rectfill(BUFFER, 8, 8, 100, 20, 66);
@@ -218,6 +218,8 @@ void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int delt
                 playerX += deltaSign * deltaY;
                 playerY -= deltaSign * deltaX;
                 screenInvalidated |= (deltaSign * deltaY != 0) || (deltaSign * deltaX != 0);
+                if((deltaSign * deltaY != 0) || (deltaSign * deltaX != 0))
+                    mazeRenderer.FlipBackground();
             }
         }
         a = playerX;
@@ -239,6 +241,8 @@ void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int delt
                 playerY += deltaSign * deltaY;
                 playerX += deltaSign * deltaX;
                 screenInvalidated |= (deltaSign * deltaY != 0) || (deltaSign * deltaX != 0);
+                if((deltaSign * deltaY != 0) || (deltaSign * deltaX != 0))
+                    mazeRenderer.FlipBackground();
             }
         }
         a = playerY;
@@ -246,7 +250,7 @@ void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int delt
         mapN1 = dungeonObj.WallMap[0].size();
         mapN2 = dungeonObj.WallMap.size();
     }  
-
+    
     UpdateCone(wallCone.Tier0, calculateForX, a, b, mapN1, mapN2, deltaSign, 4, 7, -3);
     UpdateCone(wallCone.Tier1, calculateForX, a, b, mapN1, mapN2, deltaSign, 3, 7, -3);
     UpdateCone(wallCone.Tier2, calculateForX, a, b, mapN1, mapN2, deltaSign, 2, 7, -3);

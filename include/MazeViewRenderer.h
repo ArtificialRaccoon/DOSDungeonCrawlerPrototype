@@ -1,6 +1,7 @@
 #ifndef MAZEVIEWRENDERER_H
 #define MAZEVIEWRENDERER_H
 
+#include <algorithm>
 #include "CommonGUI.h"
 #include "Globals.h"
 #include "MazeDefines.h"
@@ -11,12 +12,29 @@
 class MazeViewRenderer
 {
     public:
-        BITMAP *MAZEVIEW;
-        BITMAP *BACKGROUND;
         MazeViewRenderer(){}
         virtual ~MazeViewRenderer(){}
         void Init(BITMAP* inputBUFFER, Dungeon &currentDungeon);
         void RenderVisionCone(Dungeon &currentDungeon, VisionCone &wallCone, VisionCone &decoCone);
+        void FlipBackground() { flippedHorizontally = !flippedHorizontally; }
+
+    private:
+        void DrawBackground();       
+        void LoadBackground(std::string backgroundName);
+
+    private:
+        int backgroundTileWidth;
+        int backgroundTileHeight;
+        int backgroundTilesetWidth;
+        int backgroundTilesetHeight;
+        std::vector<int> normalTileMap;
+        std::vector<int> flippedTileMap;
+        BITMAP *TILE;
+        BITMAP *BACKGROUND;
+        bool flippedHorizontally = false;
+
+    private:
+        BITMAP *MAZEVIEW;        
         std::vector<TileReference> lastDrawn;
 };
 

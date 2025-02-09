@@ -9,6 +9,7 @@
 #include "DoorType.h"
 #include "SwitchType.h"
 #include "WallSet.h"
+#include "DecoSet.h"
 #include "MapSpace.h"
 
 using namespace std;
@@ -21,6 +22,7 @@ class Dungeon
         std::string FloorSet;
         std::string Theme;
         std::vector<WallSet> WallSets;
+        std::vector<DecoSet> DecoSets;
         std::map<int, DoorType> DoorList;
         std::map<int, SwitchType> SwitchList;
         std::vector<std::vector<MapSpace>> WallMap;

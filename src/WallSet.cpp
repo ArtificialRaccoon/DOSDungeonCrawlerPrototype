@@ -63,9 +63,6 @@ void WallSet::LoadWallSet(std::string wallSetName)
 
 void WallSet::DrawWall(BITMAP *BUFFER, WallPartId wallPart, int layer, std::vector<TileReference> &lastDrawn)
 {
-    int tilesetWidth = 26;
-    int tilesetHeight = 22;
-
     int destYPos = 0;
     const std::vector<int>& tileMapRow = WallTileMap[wallPart];
 

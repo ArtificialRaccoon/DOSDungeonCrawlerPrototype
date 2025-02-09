@@ -18,6 +18,15 @@ void Dungeon::LoadDungeon()
         WallSets.push_back(newWallset);
     }
 
+    //Fetch the Wall Decorations
+    std::vector<std::string> decoSetArray = dungeonObj["WallDeco"];
+    for(int i = 0; i < decoSetArray.size(); i++)
+    {
+        DecoSet newDecoSet;
+        newDecoSet.LoadDecoSet(decoSetArray[i].c_str());
+        DecoSets.push_back(newDecoSet);
+    }
+
     //Load the theme music
     Theme = dungeonObj.get("Theme");
 
@@ -43,6 +52,39 @@ void Dungeon::LoadDungeon()
         WallMap.push_back(row);
     }
 
+    vector<json::jobject> switchArray = dungeonObj["Switches"];
+    for(int i = 0; i < switchArray.size(); i++)
+    {
+        SwitchType switchObj;
+        json::jobject switchJson = switchArray[i];
+        vector<int> locArray = switchJson["Location"]; 
+        switchObj.Id = switchJson["Id"];
+        switchObj.SwitchSpriteSheet = 0;
+        switchObj.SwitchState = switchJson["InitialState"];    
+        switchObj.Location[0] = locArray[0];
+        switchObj.Location[1] = locArray[1];
+        WallMap[locArray[0]][locArray[1]].TypeFlag = WallMap[locArray[0]][locArray[1]].TypeFlag | SpaceType::SWITCH;
+        WallMap[locArray[0]][locArray[1]].SwitchId = switchJson["Id"];
+        
+        //Load Sound Effect
+        Effects[string(switchJson["Effect"])] = load_sample((".\\SFX\\" + string(switchJson["Effect"]) + ".WAV").c_str());
+        switchObj.Effect = string(switchJson["Effect"]);
+        SwitchList[switchJson["Id"]] = switchObj;
+
+        /*//Load Switch Spritesheets
+        std::string upSheetName = string(switchJson["SpriteSheet"]).append("A");
+        WallDeco upSheet;
+        upSheet.LoadWallDeco(upSheetName.c_str());
+        if(SwitchSets.find(upSheetName) == SwitchSets.end())
+            SwitchSets[upSheetName] = upSheet;
+
+        std::string downSheetName = string(switchJson["SpriteSheet"]).append("B");
+        WallDeco downSheet;
+        downSheet.LoadWallDeco(downSheetName.c_str());
+        if(SwitchSets.find(downSheetName) == SwitchSets.end())
+            SwitchSets[downSheetName] = downSheet;*/
+    }
+
     vector<json::jobject> doorArray = dungeonObj["Doors"];
     for(int i = 0; i < doorArray.size(); i++)
     {
@@ -51,7 +93,7 @@ void Dungeon::LoadDungeon()
         vector<int> locArray = doorJson["Location"]; 
         doorObj.Id = doorJson["Id"];
         doorObj.WallSetId = doorJson["WallSetId"];
-        doorObj.DoorSpriteSheet = string(doorJson["DoorSprite"]);        
+        doorObj.DoorSpriteSheet = string(doorJson["DoorSprite"]);
         WallMap[locArray[0]][locArray[1]].TypeFlag = WallMap[locArray[0]][locArray[1]].TypeFlag | SpaceType::DOOR; 
         WallMap[locArray[0]][locArray[1]].DoorId = doorJson["Id"];
         WallMap[locArray[0]][locArray[1]].WallSetId = doorObj.WallSetId;

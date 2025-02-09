@@ -8,7 +8,7 @@
 	],	
 	"WallDeco": 	
 	[
-		"DECOTILE"
+		"SWITCH1A"
 	],
 	"FloorSet": "STONE",
 	"Theme": "HALLS",
@@ -26,6 +26,17 @@
 		1,0,0,0,0,0,0,0,0,1,
 		1,1,1,1,1,1,1,1,1,1
 	],
+	"Switches": 
+	[
+		{
+		  "Id": 1,
+		  "Location": [ 0, 4 ],
+		  "Up": 0,
+		  "Down": 0,
+		  "InitialState": 0,
+		  "Effect": "SWITCH"
+		}
+	],	
 	"Doors": 
 	[
 		{
@@ -34,10 +45,11 @@
 		  "DoorSprite": "IRONDOOR",
 		  "Location": [ 4, 4 ],		  
 		  "Effect": "DOOR",
-		  "Combination": [
+		  "Combination": 
+		  [
 			{
 			  "SwitchId": 1,
-			  "SwitchState": 0
+			  "SwitchState": 1
 			}
 		  ]
 		}

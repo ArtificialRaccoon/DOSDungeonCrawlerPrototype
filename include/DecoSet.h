@@ -1,5 +1,5 @@
-#ifndef WALLSET_H
-#define WALLSET_H
+#ifndef DECOSET_H
+#define DECOSET_H
 
 #include <iostream>
 #include <string>
@@ -13,13 +13,14 @@
 #include "WallPart.h"
 #include "TileReference.h"
 
-class WallSet
+class DecoSet
 {
     public:
-        WallSet() {}
-        virtual ~WallSet() {}
-        void LoadWallSet(std::string wallSetName);    
-        void DrawWall(BITMAP *BUFFER, WallPartId wallPart, int layer, std::vector<TileReference> &lastDrawn);
+    DecoSet() {}
+        virtual ~DecoSet() {}
+        void LoadDecoSet(std::string decoSetName);    
+        void DrawDeco(BITMAP *BUFFER, WallPartId wallPart);
+        void DrawDeco(BITMAP *BUFFER, WallPartId wallPart, int layer, std::vector<TileReference> &lastDrawn);
 
     private:
         int tilesetWidth;
@@ -27,10 +28,10 @@ class WallSet
         int tileWidth;
         int tileHeight;
         
-        std::vector<std::vector<int>> WallTileMap;
+        std::vector<std::vector<int>> DecoTileMap;
 
         BITMAP* TILE;
         BITMAP* TILESHEET;
 };
 
-#endif // WALLSET_H
+#endif // DECO_H

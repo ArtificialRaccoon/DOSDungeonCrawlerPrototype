@@ -96,7 +96,7 @@ void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wal
 	for(int i = FORWARDD_LEFT3; i <= FORWARDD_RIGHT3; i++)
 	{
 		if(wallCone.Tier0[i].TypeFlag != SpaceType::EMPTY)
-			currentDungeon.WallSets[wallCone.Tier0[i].WallSetId - 1].DrawWall(MAZEVIEW, (WallPartId)i, 0, lastDrawn);			
+			DrawMapSpace(currentDungeon, wallCone.Tier0[i], (WallPartId)i);			
 	}	
 
 	for(int i = FARSIDED2_LEFT1; i <= FARSIDED2_RIGHT1; i++)
@@ -106,14 +106,14 @@ void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wal
 			conePosition++;
 
 		if(wallCone.Tier1[conePosition].TypeFlag != SpaceType::EMPTY)
-			currentDungeon.WallSets[wallCone.Tier1[conePosition].WallSetId - 1].DrawWall(MAZEVIEW, (WallPartId)i, 0, lastDrawn);
+			DrawMapSpace(currentDungeon, wallCone.Tier1[conePosition], (WallPartId)i);
 	}
 
 	for(int i = FORWARDC_LEFT2; i <= FORWARDC_RIGHT2; i++)
 	{
 		int conePosition = i - FORWARDC_LEFT2 + 1;
 		if(wallCone.Tier1[conePosition].TypeFlag != SpaceType::EMPTY)
-			currentDungeon.WallSets[wallCone.Tier1[conePosition].WallSetId - 1].DrawWall(MAZEVIEW, (WallPartId)i, 0, lastDrawn);		
+			DrawMapSpace(currentDungeon, wallCone.Tier1[conePosition], (WallPartId)i);		
 	}
 
 	for(int i = FARSIDEC_LEFT1; i <= FARSIDEC_RIGHT1; i++)
@@ -122,14 +122,14 @@ void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wal
 		if(conePosition >= 3)
 			conePosition++;		
 		if(wallCone.Tier2[conePosition].TypeFlag != SpaceType::EMPTY)
-			currentDungeon.WallSets[wallCone.Tier2[conePosition].WallSetId - 1].DrawWall(MAZEVIEW, (WallPartId)i, 0, lastDrawn);		
+			DrawMapSpace(currentDungeon, wallCone.Tier2[conePosition], (WallPartId)i);		
 	}
 
 	for(int i = FORWARDB_LEFT1; i <= FORWARDB_RIGHT1; i++)
 	{
 		int conePosition = i - FORWARDB_LEFT1 + 2;
 		if(wallCone.Tier2[conePosition].TypeFlag != SpaceType::EMPTY)
-			currentDungeon.WallSets[wallCone.Tier2[conePosition].WallSetId - 1].DrawWall(MAZEVIEW, (WallPartId)i, 0, lastDrawn);
+			DrawMapSpace(currentDungeon, wallCone.Tier2[conePosition], (WallPartId)i);
 	}
 
 	for(int i = SIDEB_LEFT1; i <= SIDEB_RIGHT1; i++)
@@ -138,14 +138,14 @@ void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wal
 		if(conePosition >= 2)
 			conePosition++;			
 		if(wallCone.Tier3[conePosition].TypeFlag != SpaceType::EMPTY)
-			currentDungeon.WallSets[wallCone.Tier3[conePosition].WallSetId - 1].DrawWall(MAZEVIEW, (WallPartId)i, 0, lastDrawn);
+			DrawMapSpace(currentDungeon, wallCone.Tier3[conePosition], (WallPartId)i);
 	}
 
 	for(int i = FORWARDA_LEFT1; i <= FORWARDA_RIGHT1; i++)
 	{
 		int conePosition = i - FORWARDA_LEFT1 + 1;
 		if(wallCone.Tier3[conePosition].TypeFlag != SpaceType::EMPTY)
-			currentDungeon.WallSets[wallCone.Tier3[conePosition].WallSetId - 1].DrawWall(MAZEVIEW, (WallPartId)i, 0, lastDrawn);
+			DrawMapSpace(currentDungeon, wallCone.Tier3[conePosition], (WallPartId)i);
 	}
 
 	for(int i = SIDEA_LEFT1; i <= SIDEA_RIGHT1; i++)
@@ -154,6 +154,18 @@ void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wal
 		if(conePosition >= 1)
 			conePosition++;		
 		if(wallCone.Tier4[conePosition].TypeFlag != SpaceType::EMPTY)
-			currentDungeon.WallSets[wallCone.Tier4[conePosition].WallSetId - 1].DrawWall(MAZEVIEW, (WallPartId)i, 0, lastDrawn);
+			DrawMapSpace(currentDungeon, wallCone.Tier4[conePosition], (WallPartId)i);
+	}
+}
+
+void MazeViewRenderer::DrawMapSpace(Dungeon &currentDungeon, MapSpace &space, WallPartId spriteId)
+{
+	if(space.TypeFlag & SpaceType::WALL || space.TypeFlag & SpaceType::DOOR)
+		currentDungeon.WallSets[space.WallSetId - 1].DrawWall(MAZEVIEW, spriteId, space.WallSetId, lastDrawn);
+	
+	if(space.TypeFlag & SpaceType::SWITCH)
+	{
+		SwitchType switchObj = currentDungeon.SwitchList[space.SwitchId];
+		currentDungeon.DecoSets[switchObj.SwitchSpriteSheet].DrawDeco(MAZEVIEW, spriteId, switchObj.SwitchSpriteSheet, lastDrawn);
 	}
 }

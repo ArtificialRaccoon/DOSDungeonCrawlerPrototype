@@ -19,7 +19,8 @@ class MazeViewRenderer
         void FlipBackground() { flippedHorizontally = !flippedHorizontally; }
 
     private:
-        void DrawBackground();       
+        void DrawBackground();
+        void DrawMapSpace(Dungeon &currentDungeon, MapSpace &space, WallPartId spriteId);
         void LoadBackground(std::string backgroundName);
 
     private:

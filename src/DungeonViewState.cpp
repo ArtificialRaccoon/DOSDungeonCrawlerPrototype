@@ -147,7 +147,8 @@ void DungeonViewState::ProcessInput(GameProcessor* game)
             SwitchType& gameSwitch = it->second;
             if(interactPosition[0] == gameSwitch.Location[0] && interactPosition[1] == gameSwitch.Location[1])
             {
-                gameSwitch.SwitchState = (gameSwitch.SwitchState == 0 ? 1 : 0);                            
+                gameSwitch.SwitchState = (gameSwitch.SwitchState == 0 ? 1 : 0); 
+                screenInvalidated = true;               
                 play_sample(dungeonObj.Effects.at(gameSwitch.Effect), 255, 128, 1000, FALSE);
             }
         }           
@@ -206,7 +207,8 @@ void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int delt
     // Update player position
     if (calculateForX)
     {
-        if (dungeonObj.WallMap[playerY - (deltaSign * deltaX)][playerX + (deltaSign * deltaY)].WallSetId < 1) 
+        if (dungeonObj.WallMap[playerY - (deltaSign * deltaX)][playerX + (deltaSign * deltaY)].WallSetId < 1
+            || dungeonObj.WallMap[playerY - (deltaSign * deltaX)][playerX + (deltaSign * deltaY)].TypeFlag & SpaceType::DOOR) 
         {
             bool canMove = false;
             int doorIndex = dungeonObj.WallMap[playerY - (deltaSign * deltaX)][playerX + (deltaSign * deltaY)].DoorId;
@@ -229,7 +231,8 @@ void DungeonViewState::ComputeVision(bool calculateForX, int deltaSign, int delt
     } 
     else
     {
-        if (dungeonObj.WallMap[playerY + (deltaSign * deltaY)][playerX + (deltaSign * deltaX)].WallSetId < 1)
+        if (dungeonObj.WallMap[playerY + (deltaSign * deltaY)][playerX + (deltaSign * deltaX)].WallSetId < 1        
+            || dungeonObj.WallMap[playerY + (deltaSign * deltaY)][playerX + (deltaSign * deltaX)].TypeFlag & SpaceType::DOOR) 
         {
             bool canMove = false;
             int doorIndex = dungeonObj.WallMap[playerY + (deltaSign * deltaY)][playerX + (deltaSign * deltaX)].DoorId;

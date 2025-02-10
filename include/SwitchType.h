@@ -9,7 +9,8 @@ class SwitchType
         virtual ~SwitchType() {}
         int Id;
         int SwitchState;
-        int SwitchSpriteSheet;
+        int UpSpriteSheet;
+        int DownSpriteSheet;
         int Location[2] = {-1, -1};
         std::string Effect;
 };

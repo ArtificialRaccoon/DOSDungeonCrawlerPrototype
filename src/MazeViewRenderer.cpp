@@ -89,8 +89,6 @@ void MazeViewRenderer::DrawBackground()
 
 void MazeViewRenderer::RenderVisionCone(Dungeon &currentDungeon, VisionCone &wallCone, VisionCone &decoCone)
 {
-	//I might want to load a list of tiles from the wallsets which have 
-	//transparency so I can only redraw those ones.  Not needed right now.
 	DrawBackground();
 
 	for(int i = FORWARDD_LEFT3; i <= FORWARDD_RIGHT3; i++)
@@ -166,6 +164,9 @@ void MazeViewRenderer::DrawMapSpace(Dungeon &currentDungeon, MapSpace &space, Wa
 	if(space.TypeFlag & SpaceType::SWITCH)
 	{
 		SwitchType switchObj = currentDungeon.SwitchList[space.SwitchId];
-		currentDungeon.DecoSets[switchObj.SwitchSpriteSheet].DrawDeco(MAZEVIEW, spriteId, switchObj.SwitchSpriteSheet, lastDrawn);
+		if(switchObj.SwitchState == 0)		
+			currentDungeon.DecoSets[switchObj.UpSpriteSheet].DrawDeco(MAZEVIEW, spriteId, switchObj.UpSpriteSheet, lastDrawn);
+		else
+			currentDungeon.DecoSets[switchObj.DownSpriteSheet].DrawDeco(MAZEVIEW, spriteId, switchObj.DownSpriteSheet, lastDrawn);
 	}
 }

@@ -8,7 +8,8 @@
 	],	
 	"WallDeco": 	
 	[
-		"SWITCH1A"
+		"SWITCH1A",
+		"SWITCH1B"
 	],
 	"FloorSet": "STONE",
 	"Theme": "HALLS",
@@ -32,7 +33,7 @@
 		  "Id": 1,
 		  "Location": [ 0, 4 ],
 		  "Up": 0,
-		  "Down": 0,
+		  "Down": 1,
 		  "InitialState": 0,
 		  "Effect": "SWITCH"
 		}
